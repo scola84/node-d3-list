@@ -9,7 +9,7 @@ export default class SelectItem extends PlainItem {
 
     this._outer
       .classed('plain', false)
-      .classed('menu', true)
+      .classed('select', true)
       .style('cursor', 'pointer')
       .on('click.item-select', this._handleClick.bind(this))
       .on('select.item-select', this._handleSelect.bind(this));
@@ -21,7 +21,7 @@ export default class SelectItem extends PlainItem {
         'align-items': 'center',
         'border-top': '1px solid #CCC',
         'display': 'none',
-        'width': '1.5em'
+        'width': '1.75em'
       });
 
     this._iconCheckmark = this._iconCheckmarkOuter

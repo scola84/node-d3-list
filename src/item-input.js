@@ -68,6 +68,10 @@ export default class InputItem extends Item {
       });
   }
 
+  input() {
+    return this._input;
+  }
+
   icon(name, size = '2em') {
     this._iconOuter
       .style('display', 'flex');

@@ -1,3 +1,4 @@
+import CheckItem from './src/item-check';
 import InputItem from './src/item-input';
 import MenuItem from './src/item-menu';
 import PlainItem from './src/item-plain';
@@ -6,7 +7,11 @@ import SelectItem from './src/item-select';
 import SelectList from './src/list-select';
 import StaticList from './src/list-static';
 
-export function input() {
+export function checkItem() {
+  return new CheckItem();
+}
+
+export function inputItem() {
   return new InputItem();
 }
 
