@@ -31,6 +31,17 @@ export default class StaticList {
         'border-color': '#CCC',
         'border-style': 'solid'
       });
+
+    this._comment = this._outer
+      .append('div')
+      .classed('scola comment', true)
+      .styles({
+        'color': '#AAA',
+        'display': 'none',
+        'font-size': '0.8em',
+        'line-height': '1.4em',
+        'padding': '1.1em 1.1em 0 1.1em'
+      });
   }
 
   destroy() {
@@ -52,6 +63,12 @@ export default class StaticList {
   append(item) {
     this._items.add(item);
     this._body.node().appendChild(item.node());
+  }
+
+  comment(text) {
+    this._comment
+      .style('display', 'block')
+      .text(text);
   }
 
   inset() {
