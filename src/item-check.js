@@ -16,46 +16,48 @@ export default class CheckItem extends PlainItem {
       .append('div')
       .classed('scola checker-outer', true)
       .styles({
-        'width': '4.25em',
+        'align-items': 'center',
         'display': 'flex',
-        'align-items': 'center'
+        'width': '4.25em'
       });
 
     this._checker = this._checkerOuter
       .append('div')
       .classed('scola checker', true)
       .styles({
-        'cursor': 'pointer',
-        'width': '3.25em',
-        'height': '2em',
         'border': '1px solid #CCC',
         'border-radius': '1em',
-        'position': 'relative'
+        'cursor': 'pointer',
+        'height': '2em',
+        'position': 'relative',
+        'width': '3.25em'
       })
       .on('click.item-check', this._handleClick.bind(this));
 
-    this._checkerBackground = this._checker
+    this._mask = this._checker
       .append('div')
-      .classed('scola checker-background', true)
-      .styles({
-        background: 'green',
-        opacity: 0,
-        position: 'absolute',
-        width: '100%',
-        height: '100%',
-        'border-radius': '1em'
-      });
-
-    this._checkerInner = this._checker
-      .append('div')
-      .classed('scola checker-inner', true)
+      .classed('scola mask', true)
       .styles({
         'background': '#FFF',
-        width: '1.85em',
-        height: '1.85em',
+        'border-radius': '1em',
+        'height': '100%',
+        'position': 'absolute',
+        'transform': 'scale(1)',
+        'transition-duration': '0.25s',
+        'width': '100%'
+      });
+
+    this._button = this._checker
+      .append('div')
+      .classed('scola button', true)
+      .styles({
+        'background': '#FFF',
         'border-radius': '1em',
         'box-shadow': '0 1px 5px #AAA',
-        'position': 'absolute'
+        'height': '1.85em',
+        'position': 'absolute',
+        'transition-duration': '0.25s',
+        'width': '1.85em'
       });
   }
 
@@ -104,12 +106,28 @@ export default class CheckItem extends PlainItem {
   }
 
   _handleCheck() {
+    const checker = {
+      'background': '#CCC'
+    };
+
+    const mask = {
+      'transform': 'scale(1)',
+      'opacity': '1'
+    };
+
+    const button = {
+      'left': '0'
+    };
+
     if (event.detail.item.checked()) {
-      this._checkerBackground.transition().style('opacity', '1');
-      this._checkerInner.transition().style('left', '1.27em');
-    } else {
-      this._checkerBackground.transition().style('opacity', '0');
-      this._checkerInner.transition().style('left', '0');
+      checker.background = 'green';
+      mask.transform = 'scale(0)';
+      mask.opacity = '0';
+      button.left = '1.27em';
     }
+
+    this._checker.styles(checker);
+    this._mask.styles(mask);
+    this._button.styles(button);
   }
 }
