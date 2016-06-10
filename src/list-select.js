@@ -17,6 +17,8 @@ export default class SelectList extends StaticList {
   append(item) {
     item.outer().on('select.list-select', this._handleSelect.bind(this));
     super.append(item);
+
+    return this;
   }
 
   value() {

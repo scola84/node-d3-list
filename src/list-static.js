@@ -38,9 +38,9 @@ export default class StaticList {
       .styles({
         'color': '#AAA',
         'display': 'none',
-        'font-size': '0.8em',
+        'font-size': '0.9em',
         'line-height': '1.4em',
-        'padding': '1.1em 1.1em 0 1.1em'
+        'padding': '0.75em 1.1em 0 1.1em'
       });
   }
 
@@ -63,12 +63,16 @@ export default class StaticList {
   append(item) {
     this._items.add(item);
     this._body.node().appendChild(item.node());
+
+    return this;
   }
 
   comment(text) {
     this._comment
       .style('display', 'block')
       .text(text);
+
+    return this;
   }
 
   inset() {
@@ -85,7 +89,10 @@ export default class StaticList {
   }
 
   title(text) {
-    this._title.style('display', 'block').text(text);
+    this._title
+      .style('display', 'block')
+      .text(text);
+
     return this;
   }
 
