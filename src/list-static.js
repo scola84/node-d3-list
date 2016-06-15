@@ -19,7 +19,7 @@ export default class StaticList {
         'color': '#AAA',
         'display': 'none',
         'font-size': '0.9em',
-        'padding': '0 1.1em 0.5em 1.1em',
+        'padding': '0 1.1em 0.75em',
         'text-transform': 'uppercase'
       });
 
@@ -40,7 +40,7 @@ export default class StaticList {
         'display': 'none',
         'font-size': '0.9em',
         'line-height': '1.4em',
-        'padding': '0.75em 1.1em 0 1.1em'
+        'padding': '0.75em 1.1em 0'
       });
   }
 
