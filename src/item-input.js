@@ -107,6 +107,4 @@ export default class InputItem extends Item {
 
     return this;
   }
-
-
 }

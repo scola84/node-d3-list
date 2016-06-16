@@ -34,7 +34,7 @@ export default class CheckItem extends PlainItem {
         'position': 'relative',
         'width': '3.25em'
       })
-      .on('click.item-check', this._handleClick.bind(this));
+      .on('click.item-check', () => this.checked(!this._checked));
 
     this._mask = this._checker
       .append('div')
@@ -65,9 +65,9 @@ export default class CheckItem extends PlainItem {
   }
 
   destroy() {
-    this._root.on('.item-check', null);
-    this._checker.on('.item-check', null);
-    this._root.remove();
+    this._root.on('click.item-check', null);
+    this._checker.on('click.item-check', null);
+    super.destroy();
   }
 
   checked(checked) {
@@ -93,10 +93,6 @@ export default class CheckItem extends PlainItem {
       .style('border-top-style', 'none');
 
     return this;
-  }
-
-  _handleClick() {
-    this.checked(!this._checked);
   }
 
   _handleCheck() {

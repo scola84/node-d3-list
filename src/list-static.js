@@ -49,11 +49,25 @@ export default class StaticList {
       item.destroy();
     });
 
+    this._root.dispatch('destroy');
     this._root.remove();
+    this._root = null;
   }
 
   root() {
     return this._root;
+  }
+
+  append(item, action = true) {
+    if (action === true) {
+      this._items.add(item);
+      this._body.node().appendChild(item.root().node());
+    } else if (action === false) {
+      this._items.delete(item);
+      item.root().remove();
+    }
+
+    return this;
   }
 
   comment(text) {
@@ -76,13 +90,6 @@ export default class StaticList {
     this._title
       .style('display', 'block')
       .text(text);
-
-    return this;
-  }
-
-  append(item) {
-    this._items.add(item);
-    this._body.node().appendChild(item.root().node());
 
     return this;
   }

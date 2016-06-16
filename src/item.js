@@ -18,13 +18,19 @@ export default class Item {
         'display': 'flex'
       });
 
-    this._paddingLeft = this._inner
+    this._padding = this._inner
       .append('div')
       .classed('scola padding', true)
       .styles({
         'border-top': '1px solid transparent',
         'width': '1em'
       });
+  }
+
+  destroy() {
+    this._root.dispatch('destroy');
+    this._root.remove();
+    this._root = null;
   }
 
   root() {

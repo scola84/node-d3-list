@@ -1,3 +1,4 @@
+import { event } from 'd3-selection';
 import PlainItem from './item-plain';
 
 export default class SelectItem extends PlainItem {
@@ -33,8 +34,9 @@ export default class SelectItem extends PlainItem {
   }
 
   destroy() {
-    this._root.on('.item-select', null);
-    this._root.remove();
+    this._root.on('click.item-select', null);
+    this._root.on('select.item-select', null);
+    super.destroy();
   }
 
   selected(selected) {

@@ -1,3 +1,4 @@
+import { event } from 'd3-selection';
 import StaticList from './list-static';
 
 export default class SelectList extends StaticList {
@@ -8,17 +9,20 @@ export default class SelectList extends StaticList {
 
   destroy() {
     this._items.forEach((item) => {
-      item.root().on('.list-select', null);
+      item.root().on('select.list-select', null);
     });
 
     super.destroy();
   }
 
-  append(item) {
-    item.root().on('select.list-select', this._handleSelect.bind(this));
-    super.append(item);
+  append(item, action = true) {
+    if (action === true) {
+      item.root().on('select.list-select', this._handleSelect.bind(this));
+    } else {
+      item.root().on('select.list-select', null);
+    }
 
-    return this;
+    return super.append(item, action);
   }
 
   value() {
