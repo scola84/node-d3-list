@@ -60,6 +60,10 @@ export default class StaticList {
 
   append(item, action = true) {
     if (action === true) {
+      if (this._items.size === 0) {
+        item.top();
+      }
+
       this._items.add(item);
       this._body.node().appendChild(item.root().node());
     } else if (action === false) {
