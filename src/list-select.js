@@ -8,14 +8,14 @@ export default class SelectList extends StaticList {
 
   destroy() {
     this._items.forEach((item) => {
-      item.outer().on('.list-select', null);
+      item.root().on('.list-select', null);
     });
 
     super.destroy();
   }
 
   append(item) {
-    item.outer().on('select.list-select', this._handleSelect.bind(this));
+    item.root().on('select.list-select', this._handleSelect.bind(this));
     super.append(item);
 
     return this;
@@ -31,14 +31,14 @@ export default class SelectList extends StaticList {
     }
 
     if (this._selected) {
-      this._selected.select(false);
+      this._selected.selected(false);
     }
 
     this._selected = event.detail.item;
 
-    this._outer.dispatch('select', {
+    this._root.dispatch('select', {
       detail: {
-        value: this._selected.value()
+        item: this._selected
       }
     });
   }

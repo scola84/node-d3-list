@@ -1,3 +1,4 @@
+import { event } from 'd3-selection';
 import PlainItem from './item-plain';
 
 export default class CheckItem extends PlainItem {
@@ -5,26 +6,27 @@ export default class CheckItem extends PlainItem {
     super();
 
     this._checked = false;
-    this._value = null;
 
-    this._outer
+    this._root
       .classed('plain', false)
       .classed('check', true)
       .on('check.item-check', this._handleCheck.bind(this));
 
-    this._checkerOuter = this._inner
+    this._checkerRoot = this._inner
       .append('div')
-      .classed('scola checker-outer', true)
+      .classed('scola checker-root', true)
       .styles({
         'align-items': 'center',
+        'border-top': '1px solid #CCC',
         'display': 'flex',
         'width': '4.25em'
       });
 
-    this._checker = this._checkerOuter
+    this._checker = this._checkerRoot
       .append('div')
       .classed('scola checker', true)
       .styles({
+        'background': '#CCC',
         'border': '1px solid #CCC',
         'border-radius': '1em',
         'cursor': 'pointer',
@@ -55,6 +57,7 @@ export default class CheckItem extends PlainItem {
         'border-radius': '1em',
         'box-shadow': '0 1px 5px #AAA',
         'height': '1.85em',
+        'left': 0,
         'position': 'absolute',
         'transition-duration': '0.25s',
         'width': '1.85em'
@@ -62,15 +65,19 @@ export default class CheckItem extends PlainItem {
   }
 
   destroy() {
-    this._outer.on('.item-check', null);
+    this._root.on('.item-check', null);
     this._checker.on('.item-check', null);
-    this._outer.remove();
+    this._root.remove();
   }
 
-  check(checked) {
+  checked(checked) {
+    if (typeof checked === 'undefined') {
+      return this._checked;
+    }
+
     this._checked = checked;
 
-    this._outer.dispatch('check', {
+    this._root.dispatch('check', {
       detail: {
         item: this
       }
@@ -79,30 +86,17 @@ export default class CheckItem extends PlainItem {
     return this;
   }
 
-  checked() {
-    return this._checked;
-  }
-
   top() {
     super.top();
 
-    this._checkerOuter
+    this._checkerRoot
       .style('border-top-style', 'none');
 
     return this;
   }
 
-  value(value) {
-    if (typeof value !== 'undefined') {
-      this._value = value;
-      return this;
-    }
-
-    return this._value;
-  }
-
   _handleClick() {
-    this.check(!this._checked);
+    this.checked(!this._checked);
   }
 
   _handleCheck() {

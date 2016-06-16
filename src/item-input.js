@@ -4,11 +4,11 @@ export default class InputItem extends Item {
   constructor() {
     super();
 
-    this._outer.classed('input', true);
+    this._root.classed('input', true);
 
-    this._iconOuter = this._inner
+    this._iconRoot = this._inner
       .append('div')
-      .classed('scola icon-outer', true)
+      .classed('scola icon-root', true)
       .styles({
         'align-items': 'center',
         'border-top': '1px solid transparent',
@@ -16,7 +16,7 @@ export default class InputItem extends Item {
         'width': '2.25em'
       });
 
-    this._icon = this._iconOuter
+    this._icon = this._iconRoot
       .append('div')
       .classed('scola icon', true)
       .styles({
@@ -31,7 +31,7 @@ export default class InputItem extends Item {
         'display': 'flex'
       });
 
-    this._paddingCenter = this._inner
+    this._labelPadding = this._inner
       .append('div')
       .classed('scola padding', true)
       .styles({
@@ -39,16 +39,16 @@ export default class InputItem extends Item {
         'width': '1em'
       });
 
-    this._inputOuter = this._inner
+    this._inputRoot = this._inner
       .append('div')
-      .classed('scola input-outer', true)
+      .classed('scola input-root', true)
       .styles({
         'border-top': '1px solid #CCC',
         'display': 'flex',
         'flex': 1
       });
 
-    this._input = this._inputOuter
+    this._input = this._inputRoot
       .append('input')
       .classed('scola input', true)
       .styles({
@@ -59,7 +59,7 @@ export default class InputItem extends Item {
         'width': '100%'
       });
 
-    this._paddingRight = this._inner
+    this._inputPadding = this._inner
       .append('div')
       .classed('scola padding', true)
       .styles({
@@ -73,7 +73,11 @@ export default class InputItem extends Item {
   }
 
   icon(name, size = '2em') {
-    this._iconOuter
+    if (typeof name === 'undefined') {
+      return this._icon;
+    }
+
+    this._iconRoot
       .style('display', 'flex');
 
     this._icon
@@ -84,6 +88,10 @@ export default class InputItem extends Item {
   }
 
   label(text, width) {
+    if (typeof text === 'undefined') {
+      return this._label;
+    }
+
     this._label
       .text(text)
       .style('width', width);
@@ -93,14 +101,12 @@ export default class InputItem extends Item {
 
   top() {
     this._label.style('border-top-style', 'none');
-    this._paddingCenter.style('border-top-style', 'none');
-    this._inputOuter.style('border-top-style', 'none');
-    this._paddingRight.style('border-top-style', 'none');
+    this._labelPadding.style('border-top-style', 'none');
+    this._inputRoot.style('border-top-style', 'none');
+    this._inputPadding.style('border-top-style', 'none');
 
     return this;
   }
 
-  value() {
-    return this._input.property('value');
-  }
+
 }

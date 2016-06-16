@@ -4,11 +4,11 @@ export default class PlainItem extends Item {
   constructor() {
     super();
 
-    this._outer.classed('plain', true);
+    this._root.classed('plain', true);
 
-    this._iconOuter = this._inner
+    this._iconRoot = this._inner
       .append('div')
-      .classed('scola icon-outer', true)
+      .classed('scola icon-root', true)
       .styles({
         'align-items': 'center',
         'border-top': '1px solid transparent',
@@ -16,7 +16,7 @@ export default class PlainItem extends Item {
         'width': '2.25em'
       });
 
-    this._icon = this._iconOuter
+    this._icon = this._iconRoot
       .append('div')
       .classed('scola icon', true)
       .styles({
@@ -34,7 +34,7 @@ export default class PlainItem extends Item {
         'white-space': 'nowrap'
       });
 
-    this._paddingCenter = this._inner
+    this._labelPadding = this._inner
       .append('div')
       .classed('scola padding', true)
       .styles({
@@ -48,20 +48,25 @@ export default class PlainItem extends Item {
       .styles({
         'border-top': '1px solid #CCC',
         'color': '#AAA',
-        'display': 'flex'
+        'display': 'none'
       });
 
-    this._paddingRight = this._inner
+    this._subPadding = this._inner
       .append('div')
       .classed('scola padding', true)
       .styles({
         'border-top': '1px solid #CCC',
+        'display': 'none',
         'width': '0.5em'
       });
   }
 
   icon(name, size = '2em') {
-    this._iconOuter
+    if (typeof name === 'undefined') {
+      return this._icon;
+    }
+
+    this._iconRoot
       .style('display', 'flex');
 
     this._icon
@@ -72,20 +77,34 @@ export default class PlainItem extends Item {
   }
 
   label(text) {
+    if (typeof text === 'undefined') {
+      return this._label;
+    }
+
     this._label.text(text);
     return this;
   }
 
   sub(text) {
-    this._sub.text(text);
+    if (typeof text === 'undefined') {
+      return this._sub;
+    }
+
+    this._subPadding
+      .style('display', 'flex');
+
+    this._sub
+      .style('display', 'flex')
+      .text(text);
+
     return this;
   }
 
   top() {
     this._label.style('border-top-style', 'none');
-    this._paddingCenter.style('border-top-style', 'none');
-    this._paddingRight.style('border-top-style', 'none');
+    this._labelPadding.style('border-top-style', 'none');
     this._sub.style('border-top-style', 'none');
+    this._subPadding.style('border-top-style', 'none');
 
     return this;
   }

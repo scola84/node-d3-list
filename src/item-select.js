@@ -7,16 +7,16 @@ export default class SelectItem extends PlainItem {
     this._selected = false;
     this._value = null;
 
-    this._outer
+    this._root
       .classed('plain', false)
       .classed('select', true)
       .style('cursor', 'pointer')
       .on('click.item-select', this._handleClick.bind(this))
       .on('select.item-select', this._handleSelect.bind(this));
 
-    this._iconCheckmarkOuter = this._inner
+    this._iconCheckmarkRoot = this._inner
       .append('div')
-      .classed('scola icon checkmark-outer', true)
+      .classed('scola icon checkmark', true)
       .styles({
         'align-items': 'center',
         'border-top': '1px solid #CCC',
@@ -24,7 +24,7 @@ export default class SelectItem extends PlainItem {
         'width': '1.75em'
       });
 
-    this._iconCheckmark = this._iconCheckmarkOuter
+    this._iconCheckmark = this._iconCheckmarkRoot
       .append('div')
       .classed('scola icon ion-ios-checkmark-empty', true)
       .styles({
@@ -33,14 +33,18 @@ export default class SelectItem extends PlainItem {
   }
 
   destroy() {
-    this._outer.on('.item-select', null);
-    this._outer.remove();
+    this._root.on('.item-select', null);
+    this._root.remove();
   }
 
-  select(selected) {
+  selected(selected) {
+    if (typeof selected === 'undefined') {
+      return this._selected;
+    }
+
     this._selected = selected;
 
-    this._outer.dispatch('select', {
+    this._root.dispatch('select', {
       detail: {
         item: this
       }
@@ -49,26 +53,22 @@ export default class SelectItem extends PlainItem {
     return this;
   }
 
-  selected() {
-    return this._selected;
+  value(value) {
+    if (typeof value === 'undefined') {
+      return this._value;
+    }
+
+    this._value = value;
+    return this;
   }
 
   top() {
     super.top();
 
-    this._iconCheckmarkOuter
+    this._iconCheckmarkRoot
       .style('border-top-style', 'none');
 
     return this;
-  }
-
-  value(value) {
-    if (typeof value !== 'undefined') {
-      this._value = value;
-      return this;
-    }
-
-    return this._value;
   }
 
   _handleClick() {
@@ -76,14 +76,14 @@ export default class SelectItem extends PlainItem {
       return;
     }
 
-    this.select(true);
+    this.selected(true);
   }
 
   _handleSelect() {
     if (event.detail.item.selected()) {
-      this._iconCheckmarkOuter.style('display', 'flex');
+      this._iconCheckmarkRoot.style('display', 'flex');
     } else {
-      this._iconCheckmarkOuter.style('display', 'none');
+      this._iconCheckmarkRoot.style('display', 'none');
     }
   }
 }

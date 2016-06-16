@@ -4,7 +4,7 @@ export default class StaticList {
   constructor() {
     this._items = new Set();
 
-    this._outer = select('body')
+    this._root = select('body')
       .append('div')
       .classed('scola list static', true)
       .styles({
@@ -12,7 +12,7 @@ export default class StaticList {
         'padding-top': 0
       });
 
-    this._title = this._outer
+    this._title = this._root
       .append('div')
       .classed('scola title', true)
       .styles({
@@ -23,7 +23,7 @@ export default class StaticList {
         'text-transform': 'uppercase'
       });
 
-    this._body = this._outer
+    this._body = this._root
       .append('div')
       .classed('scola body', true)
       .styles({
@@ -32,7 +32,7 @@ export default class StaticList {
         'border-style': 'solid'
       });
 
-    this._comment = this._outer
+    this._comment = this._root
       .append('div')
       .classed('scola comment', true)
       .styles({
@@ -49,25 +49,18 @@ export default class StaticList {
       item.destroy();
     });
 
-    this._outer.remove();
+    this._root.remove();
   }
 
-  outer() {
-    return this._outer;
-  }
-
-  node() {
-    return this._outer.node();
-  }
-
-  append(item) {
-    this._items.add(item);
-    this._body.node().appendChild(item.node());
-
-    return this;
+  root() {
+    return this._root;
   }
 
   comment(text) {
+    if (typeof text === 'undefined') {
+      return this._comment;
+    }
+
     this._comment
       .style('display', 'block')
       .text(text);
@@ -75,8 +68,27 @@ export default class StaticList {
     return this;
   }
 
+  title(text) {
+    if (typeof text === 'undefined') {
+      return this._title;
+    }
+
+    this._title
+      .style('display', 'block')
+      .text(text);
+
+    return this;
+  }
+
+  append(item) {
+    this._items.add(item);
+    this._body.node().appendChild(item.root().node());
+
+    return this;
+  }
+
   inset() {
-    this._outer
+    this._root
       .style('margin', '0 1em');
 
     this._body.styles({
@@ -88,16 +100,8 @@ export default class StaticList {
     return this;
   }
 
-  title(text) {
-    this._title
-      .style('display', 'block')
-      .text(text);
-
-    return this;
-  }
-
   top() {
-    this._outer.style('padding-top', '3em');
+    this._root.style('padding-top', '3em');
     return this;
   }
 }

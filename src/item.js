@@ -2,7 +2,7 @@ import { select } from 'd3-selection';
 
 export default class Item {
   constructor() {
-    this._outer = select('body')
+    this._root = select('body')
       .append('div')
       .classed('scola item', true)
       .styles({
@@ -11,7 +11,7 @@ export default class Item {
         'line-height': '3em'
       });
 
-    this._inner = this._outer
+    this._inner = this._root
       .append('div')
       .classed('scola inner', true)
       .styles({
@@ -27,12 +27,8 @@ export default class Item {
       });
   }
 
-  outer() {
-    return this._outer;
-  }
-
-  node() {
-    return this._outer.node();
+  root() {
+    return this._root;
   }
 
   top() {
