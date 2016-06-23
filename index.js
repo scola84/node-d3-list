@@ -1,6 +1,6 @@
 import CheckItem from './src/item-check';
 import InputItem from './src/item-input';
-import MenuItem from './src/item-menu';
+import NavItem from './src/item-nav';
 import PlainItem from './src/item-plain';
 import SelectItem from './src/item-select';
 
@@ -15,8 +15,8 @@ export function inputItem() {
   return new InputItem();
 }
 
-export function menuItem() {
-  return new MenuItem();
+export function navItem() {
+  return new NavItem();
 }
 
 export function plainItem() {
