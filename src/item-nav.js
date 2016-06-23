@@ -1,12 +1,12 @@
 import PlainItem from './item-plain';
 
-export default class MenuItem extends PlainItem {
+export default class NavItem extends PlainItem {
   constructor() {
     super();
 
     this._root
       .classed('plain', false)
-      .classed('menu', true)
+      .classed('nav', true)
       .style('cursor', 'pointer');
 
     this._iconForwardRoot = this._inner
