@@ -30,7 +30,15 @@ export default class SelectList extends StaticList {
   }
 
   _handleSelect() {
-    if (this._selected === event.detail.item) {
+    if (event.detail.item.selected() === false) {
+      if (event.detail.item === this._selected) {
+        this._selected = null;
+      }
+
+      return;
+    }
+
+    if (event.detail.item === this._selected) {
       return;
     }
 
@@ -42,7 +50,8 @@ export default class SelectList extends StaticList {
 
     this._root.dispatch('select', {
       detail: {
-        item: this._selected
+        item: this._selected,
+        list: this
       }
     });
   }
