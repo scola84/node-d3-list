@@ -8,10 +8,7 @@ export default class SelectList extends StaticList {
   }
 
   destroy() {
-    this._items.forEach((item) => {
-      this._unbindItem(item);
-    });
-
+    this._items.forEach((item) => this._unbindItem(item));
     super.destroy();
   }
 

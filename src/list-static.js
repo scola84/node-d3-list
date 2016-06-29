@@ -45,9 +45,8 @@ export default class StaticList {
   }
 
   destroy() {
-    this._items.forEach((item) => {
-      item.destroy();
-    });
+    this._items.forEach((item) => item.destroy());
+    this._items.clear();
 
     this._root.dispatch('destroy');
     this._root.remove();
