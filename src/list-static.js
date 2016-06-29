@@ -6,6 +6,7 @@ export default class StaticList {
 
     this._root = select('body')
       .append('div')
+      .remove()
       .classed('scola list static', true)
       .styles({
         'padding-bottom': '3em',

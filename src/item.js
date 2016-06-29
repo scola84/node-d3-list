@@ -4,6 +4,7 @@ export default class Item {
   constructor() {
     this._root = select('body')
       .append('div')
+      .remove()
       .classed('scola item', true)
       .styles({
         'background': '#FFF',
