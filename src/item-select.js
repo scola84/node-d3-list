@@ -11,9 +11,7 @@ export default class SelectItem extends PlainItem {
     this._root
       .classed('plain', false)
       .classed('select', true)
-      .style('cursor', 'pointer')
-      .on('click.item-select', this._handleClick.bind(this))
-      .on('select.item-select', this._handleSelect.bind(this));
+      .style('cursor', 'pointer');
 
     this._iconCheckmarkRoot = this._inner
       .append('div')
@@ -31,12 +29,23 @@ export default class SelectItem extends PlainItem {
       .styles({
         'font-size': '2em'
       });
+
+    this._bind();
   }
 
   destroy() {
-    this._root.on('click.item-select', null);
-    this._root.on('select.item-select', null);
+    this._unbind();
     super.destroy();
+  }
+
+  _bind() {
+    this._root.on('click.scola-select-item', this._handleClick.bind(this));
+    this._root.on('select.scola-select-item', this._handleSelect.bind(this));
+  }
+
+  _unbind() {
+    this._root.on('click.scola-select-item', null);
+    this._root.on('select.scola-select-item', null);
   }
 
   selected(selected) {

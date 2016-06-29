@@ -9,8 +9,7 @@ export default class CheckItem extends PlainItem {
 
     this._root
       .classed('plain', false)
-      .classed('check', true)
-      .on('check.item-check', this._handleCheck.bind(this));
+      .classed('check', true);
 
     this._checkerRoot = this._inner
       .append('div')
@@ -33,8 +32,7 @@ export default class CheckItem extends PlainItem {
         'height': '2em',
         'position': 'relative',
         'width': '3.25em'
-      })
-      .on('click.item-check', () => this.checked(!this._checked));
+      });
 
     this._mask = this._checker
       .append('div')
@@ -62,11 +60,12 @@ export default class CheckItem extends PlainItem {
         'transition-duration': '0.25s',
         'width': '1.85em'
       });
+
+    this._bind();
   }
 
   destroy() {
-    this._root.on('click.item-check', null);
-    this._checker.on('click.item-check', null);
+    this._unbind();
     super.destroy();
   }
 
@@ -93,6 +92,18 @@ export default class CheckItem extends PlainItem {
       .style('border-top-style', 'none');
 
     return this;
+  }
+
+  _bind() {
+    this._root.on('click.scola-check-item',
+      this._handleCheck.bind(this));
+    this._checker.on('click.scola-check-item',
+      () => this.checked(!this._checked));
+  }
+
+  _unbind() {
+    this._root.on('click.scola-check-item', null);
+    this._checker.on('click.scola-check-item', null);
   }
 
   _handleCheck() {
