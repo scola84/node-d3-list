@@ -75,7 +75,7 @@ export default class MenuItem extends PlainItem {
   _select() {
     this._root
       .classed('selected', true)
-      .style('background', 'rgb(0, 122, 255)');
+      .style('background', '#007AFF');
 
     this._label.style('color', '#FFF');
 
