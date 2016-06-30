@@ -16,8 +16,8 @@ export default class NavItem extends PlainItem {
         'align-items': 'center',
         'border-top': '1px solid #CCC',
         'display': 'flex',
-        'order': 5,
-        'width': '1.5em'
+        'order': 7,
+        'padding-right': '1em'
       });
 
     this._iconForward = this._iconForwardRoot

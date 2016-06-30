@@ -21,7 +21,7 @@ export default class SelectItem extends PlainItem {
         'border-top': '1px solid #CCC',
         'display': 'none',
         'order': 5,
-        'width': '1.75em'
+        'padding-right': '1em'
       });
 
     this._iconCheckmark = this._iconCheckmarkRoot

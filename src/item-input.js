@@ -51,7 +51,7 @@ export default class InputItem extends Item {
       .styles({
         'border-top': '1px solid #CCC',
         'order': 6,
-        'width': '0.5em'
+        'width': '1em'
       });
   }
 
