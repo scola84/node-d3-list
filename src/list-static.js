@@ -3,25 +3,18 @@ import { select } from 'd3-selection';
 export default class StaticList {
   constructor() {
     this._items = new Set();
+    this._title = null;
+    this._comment = null;
 
     this._root = select('body')
       .append('div')
       .remove()
       .classed('scola list static', true)
       .styles({
+        'display': 'flex',
+        'flex-direction': 'column',
         'padding-bottom': '3em',
         'padding-top': 0
-      });
-
-    this._title = this._root
-      .append('div')
-      .classed('scola title', true)
-      .styles({
-        'color': '#AAA',
-        'display': 'none',
-        'font-size': '0.9em',
-        'padding': '0 1.1em 0.75em',
-        'text-transform': 'uppercase'
       });
 
     this._body = this._root
@@ -30,18 +23,8 @@ export default class StaticList {
       .styles({
         'border-width': '1px 0',
         'border-color': '#CCC',
-        'border-style': 'solid'
-      });
-
-    this._comment = this._root
-      .append('div')
-      .classed('scola comment', true)
-      .styles({
-        'color': '#AAA',
-        'display': 'none',
-        'font-size': '0.9em',
-        'line-height': '1.4em',
-        'padding': '0.75em 1.1em 0'
+        'border-style': 'solid',
+        'order': 2
       });
   }
 
@@ -79,8 +62,23 @@ export default class StaticList {
       return this._comment;
     }
 
-    this._comment
-      .style('display', 'block')
+    if (text === false) {
+      this._comment.remove();
+      this._comment = null;
+
+      return this;
+    }
+
+    this._comment = this._root
+      .append('div')
+      .classed('scola comment', true)
+      .styles({
+        'color': '#AAA',
+        'font-size': '0.9em',
+        'line-height': '1.4em',
+        'order': 3,
+        'padding': '0.75em 1.1em 0'
+      })
       .text(text);
 
     return this;
@@ -91,16 +89,30 @@ export default class StaticList {
       return this._title;
     }
 
-    this._title
-      .style('display', 'block')
+    if (text === false) {
+      this._title.remove();
+      this._title = null;
+
+      return this;
+    }
+
+    this._title = this._root
+      .append('div')
+      .classed('scola title', true)
+      .styles({
+        'color': '#AAA',
+        'font-size': '0.9em',
+        'order': 1,
+        'padding': '0 1.1em 0.75em',
+        'text-transform': 'uppercase'
+      })
       .text(text);
 
     return this;
   }
 
   inset() {
-    this._root
-      .style('margin', '0 1em');
+    this._root.style('margin', '0 1em');
 
     this._body.styles({
       'border-style': 'none',

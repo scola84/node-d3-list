@@ -66,14 +66,32 @@ export default class MenuItem extends PlainItem {
 
   _handleSelect() {
     if (event.detail.item.selected()) {
-      this._root.classed('selected', true);
-      this._root.style('background', 'rgb(0, 122, 255)');
-      this._label.style('color', '#FFF');
-      this._sub.style('color', '#FFF');
+      this._select();
     } else {
-      this._root.classed('selected', false);
-      this._root.style('background', '#FFF');
-      this._label.style('color', 'initial');
+      this._deselect();
+    }
+  }
+
+  _select() {
+    this._root
+      .classed('selected', true)
+      .style('background', 'rgb(0, 122, 255)');
+
+    this._label.style('color', '#FFF');
+
+    if (this._sub) {
+      this._sub.style('color', '#FFF');
+    }
+  }
+
+  _deselect() {
+    this._root
+      .classed('selected', false)
+      .style('background', '#FFF');
+
+    this._label.style('color', 'initial');
+
+    if (this._sub) {
       this._sub.style('color', '#AAA');
     }
   }

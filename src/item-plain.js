@@ -4,76 +4,31 @@ export default class PlainItem extends Item {
   constructor() {
     super();
 
+    this._sub = null;
+    this._subPadding = null;
+
     this._root.classed('plain', true);
 
-    this._iconRoot = this._inner
-      .append('div')
-      .classed('scola icon-root', true)
-      .styles({
-        'align-items': 'center',
-        'border-top': '1px solid transparent',
-        'display': 'none',
-        'width': '2.25em'
-      });
-
-    this._icon = this._iconRoot
-      .append('div')
-      .classed('scola icon', true)
-      .styles({
-        'font-size': '2em'
-      });
-
-    this._label = this._inner
+    this._label = this._root
       .append('div')
       .classed('scola label', true)
       .styles({
         'border-top': '1px solid #CCC',
         'flex': 1,
+        'order': 3,
         'overflow': 'hidden',
         'text-overflow': 'ellipsis',
         'white-space': 'nowrap'
       });
 
-    this._labelPadding = this._inner
+    this._labelPadding = this._root
       .append('div')
       .classed('scola padding', true)
       .styles({
         'border-top': '1px solid #CCC',
+        'order': 4,
         'width': '1em'
       });
-
-    this._sub = this._inner
-      .append('div')
-      .classed('scola sub', true)
-      .styles({
-        'border-top': '1px solid #CCC',
-        'color': '#AAA',
-        'display': 'none'
-      });
-
-    this._subPadding = this._inner
-      .append('div')
-      .classed('scola padding', true)
-      .styles({
-        'border-top': '1px solid #CCC',
-        'display': 'none',
-        'width': '0.5em'
-      });
-  }
-
-  icon(name, size = '2em') {
-    if (typeof name === 'undefined') {
-      return this._icon;
-    }
-
-    this._iconRoot
-      .style('display', 'flex');
-
-    this._icon
-      .classed(name, true)
-      .style('font-size', size);
-
-    return this;
   }
 
   label(text) {
@@ -90,12 +45,39 @@ export default class PlainItem extends Item {
       return this._sub;
     }
 
-    this._subPadding
-      .style('display', 'flex');
+    if (text === false) {
+      this._sub.remove();
+      this._sub = null;
 
-    this._sub
-      .style('display', 'flex')
+      this._subPadding.remove();
+      this._subPadding = null;
+
+      return this;
+    }
+
+    if (this._sub) {
+      this._sub.text(text);
+      return this;
+    }
+
+    this._sub = this._root
+      .append('div')
+      .classed('scola sub', true)
+      .styles({
+        'border-top': '1px solid #CCC',
+        'color': '#AAA',
+        'order': 5
+      })
       .text(text);
+
+    this._subPadding = this._root
+      .append('div')
+      .classed('scola padding', true)
+      .styles({
+        'border-top': '1px solid #CCC',
+        'order': 6,
+        'width': '0.5em'
+      });
 
     return this;
   }
@@ -103,8 +85,11 @@ export default class PlainItem extends Item {
   top() {
     this._label.style('border-top-style', 'none');
     this._labelPadding.style('border-top-style', 'none');
-    this._sub.style('border-top-style', 'none');
-    this._subPadding.style('border-top-style', 'none');
+
+    if (this._sub) {
+      this._sub.style('border-top-style', 'none');
+      this._subPadding.style('border-top-style', 'none');
+    }
 
     return this;
   }

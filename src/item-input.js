@@ -6,45 +6,30 @@ export default class InputItem extends Item {
 
     this._root.classed('input', true);
 
-    this._iconRoot = this._inner
-      .append('div')
-      .classed('scola icon-root', true)
-      .styles({
-        'align-items': 'center',
-        'border-top': '1px solid transparent',
-        'display': 'none',
-        'width': '2.25em'
-      });
-
-    this._icon = this._iconRoot
-      .append('div')
-      .classed('scola icon', true)
-      .styles({
-        'font-size': '2em'
-      });
-
-    this._label = this._inner
+    this._label = this._root
       .append('div')
       .classed('scola label', true)
       .styles({
         'border-top': '1px solid #CCC',
-        'display': 'flex'
+        'order': 3
       });
 
-    this._labelPadding = this._inner
+    this._labelPadding = this._root
       .append('div')
       .classed('scola padding', true)
       .styles({
         'border-top': '1px solid #CCC',
+        'order': 4,
         'width': '1em'
       });
 
-    this._inputRoot = this._inner
+    this._inputRoot = this._root
       .append('div')
       .classed('scola input-root', true)
       .styles({
         'border-top': '1px solid #CCC',
         'display': 'flex',
+        'order': 5,
         'flex': 1
       });
 
@@ -55,36 +40,23 @@ export default class InputItem extends Item {
         'background': 'none',
         'border': 0,
         'color': 'inherit',
+        'height': '3em',
         'padding': 0,
         'width': '100%'
       });
 
-    this._inputPadding = this._inner
+    this._inputPadding = this._root
       .append('div')
       .classed('scola padding', true)
       .styles({
         'border-top': '1px solid #CCC',
+        'order': 6,
         'width': '0.5em'
       });
   }
 
   input() {
     return this._input;
-  }
-
-  icon(name, size = '2em') {
-    if (typeof name === 'undefined') {
-      return this._icon;
-    }
-
-    this._iconRoot
-      .style('display', 'flex');
-
-    this._icon
-      .classed(name, true)
-      .style('font-size', size);
-
-    return this;
   }
 
   label(text, width) {

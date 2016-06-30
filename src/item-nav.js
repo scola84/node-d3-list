@@ -9,13 +9,14 @@ export default class NavItem extends PlainItem {
       .classed('nav', true)
       .style('cursor', 'pointer');
 
-    this._iconForwardRoot = this._inner
+    this._iconForwardRoot = this._root
       .append('div')
       .classed('scola icon forward-root', true)
       .styles({
         'align-items': 'center',
         'border-top': '1px solid #CCC',
         'display': 'flex',
+        'order': 5,
         'width': '1.5em'
       });
 

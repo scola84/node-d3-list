@@ -13,13 +13,14 @@ export default class SelectItem extends PlainItem {
       .classed('select', true)
       .style('cursor', 'pointer');
 
-    this._iconCheckmarkRoot = this._inner
+    this._iconCheckmarkRoot = this._root
       .append('div')
       .classed('scola icon checkmark', true)
       .styles({
         'align-items': 'center',
         'border-top': '1px solid #CCC',
         'display': 'none',
+        'order': 5,
         'width': '1.75em'
       });
 

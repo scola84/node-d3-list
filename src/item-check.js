@@ -11,13 +11,14 @@ export default class CheckItem extends PlainItem {
       .classed('plain', false)
       .classed('check', true);
 
-    this._checkerRoot = this._inner
+    this._checkerRoot = this._root
       .append('div')
       .classed('scola checker-root', true)
       .styles({
         'align-items': 'center',
         'border-top': '1px solid #CCC',
         'display': 'flex',
+        'order': 5,
         'width': '4.25em'
       });
 
@@ -95,14 +96,14 @@ export default class CheckItem extends PlainItem {
   }
 
   _bind() {
-    this._root.on('click.scola-check-item',
+    this._root.on('check.scola-check-item',
       this._handleCheck.bind(this));
     this._checker.on('click.scola-check-item',
       () => this.checked(!this._checked));
   }
 
   _unbind() {
-    this._root.on('click.scola-check-item', null);
+    this._root.on('check.scola-check-item', null);
     this._checker.on('click.scola-check-item', null);
   }
 
