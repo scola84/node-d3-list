@@ -1,4 +1,5 @@
 import CheckItem from './src/item-check';
+import EmptyItem from './src/item-empty';
 import InputItem from './src/item-input';
 import MenuItem from './src/item-menu';
 import NavItem from './src/item-nav';
@@ -8,10 +9,17 @@ import SelectItem from './src/item-select';
 import SelectList from './src/list-select';
 import StaticList from './src/list-static';
 
+import Filter from './src/filter';
+import Header from './src/header';
+
 import SelectAggregate from './src/aggr-select';
 
 export function checkItem() {
   return new CheckItem();
+}
+
+export function emptyItem() {
+  return new EmptyItem();
 }
 
 export function inputItem() {
@@ -40,6 +48,14 @@ export function selectList() {
 
 export function staticList() {
   return new StaticList();
+}
+
+export function listFilter() {
+  return new Filter();
+}
+
+export function listHeader() {
+  return new Header();
 }
 
 export function selectAggregate() {
