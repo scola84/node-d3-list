@@ -1,4 +1,4 @@
-import { select } from 'd3-selection';
+import { event, select } from 'd3-selection';
 
 export default class Filter {
   constructor() {
