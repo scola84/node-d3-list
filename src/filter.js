@@ -85,8 +85,15 @@ export default class Filter {
     return this;
   }
 
-  value() {
-    return this._input.property('value').trim();
+  value(value) {
+    if (typeof value === 'undefined') {
+      return this._input.property('value').trim();
+    }
+
+    this._input.property('value', value);
+    this._value();
+
+    return this;
   }
 
   _handleInput() {
@@ -94,6 +101,18 @@ export default class Filter {
       return;
     }
 
+    this._value();
+  }
+
+  _handleClear() {
+    this._input.property('value', '');
+    this._clear.style('display', 'none');
+    this._root.dispatch('filter', {
+      detail: null
+    });
+  }
+
+  _value() {
     const value = this.value();
 
     if (value.length === 0) {
@@ -105,14 +124,6 @@ export default class Filter {
 
     this._root.dispatch('filter', {
       detail: value.split(' ')
-    });
-  }
-
-  _handleClear() {
-    this._input.property('value', '');
-    this._clear.style('display', 'none');
-    this._root.dispatch('filter', {
-      detail: false
     });
   }
 }
