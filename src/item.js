@@ -2,6 +2,7 @@ import { select } from 'd3-selection';
 
 export default class Item {
   constructor() {
+    this._id = null;
     this._icon = null;
 
     this._root = select('body')
@@ -34,6 +35,15 @@ export default class Item {
 
   root() {
     return this._root;
+  }
+
+  id(id) {
+    if (typeof id === 'undefined') {
+      return this._id;
+    }
+
+    this._id = id;
+    return this;
   }
 
   icon(name, size = '2em') {
