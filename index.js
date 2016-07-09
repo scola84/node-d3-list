@@ -1,5 +1,4 @@
 import CheckItem from './src/item-check';
-import EmptyItem from './src/item-empty';
 import InputItem from './src/item-input';
 import MenuItem from './src/item-menu';
 import NavItem from './src/item-nav';
@@ -16,10 +15,6 @@ import SelectAggregate from './src/aggr-select';
 
 export function checkItem() {
   return new CheckItem();
-}
-
-export function emptyItem() {
-  return new EmptyItem();
 }
 
 export function inputItem() {
