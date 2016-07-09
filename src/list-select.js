@@ -5,6 +5,10 @@ export default class SelectList extends StaticList {
   constructor() {
     super();
     this._selected = null;
+
+    this._root
+      .classed('static', false)
+      .classed('select', true);
   }
 
   destroy() {
