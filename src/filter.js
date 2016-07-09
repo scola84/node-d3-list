@@ -85,13 +85,13 @@ export default class Filter {
     return this;
   }
 
-  value(value) {
+  value(value, dispatch) {
     if (typeof value === 'undefined') {
       return this._input.property('value').trim();
     }
 
     this._input.property('value', value);
-    this._value();
+    this._value(dispatch);
 
     return this;
   }
@@ -104,15 +104,20 @@ export default class Filter {
     this._value();
   }
 
-  _handleClear() {
+  _handleClear(dispatch = true) {
     this._input.property('value', '');
     this._clear.style('display', 'none');
+
+    if (dispatch !== true) {
+      return;
+    }
+
     this._root.dispatch('filter', {
       detail: null
     });
   }
 
-  _value() {
+  _value(dispatch = true) {
     const value = this.value();
 
     if (value.length === 0) {
@@ -121,6 +126,10 @@ export default class Filter {
     }
 
     this._clear.style('display', 'inline');
+
+    if (dispatch !== true) {
+      return;
+    }
 
     this._root.dispatch('filter', {
       detail: value.split(' ')
