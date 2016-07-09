@@ -11,7 +11,8 @@ export default class Filter {
         'background': '#CCC',
         'display': 'flex',
         'height': '3em',
-        'padding': '0 0.5em'
+        'padding': '0 0.5em',
+        'position': 'relative'
       });
 
     this._search = this._root
