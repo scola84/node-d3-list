@@ -77,7 +77,7 @@ export default class Item {
     return this;
   }
 
-  top() {
+  first() {
     throw new Error('Not implemented');
   }
 }

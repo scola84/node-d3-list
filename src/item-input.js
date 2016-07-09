@@ -71,7 +71,7 @@ export default class InputItem extends Item {
     return this;
   }
 
-  top() {
+  first() {
     this._label.style('border-top-style', 'none');
     this._labelPadding.style('border-top-style', 'none');
     this._inputRoot.style('border-top-style', 'none');

@@ -82,7 +82,7 @@ export default class PlainItem extends Item {
     return this;
   }
 
-  top() {
+  first() {
     this._label.style('border-top-style', 'none');
     this._labelPadding.style('border-top-style', 'none');
 

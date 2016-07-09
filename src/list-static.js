@@ -44,7 +44,7 @@ export default class StaticList {
   append(item, action = true) {
     if (action === true) {
       if (this._items.size === 0) {
-        item.top();
+        item.first();
       }
 
       this._items.add(item);
@@ -123,7 +123,7 @@ export default class StaticList {
     return this;
   }
 
-  top() {
+  first() {
     this._root.style('padding-top', '3em');
     return this;
   }

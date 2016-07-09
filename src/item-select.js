@@ -74,8 +74,8 @@ export default class SelectItem extends PlainItem {
     return this;
   }
 
-  top() {
-    super.top();
+  first() {
+    super.first();
 
     this._iconCheckmarkRoot
       .style('border-top-style', 'none');

@@ -29,8 +29,8 @@ export default class NavItem extends PlainItem {
       });
   }
 
-  top() {
-    super.top();
+  first() {
+    super.first();
 
     this._iconForwardRoot
       .style('border-top-style', 'none');

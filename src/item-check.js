@@ -86,8 +86,8 @@ export default class CheckItem extends PlainItem {
     return this;
   }
 
-  top() {
-    super.top();
+  first() {
+    super.first();
 
     this._checkerRoot
       .style('border-top-style', 'none');
