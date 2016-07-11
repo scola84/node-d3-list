@@ -10,7 +10,8 @@ export default class InputItem extends Item {
       .append('div')
       .classed('scola label', true)
       .styles({
-        'border-top': '1px solid #CCC',
+        'border-top': '1px solid',
+        'border-top-color': 'inherit',
         'order': 3
       });
 
@@ -18,7 +19,8 @@ export default class InputItem extends Item {
       .append('div')
       .classed('scola padding', true)
       .styles({
-        'border-top': '1px solid #CCC',
+        'border-top': '1px solid',
+        'border-top-color': 'inherit',
         'order': 4,
         'width': '1em'
       });
@@ -27,7 +29,8 @@ export default class InputItem extends Item {
       .append('div')
       .classed('scola input-root', true)
       .styles({
-        'border-top': '1px solid #CCC',
+        'border-top': '1px solid',
+        'border-top-color': 'inherit',
         'display': 'flex',
         'order': 5,
         'flex': 1
@@ -49,7 +52,8 @@ export default class InputItem extends Item {
       .append('div')
       .classed('scola padding', true)
       .styles({
-        'border-top': '1px solid #CCC',
+        'border-top': '1px solid',
+        'border-top-color': 'inherit',
         'order': 6,
         'width': '1em'
       });
@@ -67,15 +71,6 @@ export default class InputItem extends Item {
     this._label
       .text(text)
       .style('width', width);
-
-    return this;
-  }
-
-  first() {
-    this._label.style('border-top-style', 'none');
-    this._labelPadding.style('border-top-style', 'none');
-    this._inputRoot.style('border-top-style', 'none');
-    this._inputPadding.style('border-top-style', 'none');
 
     return this;
   }

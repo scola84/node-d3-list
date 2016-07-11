@@ -16,7 +16,8 @@ export default class CheckItem extends PlainItem {
       .classed('scola checker-root', true)
       .styles({
         'align-items': 'center',
-        'border-top': '1px solid #CCC',
+        'border-top': '1px solid',
+        'border-top-color': 'inherit',
         'display': 'flex',
         'order': 5,
         'width': '4.25em'
@@ -82,15 +83,6 @@ export default class CheckItem extends PlainItem {
         item: this
       }
     });
-
-    return this;
-  }
-
-  first() {
-    super.first();
-
-    this._checkerRoot
-      .style('border-top-style', 'none');
 
     return this;
   }

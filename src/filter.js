@@ -23,7 +23,6 @@ export default class Filter {
         'left': '0.8em',
         'top': '0.75em',
         'font-size': '1.25em',
-        'cursor': 'pointer',
         'position': 'absolute'
       });
 

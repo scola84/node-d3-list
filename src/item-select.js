@@ -13,24 +13,6 @@ export default class SelectItem extends PlainItem {
       .classed('select', true)
       .style('cursor', 'pointer');
 
-    this._iconCheckmarkRoot = this._root
-      .append('div')
-      .classed('scola icon checkmark', true)
-      .styles({
-        'align-items': 'center',
-        'border-top': '1px solid #CCC',
-        'display': 'none',
-        'order': 5,
-        'padding-right': '1em'
-      });
-
-    this._iconCheckmark = this._iconCheckmarkRoot
-      .append('div')
-      .classed('scola icon ion-ios-checkmark-empty', true)
-      .styles({
-        'font-size': '2em'
-      });
-
     this._bind();
   }
 
@@ -74,15 +56,6 @@ export default class SelectItem extends PlainItem {
     return this;
   }
 
-  first() {
-    super.first();
-
-    this._iconCheckmarkRoot
-      .style('border-top-style', 'none');
-
-    return this;
-  }
-
   _handleClick() {
     if (this._selected) {
       return;
@@ -93,9 +66,10 @@ export default class SelectItem extends PlainItem {
 
   _handleSelect() {
     if (event.detail.item.selected()) {
-      this._iconCheckmarkRoot.style('display', 'flex');
+      this.action('ion-ios-checkmark-empty');
+      this.action().style('color', '#000');
     } else {
-      this._iconCheckmarkRoot.style('display', 'none');
+      this.action(false);
     }
   }
 }

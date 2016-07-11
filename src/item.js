@@ -78,6 +78,7 @@ export default class Item {
   }
 
   first() {
-    throw new Error('Not implemented');
+    this._root.style('border-top-color', 'transparent');
+    return this;
   }
 }

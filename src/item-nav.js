@@ -9,32 +9,6 @@ export default class NavItem extends PlainItem {
       .classed('nav', true)
       .style('cursor', 'pointer');
 
-    this._iconForwardRoot = this._root
-      .append('div')
-      .classed('scola icon forward-root', true)
-      .styles({
-        'align-items': 'center',
-        'border-top': '1px solid #CCC',
-        'display': 'flex',
-        'order': 7,
-        'padding-right': '1em'
-      });
-
-    this._iconForward = this._iconForwardRoot
-      .append('div')
-      .classed('scola icon ion-ios-arrow-forward', true)
-      .styles({
-        'color': '#BBB',
-        'font-size': '1.5em'
-      });
-  }
-
-  first() {
-    super.first();
-
-    this._iconForwardRoot
-      .style('border-top-style', 'none');
-
-    return this;
+    this.action('ion-ios-arrow-forward');
   }
 }
