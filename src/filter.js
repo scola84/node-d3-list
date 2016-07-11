@@ -13,6 +13,7 @@ export default class Filter {
 
     this._inner = this._root
       .append('div')
+      .classed('scola inner', true)
       .styles({
         'background': '#FFF',
         'border-radius': '0.5em',
