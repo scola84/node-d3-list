@@ -7,49 +7,71 @@ export default class Filter {
       .remove()
       .classed('scola filter', true)
       .styles({
-        'align-items': 'center',
         'background': '#CCC',
-        'display': 'flex',
-        'height': '3em',
-        'padding': '0 0.5em',
-        'position': 'relative'
+        'padding': '0.5em'
       });
 
-    this._search = this._root
+    this._inner = this._root
+      .append('div')
+      .styles({
+        'background': '#FFF',
+        'border-radius': '0.5em',
+        'display': 'flex',
+        'flex-direction': 'row'
+      });
+
+    this._icon = this._inner
+      .append('div')
+      .classed('scola icon', true)
+      .styles({
+        'display': 'flex',
+        'align-items': 'center',
+        'justify-content': 'center',
+        'order': 1,
+        'width': '2em',
+        'height': '2em'
+      });
+
+    this._iconInner = this._icon
       .append('div')
       .classed('ion-ios-search', true)
       .styles({
         'color': '#AAA',
-        'left': '0.8em',
-        'top': '0.75em',
-        'font-size': '1.25em',
-        'position': 'absolute'
+        'font-size': '1.25em'
       });
 
-    this._input = this._root
+    this._input = this._inner
       .append('input')
+      .classed('scola input', true)
       .attr('type', 'search')
       .styles({
-        'background': '#FFF',
+        'background': 'none',
         'border': 0,
-        'border-radius': '0.5em',
         'color': 'inherit',
         'flex': 1,
         'height': '2em',
-        'padding': '0 2em'
+        'order': 2
       });
 
-    this._clear = this._root
+    this._clear = this._inner
+      .append('div')
+      .classed('scola clear', true)
+      .styles({
+        'display': 'none',
+        'align-items': 'center',
+        'justify-content': 'center',
+        'order': 3,
+        'width': '2em',
+        'height': '2em'
+      });
+
+    this._clearInner = this._clear
       .append('div')
       .classed('ion-close-circled', true)
       .styles({
         'color': '#AAA',
-        'display': 'none',
-        'right': '0.8em',
-        'top': '0.75em',
         'font-size': '1.25em',
-        'cursor': 'pointer',
-        'position': 'absolute'
+        'cursor': 'pointer'
       });
 
     this._bind();
@@ -125,7 +147,7 @@ export default class Filter {
       return;
     }
 
-    this._clear.style('display', 'inline');
+    this._clear.style('display', 'flex');
 
     if (dispatch !== true) {
       return;
