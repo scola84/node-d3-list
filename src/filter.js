@@ -108,13 +108,13 @@ export default class Filter {
     return this;
   }
 
-  value(value, dispatch) {
+  value(value) {
     if (typeof value === 'undefined') {
       return this._input.property('value').trim();
     }
 
     this._input.property('value', value);
-    this._value(dispatch);
+    this._value();
 
     return this;
   }
@@ -127,20 +127,18 @@ export default class Filter {
     this._value();
   }
 
-  _handleClear(dispatch = true) {
-    this._input.property('value', '');
+  _handleClear() {
+    const value = '';
+
+    this._input.property('value', value);
     this._clear.style('display', 'none');
 
-    if (dispatch !== true) {
-      return;
-    }
-
     this._root.dispatch('filter', {
-      detail: null
+      detail: value
     });
   }
 
-  _value(dispatch = true) {
+  _value() {
     const value = this.value();
 
     if (value.length === 0) {
@@ -150,12 +148,8 @@ export default class Filter {
 
     this._clear.style('display', 'flex');
 
-    if (dispatch !== true) {
-      return;
-    }
-
     this._root.dispatch('filter', {
-      detail: value.split(' ')
+      detail: value
     });
   }
 }
