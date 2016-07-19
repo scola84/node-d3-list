@@ -74,4 +74,13 @@ export default class InputItem extends Item {
 
     return this;
   }
+
+  value(value) {
+    if (typeof value === 'undefined') {
+      return this._input.property('value');
+    }
+
+    this._input.property('value', value);
+    return this;
+  }
 }
