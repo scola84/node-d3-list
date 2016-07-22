@@ -31,7 +31,7 @@ export default class SelectList extends StaticList {
   }
 
   _bindItem(item) {
-    item.root().on('select.scola-select-list', this._handleSelect.bind(this));
+    item.root().on('select.scola-select-list', () => this._handleSelect());
   }
 
   _unbindItem(item) {

@@ -89,7 +89,7 @@ export default class CheckItem extends PlainItem {
 
   _bind() {
     this._root.on('check.scola-check-item',
-      this._handleCheck.bind(this));
+      () => this._handleCheck());
     this._checker.on('click.scola-check-item',
       () => this.checked(!this._checked));
   }

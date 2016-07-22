@@ -22,8 +22,8 @@ export default class SelectItem extends PlainItem {
   }
 
   _bind() {
-    this._root.on('click.scola-select-item', this._handleClick.bind(this));
-    this._root.on('select.scola-select-item', this._handleSelect.bind(this));
+    this._root.on('click.scola-select-item', () => this._handleClick());
+    this._root.on('select.scola-select-item', () => this._handleSelect());
   }
 
   _unbind() {

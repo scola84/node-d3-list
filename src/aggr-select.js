@@ -28,8 +28,7 @@ export default class SelectAggregate {
   }
 
   _bindList(list) {
-    list.root().on('select.scola-select-aggr',
-      this._handleSelect.bind(this));
+    list.root().on('select.scola-select-aggr', () => this._handleSelect());
   }
 
   _unbindList(list) {

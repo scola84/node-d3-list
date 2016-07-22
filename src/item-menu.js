@@ -47,8 +47,8 @@ export default class MenuItem extends PlainItem {
   }
 
   _bind() {
-    this._root.on('click.scola-menu-item', this._handleClick.bind(this));
-    this._root.on('select.scola-menu-item', this._handleSelect.bind(this));
+    this._root.on('click.scola-menu-item', () => this._handleClick());
+    this._root.on('select.scola-menu-item', () => this._handleSelect());
   }
 
   _unbind() {

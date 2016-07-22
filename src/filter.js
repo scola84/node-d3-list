@@ -79,13 +79,13 @@ export default class Filter {
   }
 
   _bind() {
-    this._input.on('keyup', this._handleInput.bind(this));
-    this._clear.on('click', this._handleClear.bind(this));
+    this._input.on('keyup.scola-filter', () => this._handleInput());
+    this._clear.on('click.scola-filter', () => this._handleClear());
   }
 
   _unbind() {
-    this._input.on('input', null);
-    this._clear.on('click', null);
+    this._input.on('input.scola-filter', null);
+    this._clear.on('click.scola-filter', null);
   }
 
   destroy() {
