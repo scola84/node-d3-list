@@ -85,7 +85,8 @@ export default class Item {
     }
 
     this._first = first;
-    this._root.style('border-color', first ? 'transparent' : '#CCC');
+    this._root.style('border-color',
+      first === true ? 'transparent' : '#CCC');
 
     return this;
   }

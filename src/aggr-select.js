@@ -15,7 +15,7 @@ export default class SelectAggregate {
     this._lists.clear();
   }
 
-  append(list, action = true) {
+  append(list, action) {
     if (action === true) {
       this._lists.add(list);
       this._bindList(list);

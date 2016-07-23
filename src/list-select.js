@@ -16,7 +16,7 @@ export default class SelectList extends StaticList {
     super.destroy();
   }
 
-  append(item, action = true) {
+  append(item, action) {
     if (action === true) {
       this._bindItem(item);
     } else {

@@ -2,7 +2,9 @@ import { select } from 'd3-selection';
 
 export default class StaticList {
   constructor() {
+    this._first = null;
     this._items = new Set();
+
     this._title = null;
     this._comment = null;
 
@@ -13,8 +15,7 @@ export default class StaticList {
       .styles({
         'display': 'flex',
         'flex-direction': 'column',
-        'padding-bottom': '3em',
-        'padding-top': 0
+        'padding-bottom': '3em'
       });
 
     this._body = this._root
@@ -26,6 +27,8 @@ export default class StaticList {
         'border-style': 'solid',
         'order': 2
       });
+
+    this.first(false);
   }
 
   destroy() {
@@ -41,12 +44,10 @@ export default class StaticList {
     return this._root;
   }
 
-  append(item, action = true) {
-    if (action === true) {
-      if (this._items.size === 0) {
-        item.first();
-      }
+  append(item, action) {
+    item.first(this._items.size === 0);
 
+    if (action === true) {
       this._items.add(item);
       this._body.node().appendChild(item.root().node());
     } else if (action === false) {
@@ -123,8 +124,14 @@ export default class StaticList {
     return this;
   }
 
-  first() {
-    this._root.style('padding-top', '3em');
+  first(first) {
+    if (first === this._first) {
+      return this;
+    }
+
+    this._first = first;
+    this._root.style('padding-top', first === true ? '3em' : 0);
+
     return this;
   }
 }
