@@ -3,6 +3,7 @@ import { select } from 'd3-selection';
 export default class Item {
   constructor() {
     this._id = null;
+    this._first = null;
     this._icon = null;
 
     this._root = select('body')
@@ -11,7 +12,6 @@ export default class Item {
       .classed('scola item', true)
       .styles({
         'background': '#FFF',
-        'border-top': '1px hidden #CCC',
         'display': 'flex',
         'flex-direction': 'row',
         'line-height': '3em'
@@ -25,6 +25,8 @@ export default class Item {
         'order': 1,
         'width': '1em'
       });
+
+    this.first(false);
   }
 
   destroy() {
@@ -77,8 +79,14 @@ export default class Item {
     return this;
   }
 
-  first() {
-    this._root.style('border-top-color', 'transparent');
+  first(first) {
+    if (first === this._first) {
+      return this;
+    }
+
+    this._first = first;
+    this._root.style('border-color', first ? 'transparent' : '#CCC');
+
     return this;
   }
 }
