@@ -8,6 +8,7 @@ import SelectItem from './src/item-select';
 import SelectList from './src/list-select';
 import StaticList from './src/list-static';
 
+import Button from './src/button';
 import Filter from './src/filter';
 import Header from './src/header';
 
@@ -43,6 +44,10 @@ export function selectList() {
 
 export function staticList() {
   return new StaticList();
+}
+
+export function listButton() {
+  return new Button();
 }
 
 export function listFilter() {
