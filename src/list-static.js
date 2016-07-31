@@ -58,58 +58,36 @@ export default class StaticList {
     return this;
   }
 
-  comment(text) {
-    if (typeof text === 'undefined') {
+  comment(comment) {
+    if (typeof comment === 'undefined') {
       return this._comment;
     }
 
-    if (text === false) {
-      this._comment.remove();
-      this._comment = null;
-
-      return this;
+    if (comment === false) {
+      return this._deleteComment();
     }
 
-    this._comment = this._root
-      .append('div')
-      .classed('scola comment', true)
-      .styles({
-        'color': '#AAA',
-        'font-size': '0.9em',
-        'line-height': '1.4em',
-        'order': 3,
-        'padding': '0.75em 1.1em 0'
-      })
-      .text(text);
+    if (this._comment) {
+      return this._updateComment(comment);
+    }
 
-    return this;
+    return this._insertComment(comment);
   }
 
-  title(text) {
-    if (typeof text === 'undefined') {
+  title(title) {
+    if (typeof title === 'undefined') {
       return this._title;
     }
 
-    if (text === false) {
-      this._title.remove();
-      this._title = null;
-
-      return this;
+    if (title === false) {
+      return this._deleteTitle();
     }
 
-    this._title = this._root
-      .append('div')
-      .classed('scola title', true)
-      .styles({
-        'color': '#AAA',
-        'font-size': '0.9em',
-        'order': 1,
-        'padding': '0 1.1em 0.75em',
-        'text-transform': 'uppercase'
-      })
-      .text(text);
+    if (this._title) {
+      return this._updateTitle(title);
+    }
 
-    return this;
+    return this._insertTitle(title);
   }
 
   inset() {
@@ -131,6 +109,66 @@ export default class StaticList {
 
     this._first = first;
     this._root.style('padding-top', first === true ? '3em' : 0);
+
+    return this;
+  }
+
+  _insertComment(comment) {
+    this._comment = this._root
+      .append('div')
+      .classed('scola comment', true)
+      .styles({
+        'color': '#AAA',
+        'font-size': '0.9em',
+        'line-height': '1.5em',
+        'order': 3,
+        'padding': '0.75em 1.1em 0'
+      })
+      .text(comment);
+
+    return this;
+  }
+
+  _updateComment(comment) {
+    this._comment.text(comment);
+    return this;
+  }
+
+  _deleteComment() {
+    if (this._comment) {
+      this._comment.remove();
+      this._comment = null;
+    }
+
+    return this;
+  }
+
+  _insertTitle(title) {
+    this._title = this._root
+      .append('div')
+      .classed('scola title', true)
+      .styles({
+        'color': '#AAA',
+        'font-size': '0.9em',
+        'order': 1,
+        'padding': '0 1.1em 0.75em',
+        'text-transform': 'uppercase'
+      })
+      .text(title);
+
+    return this;
+  }
+
+  _updateTitle(title) {
+    this._title.text(title);
+    return this;
+  }
+
+  _deleteTitle() {
+    if (this._title) {
+      this._title.remove();
+      this._title = null;
+    }
 
     return this;
   }

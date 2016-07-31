@@ -7,6 +7,10 @@ export default class PlainItem extends Item {
     this._sub = null;
     this._subPadding = null;
 
+    this._action = null;
+    this._actionPadding = null;
+    this._actionName = null;
+
     this._root.classed('plain', true);
 
     this._label = this._root
@@ -42,26 +46,39 @@ export default class PlainItem extends Item {
     return this;
   }
 
-  sub(text) {
-    if (typeof text === 'undefined') {
+  sub(sub) {
+    if (typeof sub === 'undefined') {
       return this._sub;
     }
 
-    if (text === false) {
-      this._sub.remove();
-      this._sub = null;
-
-      this._subPadding.remove();
-      this._subPadding = null;
-
-      return this;
+    if (sub === false) {
+      return this._deleteSub();
     }
 
     if (this._sub) {
-      this._sub.text(text);
-      return this;
+      return this._updateSub(sub);
     }
 
+    return this._insertSub(sub);
+  }
+
+  action(name, size = '2em') {
+    if (typeof name === 'undefined') {
+      return this._action;
+    }
+
+    if (name === false) {
+      return this._deleteAction();
+    }
+
+    if (this._action) {
+      return this._updateAction(name, size);
+    }
+
+    return this._insertAction(name, size);
+  }
+
+  _insertSub(sub) {
     this._sub = this._root
       .append('div')
       .classed('scola sub', true)
@@ -71,7 +88,7 @@ export default class PlainItem extends Item {
         'color': '#AAA',
         'order': 5
       })
-      .text(text);
+      .text(sub);
 
     this._subPadding = this._root
       .append('div')
@@ -86,20 +103,25 @@ export default class PlainItem extends Item {
     return this;
   }
 
-  action(name, size = '2em') {
-    if (typeof name === 'undefined') {
-      return this._action;
+  _updateSub(sub) {
+    this._sub.text(sub);
+    return this;
+  }
+
+  _deleteSub() {
+    if (this._sub) {
+      this._sub.remove();
+      this._sub = null;
+
+      this._subPadding.remove();
+      this._subPadding = null;
     }
 
-    if (name === false) {
-      this._action.remove();
-      this._action = null;
+    return this;
+  }
 
-      this._actionPadding.remove();
-      this._actionPadding = null;
-
-      return this;
-    }
+  _insertAction(name, size) {
+    this._actionName = name;
 
     this._action = this._root
       .append('div')
@@ -127,6 +149,28 @@ export default class PlainItem extends Item {
         'order': 8,
         'width': '1em'
       });
+
+    return this;
+  }
+
+  _updateAction(name, size) {
+    this._action
+      .classed(this._actionName, false)
+      .classed(name, true)
+      .style('font-size', size);
+
+    this._actionName = name;
+    return this;
+  }
+
+  _deleteAction() {
+    if (this._action) {
+      this._action.remove();
+      this._action = null;
+
+      this._actionPadding.remove();
+      this._actionPadding = null;
+    }
 
     return this;
   }

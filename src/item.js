@@ -6,7 +6,10 @@ export default class Item {
     this._index = null;
 
     this._first = null;
+
     this._icon = null;
+    this._iconInner = null;
+    this._iconName = null;
 
     this._root = select('body')
       .append('div')
@@ -65,11 +68,30 @@ export default class Item {
     }
 
     if (name === false) {
-      this._icon.remove();
-      this._icon = null;
+      return this._deleteIcon();
+    }
 
+    if (this._icon) {
+      return this._updateIcon(name, size);
+    }
+
+    return this._insertIcon(name, size);
+  }
+
+  first(first) {
+    if (first === this._first) {
       return this;
     }
+
+    this._first = first;
+    this._root.style('border-color',
+      first === true ? 'transparent' : '#CCC');
+
+    return this;
+  }
+
+  _insertIcon(name, size) {
+    this._iconName = name;
 
     this._icon = this._root
       .append('div')
@@ -82,7 +104,7 @@ export default class Item {
         'width': '2.25em'
       });
 
-    this._icon
+    this._iconInner = this._icon
       .append('div')
       .classed(name, true)
       .style('font-size', size);
@@ -90,14 +112,21 @@ export default class Item {
     return this;
   }
 
-  first(first) {
-    if (first === this._first) {
-      return this;
-    }
+  _updateIcon(name, size) {
+    this._iconInner
+      .classed(this._iconName, false)
+      .classed(name, true)
+      .style('font-size', size);
 
-    this._first = first;
-    this._root.style('border-color',
-      first === true ? 'transparent' : '#CCC');
+    this._iconName = name;
+    return this;
+  }
+
+  _deleteIcon() {
+    if (this._icon) {
+      this._icon.remove();
+      this._icon = null;
+    }
 
     return this;
   }
