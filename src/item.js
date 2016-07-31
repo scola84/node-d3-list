@@ -3,6 +3,8 @@ import { select } from 'd3-selection';
 export default class Item {
   constructor() {
     this._id = null;
+    this._index = null;
+
     this._first = null;
     this._icon = null;
 
@@ -45,6 +47,15 @@ export default class Item {
     }
 
     this._id = id;
+    return this;
+  }
+
+  index(index) {
+    if (typeof index === 'undefined') {
+      return this._index;
+    }
+
+    this._index = index;
     return this;
   }
 
