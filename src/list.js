@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 
-export default class StaticList {
+export default class List {
   constructor() {
     this._first = null;
     this._items = new Set();

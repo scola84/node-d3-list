@@ -1,15 +1,12 @@
 import { select } from 'd3-selection';
+import Primary from './primary';
+import Secondary from './secondary';
 
 export default class Item {
   constructor() {
-    this._id = null;
     this._index = null;
-
     this._first = null;
-
-    this._icon = null;
-    this._iconInner = null;
-    this._iconName = null;
+    this._model = null;
 
     this._root = select('body')
       .append('div')
@@ -31,10 +28,17 @@ export default class Item {
         'width': '1em'
       });
 
+    this._handleModelChange = (e) => this._modelChange(e);
+
     this.first(false);
   }
 
   destroy() {
+    if (this._model) {
+      this._unbindModel();
+      this._model = null;
+    }
+
     this._root.dispatch('destroy');
     this._root.remove();
     this._root = null;
@@ -44,15 +48,6 @@ export default class Item {
     return this._root;
   }
 
-  id(id) {
-    if (typeof id === 'undefined') {
-      return this._id;
-    }
-
-    this._id = id;
-    return this;
-  }
-
   index(index) {
     if (typeof index === 'undefined') {
       return this._index;
@@ -60,22 +55,6 @@ export default class Item {
 
     this._index = index;
     return this;
-  }
-
-  icon(name, size = '2em') {
-    if (typeof name === 'undefined') {
-      return this._icon;
-    }
-
-    if (name === false) {
-      return this._deleteIcon();
-    }
-
-    if (this._icon) {
-      return this._updateIcon(name, size);
-    }
-
-    return this._insertIcon(name, size);
   }
 
   first(first) {
@@ -90,44 +69,64 @@ export default class Item {
     return this;
   }
 
-  _insertIcon(name, size) {
-    this._iconName = name;
+  model(model) {
+    this._model = model;
 
-    this._icon = this._root
-      .append('div')
-      .classed('scola icon', true)
-      .styles({
-        'align-items': 'center',
-        'border-top': '1px solid transparent',
-        'display': 'flex',
-        'order': 2,
-        'width': '2.25em'
-      });
-
-    this._iconInner = this._icon
-      .append('div')
-      .classed(name, true)
-      .style('font-size', size);
+    this._bindModel();
+    this._modelChange();
 
     return this;
   }
 
-  _updateIcon(name, size) {
-    this._iconInner
-      .classed(this._iconName, false)
-      .classed(name, true)
-      .style('font-size', size);
+  name(name) {
+    this._name = name;
 
-    this._iconName = name;
-    return this;
-  }
-
-  _deleteIcon() {
-    if (this._icon) {
-      this._icon.remove();
-      this._icon = null;
+    if (this._model) {
+      this._modelChange();
     }
 
     return this;
+  }
+
+  icon(icon, size) {
+    this.primary().icon(icon, size);
+    return this;
+  }
+
+  text(text, size) {
+    this.primary().text(text, size);
+    return this;
+  }
+
+  primary() {
+    if (!this._primary) {
+      this._primary = new Primary()
+        .item(this);
+    }
+
+    return this._primary;
+  }
+
+  secondary() {
+    if (!this._secondary) {
+      this._secondary = new Secondary()
+        .item(this);
+    }
+
+    return this._secondary;
+  }
+
+  _bindModel() {
+    this._model.setMaxListeners(this._model.getMaxListeners() + 1);
+    this._model.on('change', this._handleModelChange);
+  }
+
+  _unbindModel() {
+    this._model.setMaxListeners(this._model.getMaxListeners() - 1);
+    this._model.removeListener('change', this._handleModelChange);
+  }
+
+  _modelChange() {
+    throw new Error('Not implemented');
   }
 }

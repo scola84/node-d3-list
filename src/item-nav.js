@@ -1,6 +1,6 @@
-import PlainItem from './item-plain';
+import Item from './item';
 
-export default class NavItem extends PlainItem {
+export default class NavItem extends Item {
   constructor() {
     super();
 
@@ -9,6 +9,8 @@ export default class NavItem extends PlainItem {
       .classed('nav', true)
       .style('cursor', 'pointer');
 
-    this.action('ion-ios-arrow-forward');
+    this.secondary().icon('ion-ios-arrow-forward');
   }
+
+  _modelChange() {}
 }

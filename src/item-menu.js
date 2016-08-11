@@ -1,12 +1,8 @@
-import { event } from 'd3-selection';
-import PlainItem from './item-plain';
+import Item from './item';
 
-export default class MenuItem extends PlainItem {
+export default class MenuItem extends Item {
   constructor() {
     super();
-
-    this._selected = false;
-    this._value = null;
 
     this._root
       .classed('plain', false)
@@ -21,78 +17,32 @@ export default class MenuItem extends PlainItem {
     super.destroy();
   }
 
-  selected(selected) {
-    if (typeof selected === 'undefined') {
-      return this._selected;
-    }
-
-    this._selected = selected;
-
-    this._root.dispatch('select', {
-      detail: {
-        item: this
-      }
-    });
-
-    return this;
-  }
-
   value(value) {
-    if (typeof value === 'undefined') {
-      return this._value;
-    }
-
     this._value = value;
     return this;
   }
 
   _bind() {
     this._root.on('click.scola-menu-item', () => this._handleClick());
-    this._root.on('select.scola-menu-item', () => this._handleSelect());
   }
 
   _unbind() {
     this._root.on('click.scola-menu-item', null);
-    this._root.on('select.scola-menu-item', null);
   }
 
   _handleClick() {
-    if (this._selected) {
-      return;
-    }
-
-    this.selected(true);
+    this._model.set(this._name, this._value);
   }
 
-  _handleSelect() {
-    if (event.detail.item.selected()) {
-      this._select();
+  _modelChange() {
+    if (this._model.get(this._name) === this._value) {
+      this._root
+        .classed('selected', true)
+        .style('background', '#007AFF');
     } else {
-      this._deselect();
-    }
-  }
-
-  _select() {
-    this._root
-      .classed('selected', true)
-      .style('background', '#007AFF');
-
-    this._label.style('color', '#FFF');
-
-    if (this._sub) {
-      this._sub.style('color', '#FFF');
-    }
-  }
-
-  _deselect() {
-    this._root
-      .classed('selected', false)
-      .style('background', '#FFF');
-
-    this._label.style('color', 'initial');
-
-    if (this._sub) {
-      this._sub.style('color', '#AAA');
+      this._root
+        .classed('selected', false)
+        .style('background', '#FFF');
     }
   }
 }

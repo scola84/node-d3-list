@@ -4,27 +4,6 @@ export default class InputItem extends Item {
   constructor() {
     super();
 
-    this._root.classed('input', true);
-
-    this._label = this._root
-      .append('div')
-      .classed('scola label', true)
-      .styles({
-        'border-top': '1px solid',
-        'border-top-color': 'inherit',
-        'order': 3
-      });
-
-    this._labelPadding = this._root
-      .append('div')
-      .classed('scola padding', true)
-      .styles({
-        'border-top': '1px solid',
-        'border-top-color': 'inherit',
-        'order': 4,
-        'width': '1em'
-      });
-
     this._inputRoot = this._root
       .append('div')
       .classed('scola input-root', true)
@@ -57,30 +36,33 @@ export default class InputItem extends Item {
         'order': 6,
         'width': '1em'
       });
+
+    this._bind();
   }
 
-  input() {
-    return this._input;
+  destroy() {
+    this._unbind();
+    super.destroy();
   }
 
-  label(text, width) {
-    if (typeof text === 'undefined') {
-      return this._label;
-    }
-
-    this._label
-      .text(text)
-      .style('width', width);
-
-    return this;
+  name(name) {
+    this._input.attr('name', name);
+    return super.name(name);
   }
 
-  value(value) {
-    if (typeof value === 'undefined') {
-      return this._input.property('value');
-    }
+  _bind() {
+    this._input.on('input.scola-input-item', () => this._handleInput());
+  }
 
-    this._input.property('value', value);
-    return this;
+  _unbind() {
+    this._input.on('input.scola-input-item', null);
+  }
+
+  _handleInput() {
+    this._model.set(this._name, this._input.property('value'));
+  }
+
+  _modelChange() {
+    this._input.property('value', this._model.get(this._name));
   }
 }
