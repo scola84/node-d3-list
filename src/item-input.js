@@ -50,6 +50,10 @@ export default class InputItem extends Item {
     return super.name(name);
   }
 
+  input() {
+    return this._input;
+  }
+
   _bind() {
     this._input.on('input.scola-input-item', () => this._handleInput());
   }

@@ -4,6 +4,8 @@ export default class MenuItem extends Item {
   constructor() {
     super();
 
+    this._value = null;
+
     this._root
       .classed('plain', false)
       .classed('menu', true)
@@ -18,6 +20,10 @@ export default class MenuItem extends Item {
   }
 
   value(value) {
+    if (typeof value === 'undefined') {
+      return this._value;
+    }
+
     this._value = value;
     return this;
   }
