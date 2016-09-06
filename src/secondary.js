@@ -56,7 +56,7 @@ export default class Secondary {
 
     this._icon = this._item.root()
       .append('div')
-      .classed('scola icon', true)
+      .classed('scola secondary icon', true)
       .styles({
         'align-items': 'center',
         'border-top': '1px solid',

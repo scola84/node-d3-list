@@ -7,7 +7,6 @@ export default class MenuItem extends Item {
     this._value = null;
 
     this._root
-      .classed('plain', false)
       .classed('menu', true)
       .style('cursor', 'pointer');
 

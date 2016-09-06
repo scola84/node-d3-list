@@ -4,6 +4,8 @@ export default class InputItem extends Item {
   constructor() {
     super();
 
+    this._root.classed('input', true);
+
     this._inputRoot = this._root
       .append('div')
       .classed('scola input-root', true)

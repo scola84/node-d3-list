@@ -5,7 +5,6 @@ export default class NavItem extends Item {
     super();
 
     this._root
-      .classed('plain', false)
       .classed('nav', true)
       .style('cursor', 'pointer');
 

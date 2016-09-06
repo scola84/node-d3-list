@@ -5,7 +5,6 @@ export default class RadioItem extends Item {
     super();
 
     this._root
-      .classed('plain', false)
       .classed('radio', true)
       .style('cursor', 'pointer');
 

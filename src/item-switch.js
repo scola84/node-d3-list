@@ -4,9 +4,7 @@ export default class SwitchItem extends Item {
   constructor() {
     super();
 
-    this._root
-      .classed('plain', false)
-      .classed('switch', true);
+    this._root.classed('switch', true);
 
     this._switchRoot = this._root
       .append('div')
@@ -86,7 +84,8 @@ export default class SwitchItem extends Item {
     }
 
     const switchStyle = {
-      'background': '#CCC'
+      'background': '#CCC',
+      'border-color': '#CCC'
     };
 
     const maskStyle = {
@@ -100,8 +99,11 @@ export default class SwitchItem extends Item {
 
     if (Boolean(event.value) === true) {
       switchStyle.background = 'green';
+      switchStyle['border-color'] = 'green';
+
       maskStyle.transform = 'scale(0)';
       maskStyle.opacity = '0';
+      
       knobStyle.left = '1.27em';
     }
 
