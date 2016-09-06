@@ -45,9 +45,9 @@ export default class InputItem extends Item {
     super.destroy();
   }
 
-  name(name) {
-    this._input.attr('name', name);
-    return super.name(name);
+  name(itemName) {
+    this._input.attr('name', itemName);
+    return super.name(itemName);
   }
 
   input() {
@@ -66,7 +66,11 @@ export default class InputItem extends Item {
     this._model.set(this._name, this._input.property('value'));
   }
 
-  _modelChange() {
-    this._input.property('value', this._model.get(this._name));
+  _modelSet(event) {
+    if (event.name !== this._name) {
+      return;
+    }
+
+    this._input.property('value', event.value);
   }
 }

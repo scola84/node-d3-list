@@ -10,45 +10,45 @@ export default class Secondary {
     this._textPadding = null;
   }
 
-  item(item) {
-    if (typeof item === 'undefined') {
+  item(value) {
+    if (typeof value === 'undefined') {
       return this._item;
     }
 
-    this._item = item;
+    this._item = value;
     return this;
   }
 
-  icon(name, size = '2em') {
-    if (typeof name === 'undefined') {
+  icon(value, size = '2em') {
+    if (typeof value === 'undefined') {
       return this._icon;
     }
 
-    if (name === false) {
+    if (value === false) {
       return this._deleteIcon();
     }
 
     if (this._icon) {
-      return this._updateIcon(name, size);
+      return this._updateIcon(value, size);
     }
 
-    return this._insertIcon(name, size);
+    return this._insertIcon(value, size);
   }
 
-  text(text) {
-    if (typeof text === 'undefined') {
+  text(value) {
+    if (typeof value === 'undefined') {
       return this._text;
     }
 
-    if (text === false) {
+    if (value === false) {
       return this._deleteText();
     }
 
     if (this._text) {
-      return this._updateText(text);
+      return this._updateText(value);
     }
 
-    return this._insertText(text);
+    return this._insertText(value);
   }
 
   _insertIcon(name, size) {

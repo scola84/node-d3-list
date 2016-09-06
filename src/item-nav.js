@@ -12,5 +12,5 @@ export default class NavItem extends Item {
     this.secondary().icon('ion-ios-arrow-forward');
   }
 
-  _modelChange() {}
+  _modelSet() {}
 }

@@ -58,36 +58,36 @@ export default class List {
     return this;
   }
 
-  comment(comment) {
-    if (typeof comment === 'undefined') {
+  comment(value) {
+    if (typeof value === 'undefined') {
       return this._comment;
     }
 
-    if (comment === false) {
+    if (value === false) {
       return this._deleteComment();
     }
 
     if (this._comment) {
-      return this._updateComment(comment);
+      return this._updateComment(value);
     }
 
-    return this._insertComment(comment);
+    return this._insertComment(value);
   }
 
-  title(title) {
-    if (typeof title === 'undefined') {
+  title(value) {
+    if (typeof value === 'undefined') {
       return this._title;
     }
 
-    if (title === false) {
+    if (value === false) {
       return this._deleteTitle();
     }
 
     if (this._title) {
-      return this._updateTitle(title);
+      return this._updateTitle(value);
     }
 
-    return this._insertTitle(title);
+    return this._insertTitle(value);
   }
 
   inset() {
@@ -102,13 +102,13 @@ export default class List {
     return this;
   }
 
-  first(first) {
-    if (first === this._first) {
+  first(value) {
+    if (value === this._first) {
       return this;
     }
 
-    this._first = first;
-    this._root.style('padding-top', first === true ? '3em' : 0);
+    this._first = value;
+    this._root.style('padding-top', value === true ? '3em' : 0);
 
     return this;
   }

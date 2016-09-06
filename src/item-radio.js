@@ -17,8 +17,8 @@ export default class RadioItem extends Item {
     super.destroy();
   }
 
-  value(value) {
-    this._value = value;
+  value(itemValue) {
+    this._value = itemValue;
     return this;
   }
 
@@ -34,8 +34,12 @@ export default class RadioItem extends Item {
     this._model.set(this._name, this._value);
   }
 
-  _modelChange() {
-    if (this._model.get(this._name) === this._value) {
+  _modelSet(event) {
+    if (event.name !== this._name) {
+      return;
+    }
+
+    if (event.value === this._value) {
       this.secondary().icon('ion-ios-checkmark-empty');
       this.secondary().icon().style('color', '#000');
     } else {

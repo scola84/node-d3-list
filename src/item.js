@@ -28,7 +28,7 @@ export default class Item {
         'width': '1em'
       });
 
-    this._handleModelChange = (e) => this._modelChange(e);
+    this._handleModelSet = (e) => this._modelSet(e);
 
     this.first(false);
   }
@@ -48,53 +48,53 @@ export default class Item {
     return this._root;
   }
 
-  index(index) {
-    if (typeof index === 'undefined') {
+  index(value) {
+    if (typeof value === 'undefined') {
       return this._index;
     }
 
-    this._index = index;
+    this._index = value;
     return this;
   }
 
-  first(first) {
-    if (first === this._first) {
+  first(value) {
+    if (value === this._first) {
       return this;
     }
 
-    this._first = first;
+    this._first = value;
     this._root.style('border-color',
-      first === true ? 'transparent' : '#CCC');
+      value === true ? 'transparent' : '#CCC');
 
     return this;
   }
 
-  model(model) {
-    this._model = model;
+  model(value) {
+    this._model = value;
 
     this._bindModel();
-    this._modelChange();
+
+    this._modelSet({
+      action: 'model',
+      name: this._name,
+      value: value.get(this._name)
+    });
 
     return this;
   }
 
-  name(name) {
-    this._name = name;
-
-    if (this._model) {
-      this._modelChange();
-    }
-
+  name(itemName) {
+    this._name = itemName;
     return this;
   }
 
-  icon(icon, size) {
-    this.primary().icon(icon, size);
+  icon(value, size) {
+    this.primary().icon(value, size);
     return this;
   }
 
-  text(text, size) {
-    this.primary().text(text, size);
+  text(value, size) {
+    this.primary().text(value, size);
     return this;
   }
 
@@ -118,15 +118,15 @@ export default class Item {
 
   _bindModel() {
     this._model.setMaxListeners(this._model.getMaxListeners() + 1);
-    this._model.on('change', this._handleModelChange);
+    this._model.addListener('set', this._handleModelSet);
   }
 
   _unbindModel() {
     this._model.setMaxListeners(this._model.getMaxListeners() - 1);
-    this._model.removeListener('change', this._handleModelChange);
+    this._model.removeListener('set', this._handleModelSet);
   }
 
-  _modelChange() {
+  _modelSet() {
     throw new Error('Not implemented');
   }
 }

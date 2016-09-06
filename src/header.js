@@ -25,8 +25,8 @@ export default class Header {
     return this._root;
   }
 
-  text(text) {
-    this._root.text(text);
+  text(value) {
+    this._root.text(value);
     return this;
   }
 }

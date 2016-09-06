@@ -3,7 +3,7 @@ import { select } from 'd3-selection';
 export default class Button {
   constructor() {
     this._disabled = false;
-    
+
     this._root = select('body')
       .append('div')
       .remove()
@@ -26,18 +26,18 @@ export default class Button {
     return this._root;
   }
 
-  text(text) {
-    this._root.text(text);
+  text(value) {
+    this._root.text(value);
     return this;
   }
 
-  disabled(disabled) {
-    if (typeof disabled === 'undefined') {
+  disabled(value) {
+    if (typeof value === 'undefined') {
       return this._disabled;
     }
 
-    this._root.classed('disabled', disabled);
-    this._disabled = disabled;
+    this._root.classed('disabled', value);
+    this._disabled = value;
 
     return this;
   }

@@ -19,8 +19,8 @@ export default class CheckItem extends Item {
     super.destroy();
   }
 
-  value(value) {
-    this._value = value;
+  value(itemValue) {
+    this._value = itemValue;
     return this;
   }
 
@@ -35,14 +35,16 @@ export default class CheckItem extends Item {
   _handleClick() {
     const value = this._model.get(this._name);
     const action = !value || value.indexOf(this._value) === -1;
-    
+
     this._model.add(this._name, this._value, action);
   }
 
-  _modelChange() {
-    const value = this._model.get(this._name);
+  _modelSet(event) {
+    if (event.name !== this._name) {
+      return;
+    }
 
-    if (!value || value.indexOf(this._value) === -1) {
+    if (!event.value || event.value.indexOf(this._value) === -1) {
       this.primary().icon('ion-ios-circle-outline');
     } else {
       this.primary().icon('ion-ios-checkmark');

@@ -8,7 +8,6 @@ import RadioItem from './src/item-radio';
 import SwitchItem from './src/item-switch';
 
 import Button from './src/button';
-import Filter from './src/filter';
 import Header from './src/header';
 import List from './src/list';
 
@@ -50,10 +49,6 @@ export function itemList() {
 
 export function listButton() {
   return new Button();
-}
-
-export function listFilter() {
-  return new Filter();
 }
 
 export function listHeader() {

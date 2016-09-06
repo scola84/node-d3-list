@@ -80,7 +80,11 @@ export default class SwitchItem extends Item {
     this._model.set(this._name, !this._model.get(this._name));
   }
 
-  _modelChange() {
+  _modelSet(event) {
+    if (event.name !== this._name) {
+      return;
+    }
+
     const switchStyle = {
       'background': '#CCC'
     };
@@ -94,7 +98,7 @@ export default class SwitchItem extends Item {
       'left': '0'
     };
 
-    if (Boolean(this._model.get(this._name)) === true) {
+    if (Boolean(event.value) === true) {
       switchStyle.background = 'green';
       maskStyle.transform = 'scale(0)';
       maskStyle.opacity = '0';

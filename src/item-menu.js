@@ -19,12 +19,12 @@ export default class MenuItem extends Item {
     super.destroy();
   }
 
-  value(value) {
-    if (typeof value === 'undefined') {
+  value(itemValue) {
+    if (typeof itemValue === 'undefined') {
       return this._value;
     }
 
-    this._value = value;
+    this._value = itemValue;
     return this;
   }
 
@@ -37,11 +37,17 @@ export default class MenuItem extends Item {
   }
 
   _handleClick() {
-    this._model.set(this._name, this._value);
+    this._model
+      .set(this._name, this._value)
+      .commit();
   }
 
-  _modelChange() {
-    if (this._model.get(this._name) === this._value) {
+  _modelSet(event) {
+    if (event.name !== this._name) {
+      return;
+    }
+
+    if (event.value === this._value) {
       this._root
         .classed('selected', true)
         .style('background', '#007AFF');

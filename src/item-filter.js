@@ -1,4 +1,4 @@
-import { event } from 'd3-selection';
+import { event }  from 'd3-selection';
 import Item from './item';
 
 export default class FilterItem extends Item {
@@ -88,9 +88,9 @@ export default class FilterItem extends Item {
     super.destroy();
   }
 
-  name(name) {
-    this._input.attr('name', name);
-    return super.name(name);
+  name(itemName) {
+    this._input.attr('name', itemName);
+    return super.name(itemName);
   }
 
   input() {
@@ -112,15 +112,23 @@ export default class FilterItem extends Item {
       return;
     }
 
-    this._model.set(this._name, this._input.property('value'));
+    this._model
+      .set(this._name, this._input.property('value'))
+      .commit();
   }
 
   _handleClear() {
-    this._model.set(this._name, '');
+    this._model
+      .set(this._name, '')
+      .commit();
   }
 
-  _modelChange() {
-    const value = this._model.get(this._name) || '';
+  _modelSet(modelEvent) {
+    if (modelEvent.name !== this._name) {
+      return;
+    }
+
+    const value = modelEvent.value || '';
     this._input.property('value', value);
 
     if (value.length === 0) {
