@@ -38,7 +38,9 @@ export default class RadioItem extends Item {
       return;
     }
 
-    if (event.value === this._value) {
+    const value = this._format(event.value);
+
+    if (value === this._value) {
       this.secondary().icon('ion-ios-checkmark-empty');
       this.secondary().icon().style('color', '#000');
     } else {

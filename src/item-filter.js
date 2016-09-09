@@ -1,4 +1,4 @@
-import { event }  from 'd3-selection';
+import { event } from 'd3-selection';
 import Item from './item';
 
 export default class FilterItem extends Item {
@@ -128,7 +128,7 @@ export default class FilterItem extends Item {
       return;
     }
 
-    const value = modelEvent.value || '';
+    const value = this._format(modelEvent.value) || '';
     this._input.property('value', value);
 
     if (value.length === 0) {

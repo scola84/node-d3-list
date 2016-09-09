@@ -73,6 +73,6 @@ export default class InputItem extends Item {
       return;
     }
 
-    this._input.property('value', event.value);
+    this._input.property('value', this._format(event.value));
   }
 }

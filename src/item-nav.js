@@ -11,5 +11,11 @@ export default class NavItem extends Item {
     this.secondary().icon('ion-ios-arrow-forward');
   }
 
-  _modelSet() {}
+  _modelSet(event) {
+    if (event.name !== this._name) {
+      return;
+    }
+
+    this.secondary().text(this._format(event.value));
+  }
 }

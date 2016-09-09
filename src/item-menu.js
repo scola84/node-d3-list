@@ -46,7 +46,9 @@ export default class MenuItem extends Item {
       return;
     }
 
-    if (event.value === this._value) {
+    const value = this._format(event.value);
+
+    if (value === this._value) {
       this._root
         .classed('selected', true)
         .style('background', '#007AFF');

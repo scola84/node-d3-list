@@ -44,7 +44,9 @@ export default class CheckItem extends Item {
       return;
     }
 
-    if (!event.value || event.value.indexOf(this._value) === -1) {
+    const value = this._format(event.value);
+
+    if (!value || value.indexOf(this._value) === -1) {
       this.primary().icon('ion-ios-circle-outline');
     } else {
       this.primary().icon('ion-ios-checkmark');

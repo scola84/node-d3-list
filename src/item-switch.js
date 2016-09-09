@@ -83,6 +83,8 @@ export default class SwitchItem extends Item {
       return;
     }
 
+    const value = this._format(event.value);
+
     const switchStyle = {
       'background': '#CCC',
       'border-color': '#CCC'
@@ -97,13 +99,13 @@ export default class SwitchItem extends Item {
       'left': '0'
     };
 
-    if (Boolean(event.value) === true) {
+    if (Boolean(value) === true) {
       switchStyle.background = 'green';
       switchStyle['border-color'] = 'green';
 
       maskStyle.transform = 'scale(0)';
       maskStyle.opacity = '0';
-      
+
       knobStyle.left = '1.27em';
     }
 

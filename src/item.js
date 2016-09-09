@@ -7,6 +7,7 @@ export default class Item {
     this._index = null;
     this._first = null;
     this._model = null;
+    this._format = null;
 
     this._root = select('body')
       .append('div')
@@ -69,8 +70,9 @@ export default class Item {
     return this;
   }
 
-  model(value) {
+  model(value, format = (v) => v) {
     this._model = value;
+    this._format = format;
 
     this._bindModel();
 
