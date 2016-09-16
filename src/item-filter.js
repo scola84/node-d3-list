@@ -9,7 +9,7 @@ export default class FilterItem extends Item {
       .classed('filter', true)
       .styles({
         'background': '#CCC',
-        'display': 'inline',
+        'display': 'block',
         'padding': '0.5em'
       });
 
