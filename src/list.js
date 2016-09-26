@@ -108,7 +108,7 @@ export default class List {
     }
 
     this._first = value;
-    this._root.style('padding-top', value === true ? '3em' : 0);
+    this._root.style('padding-top', value === true ? '3em' : '0px');
 
     return this;
   }
