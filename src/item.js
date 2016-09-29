@@ -1,6 +1,7 @@
 import { select } from 'd3-selection';
 import Primary from './primary';
 import Secondary from './secondary';
+import 'd3-selection-multi';
 
 export default class Item {
   constructor() {

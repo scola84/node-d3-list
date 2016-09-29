@@ -1,3 +1,5 @@
+import 'd3-selection-multi';
+
 export default class Secondary {
   constructor() {
     this._item = null;

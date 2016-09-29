@@ -1,3 +1,5 @@
+import 'd3-selection-multi';
+
 export default class Primary {
   constructor() {
     this._item = null;

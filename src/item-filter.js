@@ -1,5 +1,6 @@
 import { event } from 'd3-selection';
 import Item from './item';
+import 'd3-selection-multi';
 
 export default class FilterItem extends Item {
   constructor() {

@@ -1,4 +1,5 @@
 import Item from './item';
+import 'd3-selection-multi';
 
 export default class InputItem extends Item {
   constructor() {
