@@ -48,9 +48,19 @@ export default class InputItem extends Item {
     super.destroy();
   }
 
-  name(itemName) {
-    this._input.attr('name', itemName);
-    return super.name(itemName);
+  name(value) {
+    this._input.attr('name', value);
+    return super.name(value);
+  }
+
+  placeholder(value) {
+    this._input.attr('placeholder', value);
+    return this;
+  }
+
+  type(value) {
+    this._input.attr('type', value);
+    return this;
   }
 
   input() {
