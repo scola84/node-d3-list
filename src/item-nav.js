@@ -8,7 +8,7 @@ export default class NavItem extends Item {
       .classed('nav', true)
       .style('cursor', 'pointer');
 
-    this.secondary().icon('ion-ios-arrow-forward');
+    this.secondary().button('ion-ios-arrow-forward');
   }
 
   _modelSet(event) {

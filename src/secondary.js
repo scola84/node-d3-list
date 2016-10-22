@@ -4,9 +4,9 @@ export default class Secondary {
   constructor() {
     this._item = null;
 
-    this._icon = null;
-    this._iconInner = null;
-    this._iconPadding = null;
+    this._button = null;
+    this._buttonInner = null;
+    this._buttonPadding = null;
 
     this._text = null;
     this._textPadding = null;
@@ -21,20 +21,20 @@ export default class Secondary {
     return this;
   }
 
-  icon(value, size = '2em') {
+  button(value, size = '2em', type = 'button') {
     if (typeof value === 'undefined') {
-      return this._icon;
+      return this._button;
     }
 
     if (value === false) {
-      return this._deleteIcon();
+      return this._deleteButton();
     }
 
-    if (this._icon) {
-      return this._updateIcon(value, size);
+    if (this._button) {
+      return this._updateButton(value, size, type);
     }
 
-    return this._insertIcon(value, size);
+    return this._insertButton(value, size, type);
   }
 
   text(value) {
@@ -53,27 +53,34 @@ export default class Secondary {
     return this._insertText(value);
   }
 
-  _insertIcon(name, size) {
-    this._iconName = name;
+  _insertButton(name, size, type) {
+    this._buttonName = name;
 
-    this._icon = this._item.root()
-      .append('div')
-      .classed('scola secondary icon', true)
+    this._button = this._item.root()
+      .append('button')
+      .classed('scola secondary button', true)
+      .attrs({
+        type
+      })
       .styles({
         'align-items': 'center',
+        'background': 'none',
+        'border': 0,
         'border-top': '1px solid',
         'border-top-color': 'inherit',
         'color': '#BBB',
+        'cursor': 'pointer',
         'display': 'flex',
-        'order': 7
+        'order': 7,
+        'padding': 0
       });
 
-    this._iconInner = this._icon
+    this._buttonInner = this._button
       .append('div')
       .classed(name, true)
       .style('font-size', size);
 
-    this._iconPadding = this._item.root()
+    this._buttonPadding = this._item.root()
       .append('div')
       .classed('scola padding', true)
       .styles({
@@ -86,23 +93,24 @@ export default class Secondary {
     return this;
   }
 
-  _updateIcon(name, size) {
-    this._iconInner
-      .classed(this._iconName, false)
+  _updateButton(name, size, type) {
+    this._buttonInner
+      .classed(this._buttonName, false)
       .classed(name, true)
+      .attr('type', type)
       .style('font-size', size);
 
-    this._iconName = name;
+    this._buttonName = name;
     return this;
   }
 
-  _deleteIcon() {
-    if (this._icon) {
-      this._icon.remove();
-      this._icon = null;
+  _deleteButton() {
+    if (this._button) {
+      this._button.remove();
+      this._button = null;
 
-      this._iconPadding.remove();
-      this._iconPadding = null;
+      this._buttonPadding.remove();
+      this._buttonPadding = null;
     }
 
     return this;
