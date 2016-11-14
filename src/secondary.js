@@ -71,6 +71,7 @@ export default class Secondary {
         'color': '#BBB',
         'cursor': 'pointer',
         'display': 'flex',
+        'margin': 0,
         'order': 7,
         'padding': 0
       });
@@ -124,7 +125,12 @@ export default class Secondary {
         'border-top': '1px solid',
         'border-top-color': 'inherit',
         'color': '#AAA',
-        'order': 5
+        'flex': 1,
+        'order': 5,
+        'overflow': 'hidden',
+        'text-align': 'end',
+        'text-overflow': 'ellipsis',
+        'white-space': 'nowrap'
       })
       .text(text);
 
