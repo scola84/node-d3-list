@@ -1,4 +1,5 @@
 import CheckItem from './src/item-check';
+import DateItem from './src/item-date';
 import FilterItem from './src/item-filter';
 import Item from './src/item';
 import InputItem from './src/item-input';
@@ -13,6 +14,10 @@ import List from './src/list';
 
 export function checkItem() {
   return new CheckItem();
+}
+
+export function dateItem() {
+  return new DateItem();
 }
 
 export function filterItem() {
