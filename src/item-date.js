@@ -1,8 +1,3 @@
-// Fix event handling
-// Set range
-// Prevent click on invalid dates
-// Order of create, set scroll etc
-
 import { event, select } from 'd3-selection';
 import Item from './item';
 import 'd3-selection-multi';
@@ -11,8 +6,10 @@ export default class DateItem extends Item {
   constructor() {
     super();
 
+    this._begin = null;
+    this._end = null;
+
     this._height = null;
-    this._i18n = null;
     this._open = false;
     this._pan = false;
     this._scrollLeft = 0;
@@ -33,8 +30,13 @@ export default class DateItem extends Item {
     super.destroy();
   }
 
-  i18n(value) {
-    this._i18n = value;
+  begin(value) {
+    this._begin = value;
+    return this;
+  }
+
+  end(value) {
+    this._end = value;
     return this;
   }
 
@@ -93,10 +95,13 @@ export default class DateItem extends Item {
         'line-height': '2em',
         'margin-top': '0.5em',
         'overflow': 'hidden',
-        'border': '1px solid #FFF'
+        'padding': '1px 0'
       });
 
-    for (let i = 0, max = 60; i < max; i += 1) {
+    let i = this._begin.year();
+    let max = this._end.year();
+
+    for (; i <= max; i += 1) {
       this._year
         .append('div')
         .styles({
@@ -105,7 +110,7 @@ export default class DateItem extends Item {
           'padding-right': '0.5em',
           'border-radius': '0.25em'
         })
-        .text(this._i18n.date().moment().year(1970 + i).year());
+        .text(i);
     }
 
     this._month = this._select
@@ -117,10 +122,15 @@ export default class DateItem extends Item {
         'line-height': '2em',
         'margin-top': '0.5em',
         'overflow': 'hidden',
-        'border': '1px solid #FFF'
+        'padding': '1px 0'
       });
 
-    for (let i = 0, max = 12; i < max; i += 1) {
+    i = 0;
+    max = 12;
+
+    const formatter = this._begin.clone();
+
+    for (; i < max; i += 1) {
       this._month
         .append('div')
         .styles({
@@ -129,7 +139,7 @@ export default class DateItem extends Item {
           'padding-right': '0.5em',
           'border-radius': '0.25em'
         })
-        .text(this._i18n.date().moment().month(i).format('MMMM'));
+        .text(formatter.month(i).format('MMMM'));
     }
 
     this._day = this._select
@@ -141,10 +151,13 @@ export default class DateItem extends Item {
         'line-height': '2em',
         'margin-top': '0.5em',
         'overflow': 'hidden',
-        'border': '1px solid #FFF'
+        'padding': '1px 0'
       });
 
-    for (let i = 0, max = 31; i < max; i += 1) {
+    i = 0;
+    max = 31;
+
+    for (; i < max; i += 1) {
       this._day
         .append('div')
         .styles({
@@ -173,12 +186,13 @@ export default class DateItem extends Item {
 
   _setScroll() {
     const now = this._model.get(this._name);
+    const firstYear = this._begin.year();
 
-    const yearIndex = now.year() - 1970 + 1;
+    const yearIndex = now.year() - firstYear + 1;
     this._year.node().scrollLeft = this._year
       .select(`:nth-child(${yearIndex})`).node().offsetLeft;
 
-    const monthIndex = now.month();
+    const monthIndex = now.month() + 1;
     this._month.node().scrollLeft = this._month
       .select(`:nth-child(${monthIndex})`).node().offsetLeft;
 
@@ -270,14 +284,15 @@ export default class DateItem extends Item {
     const index = this._indexOf(event.target);
     const date = this._model.get(this._name);
     const copy = date.clone();
+    const firstYear = this._begin.year();
 
-    copy.date(1).year(1970 + index);
+    copy.date(1).year(firstYear + index);
 
     if (date.date() > copy.daysInMonth()) {
       date.date(copy.daysInMonth());
     }
 
-    this._model.set(this._name, date.year(1970 + index));
+    this._model.set(this._name, date.year(firstYear + index));
   }
 
   _handleMonthClick() {
@@ -326,7 +341,9 @@ export default class DateItem extends Item {
     }
 
     const date = this._model.get(this._name);
-    const yearIndex = date.year() - 1970 + 1;
+    const firstYear = this._begin.year();
+
+    const yearIndex = date.year() - firstYear + 1;
     const monthIndex = date.month() + 1;
     const dayIndex = date.date();
 
