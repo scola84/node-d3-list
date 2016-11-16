@@ -1,3 +1,4 @@
+import isEqual from 'lodash-es/isEqual';
 import Item from './item';
 
 export default class MenuItem extends Item {
@@ -48,7 +49,7 @@ export default class MenuItem extends Item {
 
     const value = this._format(event.value);
 
-    if (value === this._value) {
+    if (isEqual(value, this._value)) {
       this._root
         .classed('selected', true)
         .style('background', '#007AFF');

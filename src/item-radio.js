@@ -1,3 +1,4 @@
+import isEqual from 'lodash-es/isEqual';
 import Item from './item';
 
 export default class RadioItem extends Item {
@@ -40,7 +41,7 @@ export default class RadioItem extends Item {
 
     const value = this._format(event.value);
 
-    if (value === this._value) {
+    if (isEqual(value, this._value)) {
       this.secondary().button('ion-ios-checkmark-empty');
       this.secondary().button().style('color', '#000');
     } else {
