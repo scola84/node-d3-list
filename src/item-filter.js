@@ -113,15 +113,11 @@ export default class FilterItem extends Item {
       return;
     }
 
-    this._model
-      .set(this._name, this._input.property('value'))
-      .commit();
+    this._model.set(this._name, this._input.property('value'));
   }
 
   _handleClear() {
-    this._model
-      .set(this._name, '')
-      .commit();
+    this._model.set(this._name, '');
   }
 
   _modelSet(modelEvent) {

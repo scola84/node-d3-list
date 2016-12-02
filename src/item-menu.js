@@ -37,9 +37,7 @@ export default class MenuItem extends Item {
   }
 
   _handleClick() {
-    this._model
-      .set(this._name, this._value)
-      .commit();
+    this._model.set(this._name, this._value);
   }
 
   _modelSet(event) {
