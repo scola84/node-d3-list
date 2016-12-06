@@ -9,6 +9,12 @@ export default class DateItem extends Item {
     this._begin = null;
     this._end = null;
 
+    this._formats = {
+      day: 'D',
+      month: 'MMMM',
+      year: 'YYYY'
+    };
+
     this._height = null;
     this._open = false;
     this._pan = false;
@@ -40,20 +46,21 @@ export default class DateItem extends Item {
     return this;
   }
 
-  _bind() {
-    this._root.on('click.scola-item-date', () => this._handleRootClick());
+  formats(value) {
+    Object.assign(this._formats, value);
+    return this;
   }
 
-  _unbind() {
-    this._root.on('click.scola-item-date', null);
-  }
-
-  _handleRootClick() {
+  open(value) {
     if (!this._height) {
       this._height = this._root.style('height');
     }
 
-    this._open = !this._open;
+    if (this._open === value) {
+      return this;
+    }
+
+    this._open = value;
     const height = this._open ? (11 * 16) + 'px' : this._height;
 
     if (this._open) {
@@ -68,9 +75,25 @@ export default class DateItem extends Item {
           this._destroySelect();
         }
       });
+
+    return this;
+  }
+
+  toggle() {
+    return this.open(!this._open);
+  }
+
+  _bind() {
+    this._root.on('click.scola-item-date', () => this.toggle());
+  }
+
+  _unbind() {
+    this._root.on('click.scola-item-date', null);
   }
 
   _createSelect() {
+    const formatter = this._begin.clone();
+
     this._select = this._root
       .append('div')
       .classed('scola select', true)
@@ -110,7 +133,7 @@ export default class DateItem extends Item {
           'padding-right': '0.5em',
           'border-radius': '0.25em'
         })
-        .text(i);
+        .text(formatter.year(i).format(this._formats.year));
     }
 
     this._month = this._select
@@ -128,8 +151,6 @@ export default class DateItem extends Item {
     i = 0;
     max = 12;
 
-    const formatter = this._begin.clone();
-
     for (; i < max; i += 1) {
       this._month
         .append('div')
@@ -139,7 +160,9 @@ export default class DateItem extends Item {
           'padding-right': '0.5em',
           'border-radius': '0.25em'
         })
-        .text(formatter.month(i).format('MMMM'));
+        .text(formatter
+          .month(i)
+          .format(this._formats.month));
     }
 
     this._day = this._select
@@ -154,10 +177,10 @@ export default class DateItem extends Item {
         'padding': '1px 0'
       });
 
-    i = 0;
+    i = 1;
     max = 31;
 
-    for (; i < max; i += 1) {
+    for (; i <= max; i += 1) {
       this._day
         .append('div')
         .styles({
@@ -166,7 +189,10 @@ export default class DateItem extends Item {
           'padding-right': '0.5em',
           'border-radius': '0.25em'
         })
-        .text(('00' + (i + 1)).slice(-2));
+        .text(formatter
+          .startOf('year')
+          .date(i)
+          .format(this._formats.day));
     }
 
     this._setScroll();
