@@ -103,8 +103,9 @@ export default class DateItem extends Item {
         'position': 'absolute',
         'top': '3em',
         'left': '1em',
-        'right': 0,
-        'padding': '0 1em 0 0'
+        'margin-top': '1px',
+        'padding': '0 1em 0 0',
+        'right': 0
       });
 
     this._root.node().appendChild(this._select.node());

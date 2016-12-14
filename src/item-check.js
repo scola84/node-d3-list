@@ -20,6 +20,10 @@ export default class CheckItem extends Item {
   }
 
   value(itemValue) {
+    if (typeof itemValue === 'undefined') {
+      return this._value;
+    }
+
     this._value = itemValue;
     return this;
   }
@@ -39,12 +43,12 @@ export default class CheckItem extends Item {
     this._model.add(this._name, this._value, action);
   }
 
-  _modelSet(event) {
-    if (event.name !== this._name) {
+  _modelSet(setEvent) {
+    if (setEvent.name !== this._name) {
       return;
     }
 
-    const value = this._format(event.value);
+    const value = this._format(setEvent.value);
 
     if (!value || value.indexOf(this._value) === -1) {
       this.primary().icon('ion-ios-circle-outline');

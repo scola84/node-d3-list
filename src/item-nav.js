@@ -1,21 +1,24 @@
-import Item from './item';
+import MenuItem from './item-menu';
 
-export default class NavItem extends Item {
+export default class NavItem extends MenuItem {
   constructor() {
     super();
 
     this._root
-      .classed('nav', true)
-      .style('cursor', 'pointer');
+      .classed('menu', false)
+      .classed('nav', true);
 
-    this.secondary().button('ion-ios-arrow-forward');
+    this.secondary()
+      .button('ion-ios-arrow-forward');
   }
 
-  _modelSet(event) {
-    if (event.name !== this._name) {
-      return;
+  _handleUser() {
+    if (!this._user.may('GET', this._path())) {
+      this.secondary().button(false);
     }
 
-    this.secondary().text(this._format(event.value));
+    return super._handleUser();
   }
+
+  _modelSet() {}
 }

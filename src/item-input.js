@@ -79,11 +79,11 @@ export default class InputItem extends Item {
     this._model.set(this._name, this._input.property('value'));
   }
 
-  _modelSet(event) {
-    if (event.name !== this._name) {
+  _modelSet(setEvent) {
+    if (setEvent.name !== this._name) {
       return;
     }
 
-    this._input.property('value', this._format(event.value));
+    this._input.property('value', this._format(setEvent.value));
   }
 }

@@ -1,10 +1,10 @@
-import isEqual from 'lodash-es/isEqual';
 import Item from './item';
 
 export default class MenuItem extends Item {
   constructor() {
     super();
 
+    this._user = null;
     this._value = null;
 
     this._root
@@ -17,6 +17,15 @@ export default class MenuItem extends Item {
   destroy() {
     this._unbind();
     super.destroy();
+  }
+
+  user(value) {
+    if (typeof value === 'undefined') {
+      return this._user;
+    }
+
+    this._user = value;
+    return this._handleUser();
   }
 
   value(itemValue) {
@@ -36,8 +45,27 @@ export default class MenuItem extends Item {
     this._root.on('click.scola-menu-item', null);
   }
 
+  _path() {
+    return [this._value, this._name].join('@');
+  }
+
   _handleClick() {
-    this._model.set(this._name, this._value);
+    if (!this._user || this._user.may('GET', this._path())) {
+      this._model.set(this._name, this._value);
+    }
+  }
+
+  _handleUser() {
+    if (this._user.may('GET', this._path())) {
+      return this;
+    }
+
+    this._root
+      .classed('disabled', true)
+      .style('cursor', 'default');
+
+    this.secondary().button(false);
+    return this;
   }
 
   _modelSet(event) {
@@ -47,7 +75,7 @@ export default class MenuItem extends Item {
 
     const value = this._format(event.value);
 
-    if (isEqual(value, this._value)) {
+    if (value && value.indexOf(this._value) !== -1) {
       this._root
         .classed('selected', true)
         .style('background', '#007AFF');

@@ -34,12 +34,12 @@ export default class RadioItem extends Item {
     this._model.set(this._name, this._value);
   }
 
-  _modelSet(event) {
-    if (event.name !== this._name) {
+  _modelSet(setEvent) {
+    if (setEvent.name !== this._name) {
       return;
     }
 
-    const value = this._format(event.value);
+    const value = this._format(setEvent.value);
 
     if (isEqual(value, this._value)) {
       this.secondary().button('ion-ios-checkmark-empty');
