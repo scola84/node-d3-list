@@ -1,11 +1,14 @@
 import { select } from 'd3-selection';
 import 'd3-selection-multi';
+import '@scola/d3-media';
 
 export default class List {
   constructor() {
     this._first = null;
     this._items = new Set();
 
+    this._rootMedia = null;
+    this._bodyMedia = null;
     this._title = null;
     this._comment = null;
 
@@ -23,9 +26,9 @@ export default class List {
       .append('div')
       .classed('scola body', true)
       .styles({
-        'border-width': '1px 0',
         'border-color': '#CCC',
         'border-style': 'solid',
+        'border-width': '1px 0',
         'order': 2
       });
 
@@ -33,6 +36,16 @@ export default class List {
   }
 
   destroy() {
+    if (this._rootMedia) {
+      this._rootMedia.destroy();
+      this._rootMedia = null;
+    }
+
+    if (this._bodyMedia) {
+      this._bodyMedia.destroy();
+      this._bodyMedia = null;
+    }
+
     this._items.forEach((item) => item.destroy());
     this._items.clear();
 
@@ -91,14 +104,33 @@ export default class List {
     return this._insertTitle(value);
   }
 
-  inset() {
-    this._root.style('margin', '0 1em');
+  inset(width = '48em') {
+    if (width === false) {
+      this._rootMedia.destroy();
+      this._rootMedia = null;
 
-    this._body.styles({
-      'border-style': 'none',
-      'border-radius': '0.5em',
-      'overflow': 'hidden'
-    });
+      this._bodyedia.destroy();
+      this._bodyMedia = null;
+
+      return this;
+    }
+
+    this._rootMedia = this._root
+      .media(`(min-width: ${width})`)
+      .styles({
+        'padding-left': '1em',
+        'padding-right': '1em'
+      })
+      .start();
+
+    this._bodyMedia = this._body
+      .media(`(min-width: ${width})`)
+      .styles({
+        'border-radius': '0.5em',
+        'border-style': 'none',
+        'overflow': 'hidden'
+      })
+      .start();
 
     return this;
   }
