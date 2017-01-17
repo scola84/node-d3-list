@@ -79,12 +79,12 @@ export default class SwitchItem extends Item {
     this._model.set(this._name, !this._model.get(this._name));
   }
 
-  _modelSet(event) {
-    if (event.name !== this._name) {
+  _modelSet(setEvent) {
+    if (setEvent.name !== this._name) {
       return;
     }
 
-    const value = this._format(event.value);
+    const value = this._format(setEvent.value);
 
     const switchStyle = {
       'background': '#CCC',

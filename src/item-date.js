@@ -1,6 +1,8 @@
 import { event, select } from 'd3-selection';
 import Item from './item';
 import 'd3-selection-multi';
+import 'd3-transition';
+import '@scola/d3-gesture';
 
 export default class DateItem extends Item {
   constructor() {
@@ -15,9 +17,10 @@ export default class DateItem extends Item {
       year: 'YYYY'
     };
 
-    this._height = null;
     this._open = false;
     this._pan = false;
+
+    this._height = null;
     this._scrollLeft = 0;
 
     this._root
@@ -36,22 +39,38 @@ export default class DateItem extends Item {
     super.destroy();
   }
 
-  begin(value) {
+  begin(value = null) {
+    if (value === null) {
+      return this._begin;
+    }
+
     this._begin = value;
     return this;
   }
 
-  end(value) {
+  end(value = null) {
+    if (value === null) {
+      return this._end;
+    }
+
     this._end = value;
     return this;
   }
 
-  formats(value) {
+  formats(value = null) {
+    if (value === null) {
+      return this._formats;
+    }
+
     Object.assign(this._formats, value);
     return this;
   }
 
-  open(value) {
+  open(value = null) {
+    if (value === null) {
+      return this._open;
+    }
+
     if (!this._height) {
       this._height = this._root.style('height');
     }
@@ -384,7 +403,7 @@ export default class DateItem extends Item {
     this._year.select(`div:nth-child(${yearIndex})`)
       .classed('selected', true)
       .styles({
-        'background': '#007aff',
+        'background': '#007AFF',
         'color': '#FFF'
       });
 
@@ -398,7 +417,7 @@ export default class DateItem extends Item {
     this._month.select(`div:nth-child(${monthIndex})`)
       .classed('selected', true)
       .styles({
-        'background': '#007aff',
+        'background': '#007AFF',
         'color': '#FFF'
       });
 
@@ -414,7 +433,7 @@ export default class DateItem extends Item {
     this._day.select(`div:nth-child(${dayIndex})`)
       .classed('selected', true)
       .styles({
-        'background': '#007aff',
+        'background': '#007AFF',
         'color': '#FFF'
       });
 

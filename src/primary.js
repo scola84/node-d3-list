@@ -11,8 +11,8 @@ export default class Primary {
     this._textPadding = null;
   }
 
-  item(value) {
-    if (typeof value === 'undefined') {
+  item(value = null) {
+    if (value === null) {
       return this._item;
     }
 
@@ -20,8 +20,8 @@ export default class Primary {
     return this;
   }
 
-  icon(value, size) {
-    if (typeof value === 'undefined') {
+  icon(value = null, size = '2em') {
+    if (value === null) {
       return this._icon;
     }
 
@@ -36,8 +36,8 @@ export default class Primary {
     return this._insertIcon(value, size);
   }
 
-  text(value, size) {
-    if (typeof value === 'undefined') {
+  text(value = null, size = null) {
+    if (value === null) {
       return this._text;
     }
 
@@ -52,7 +52,7 @@ export default class Primary {
     return this._insertText(value, size);
   }
 
-  _insertIcon(name, size = '2em') {
+  _insertIcon(name, size) {
     this._iconName = name;
 
     this._icon = this._item.root()
@@ -124,7 +124,7 @@ export default class Primary {
       this._text.text(text);
     }
 
-    if (typeof size !== 'undefined') {
+    if (size !== null) {
       this._text.styles({
         'flex': 'none',
         'width': size

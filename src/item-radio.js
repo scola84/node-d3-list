@@ -17,7 +17,11 @@ export default class RadioItem extends Item {
     super.destroy();
   }
 
-  value(itemValue) {
+  value(itemValue = null) {
+    if (itemValue === null) {
+      return this._value;
+    }
+
     this._value = itemValue;
     return this;
   }

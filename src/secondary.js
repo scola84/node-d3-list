@@ -12,8 +12,8 @@ export default class Secondary {
     this._textPadding = null;
   }
 
-  item(value) {
-    if (typeof value === 'undefined') {
+  item(value = null) {
+    if (value === null) {
       return this._item;
     }
 
@@ -21,8 +21,8 @@ export default class Secondary {
     return this;
   }
 
-  button(value, size = '2em', type = 'button') {
-    if (typeof value === 'undefined') {
+  button(value = null, size = '2em', type = 'button') {
+    if (value === null) {
       return this._button;
     }
 
@@ -37,8 +37,8 @@ export default class Secondary {
     return this._insertButton(value, size, type);
   }
 
-  text(value) {
-    if (typeof value === 'undefined') {
+  text(value = null) {
+    if (value === null) {
       return this._text;
     }
 

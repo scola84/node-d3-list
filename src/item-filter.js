@@ -89,13 +89,13 @@ export default class FilterItem extends Item {
     super.destroy();
   }
 
-  name(itemName) {
-    this._input.attr('name', itemName);
-    return super.name(itemName);
-  }
-
   input() {
     return this._input;
+  }
+
+  name(value) {
+    this._input.attr('name', value);
+    return super.name(value);
   }
 
   _bind() {
@@ -120,12 +120,12 @@ export default class FilterItem extends Item {
     this._model.set(this._name, '');
   }
 
-  _modelSet(modelEvent) {
-    if (modelEvent.name !== this._name) {
+  _modelSet(setEvent) {
+    if (setEvent.name !== this._name) {
       return;
     }
 
-    const value = this._format(modelEvent.value) || '';
+    const value = this._format(setEvent.value) || '';
     this._input.property('value', value);
 
     if (value.length === 0) {

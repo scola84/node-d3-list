@@ -48,6 +48,10 @@ export default class InputItem extends Item {
     super.destroy();
   }
 
+  input() {
+    return this._input;
+  }
+
   name(value) {
     this._input.attr('name', value);
     return super.name(value);
@@ -61,10 +65,6 @@ export default class InputItem extends Item {
   type(value) {
     this._input.attr('type', value);
     return this;
-  }
-
-  input() {
-    return this._input;
   }
 
   _bind() {

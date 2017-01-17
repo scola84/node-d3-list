@@ -19,8 +19,8 @@ export default class CheckItem extends Item {
     super.destroy();
   }
 
-  value(itemValue) {
-    if (typeof itemValue === 'undefined') {
+  value(itemValue = null) {
+    if (itemValue === null) {
       return this._value;
     }
 

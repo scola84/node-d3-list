@@ -5,8 +5,8 @@ import 'd3-selection-multi';
 
 export default class Item {
   constructor() {
-    this._index = null;
     this._first = null;
+    this._name = null;
     this._model = null;
     this._format = null;
 
@@ -36,10 +36,8 @@ export default class Item {
   }
 
   destroy() {
-    if (this._model) {
-      this._unbindModel();
-      this._model = null;
-    }
+    this._unbindModel();
+    this._model = null;
 
     this._root.dispatch('destroy');
     this._root.remove();
@@ -50,24 +48,24 @@ export default class Item {
     return this._root;
   }
 
-  index(value) {
-    if (typeof value === 'undefined') {
-      return this._index;
-    }
-
-    this._index = value;
-    return this;
-  }
-
-  first(value) {
-    if (value === this._first) {
-      return this;
+  first(value = null) {
+    if (value === null) {
+      return this._first;
     }
 
     this._first = value;
     this._root.style('border-color',
       value === true ? 'transparent' : '#CCC');
 
+    return this;
+  }
+
+  name(value) {
+    if (value === null) {
+      return this._name;
+    }
+
+    this._name = value;
     return this;
   }
 
@@ -83,11 +81,6 @@ export default class Item {
       value: value.get(this._name)
     });
 
-    return this;
-  }
-
-  name(itemName) {
-    this._name = itemName;
     return this;
   }
 
@@ -120,13 +113,17 @@ export default class Item {
   }
 
   _bindModel() {
-    this._model.setMaxListeners(this._model.getMaxListeners() + 1);
-    this._model.addListener('set', this._handleModelSet);
+    if (this._model) {
+      this._model.setMaxListeners(this._model.getMaxListeners() + 1);
+      this._model.addListener('set', this._handleModelSet);
+    }
   }
 
   _unbindModel() {
-    this._model.setMaxListeners(this._model.getMaxListeners() - 1);
-    this._model.removeListener('set', this._handleModelSet);
+    if (this._model) {
+      this._model.setMaxListeners(this._model.getMaxListeners() - 1);
+      this._model.removeListener('set', this._handleModelSet);
+    }
   }
 
   _modelSet() {

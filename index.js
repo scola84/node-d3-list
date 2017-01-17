@@ -9,7 +9,6 @@ import RadioItem from './src/item-radio';
 import SwitchItem from './src/item-switch';
 
 import Button from './src/button';
-import Header from './src/header';
 import List from './src/list';
 
 export function checkItem() {
@@ -54,8 +53,4 @@ export function itemList() {
 
 export function listButton() {
   return new Button();
-}
-
-export function listHeader() {
-  return new Header();
 }

@@ -19,8 +19,8 @@ export default class MenuItem extends Item {
     super.destroy();
   }
 
-  user(value) {
-    if (typeof value === 'undefined') {
+  user(value = null) {
+    if (value === null) {
       return this._user;
     }
 
@@ -28,8 +28,8 @@ export default class MenuItem extends Item {
     return this._handleUser();
   }
 
-  value(itemValue) {
-    if (typeof itemValue === 'undefined') {
+  value(itemValue = null) {
+    if (itemValue === null) {
       return this._value;
     }
 
@@ -68,12 +68,12 @@ export default class MenuItem extends Item {
     return this;
   }
 
-  _modelSet(event) {
-    if (event.name !== this._name) {
+  _modelSet(setEvent) {
+    if (setEvent.name !== this._name) {
       return;
     }
 
-    const value = this._format(event.value);
+    const value = this._format(setEvent.value);
 
     if (value && value.indexOf(this._value) !== -1) {
       this._root

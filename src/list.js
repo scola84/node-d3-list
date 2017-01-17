@@ -36,15 +36,7 @@ export default class List {
   }
 
   destroy() {
-    if (this._rootMedia) {
-      this._rootMedia.destroy();
-      this._rootMedia = null;
-    }
-
-    if (this._bodyMedia) {
-      this._bodyMedia.destroy();
-      this._bodyMedia = null;
-    }
+    this._deleteInset();
 
     this._items.forEach((item) => item.destroy());
     this._items.clear();
@@ -58,38 +50,32 @@ export default class List {
     return this._root;
   }
 
-  append(item, action) {
-    item.first(this._items.size === 0);
+  first(value = null) {
+    if (value === null) {
+      return this._first;
+    }
 
-    if (action === true) {
-      this._items.add(item);
-      this._body.node().appendChild(item.root().node());
-    } else if (action === false) {
-      this._items.delete(item);
-      item.root().remove();
+    this._first = value;
+    this._root.style('padding-top',
+      value === true ? '3em' : '0px');
+
+    return this;
+  }
+
+  inset(width = '48em') {
+    if (width === false) {
+      this._deleteInset();
+    }
+
+    if (!this._rootMedia) {
+      this._insertInset(width);
     }
 
     return this;
   }
 
-  comment(value) {
-    if (typeof value === 'undefined') {
-      return this._comment;
-    }
-
-    if (value === false) {
-      return this._deleteComment();
-    }
-
-    if (this._comment) {
-      return this._updateComment(value);
-    }
-
-    return this._insertComment(value);
-  }
-
-  title(value) {
-    if (typeof value === 'undefined') {
+  title(value = null) {
+    if (value === null) {
       return this._title;
     }
 
@@ -104,17 +90,37 @@ export default class List {
     return this._insertTitle(value);
   }
 
-  inset(width = '48em') {
-    if (width === false) {
-      this._rootMedia.destroy();
-      this._rootMedia = null;
-
-      this._bodyedia.destroy();
-      this._bodyMedia = null;
-
-      return this;
+  comment(value = null) {
+    if (value === null) {
+      return this._comment;
     }
 
+    if (value === false) {
+      return this._deleteComment();
+    }
+
+    if (this._comment) {
+      return this._updateComment(value);
+    }
+
+    return this._insertComment(value);
+  }
+
+  append(item, action = true) {
+    item.first(this._items.size === 0);
+
+    if (action === true) {
+      this._items.add(item);
+      this._body.node().appendChild(item.root().node());
+    } else if (action === false) {
+      this._items.delete(item);
+      item.root().remove();
+    }
+
+    return this;
+  }
+
+  _insertInset(width) {
     this._rootMedia = this._root
       .media(`(min-width: ${width})`)
       .styles({
@@ -135,42 +141,15 @@ export default class List {
     return this;
   }
 
-  first(value) {
-    if (value === this._first) {
-      return this;
+  _deleteInset() {
+    if (this._rootMedia) {
+      this._rootMedia.destroy();
+      this._rootMedia = null;
     }
 
-    this._first = value;
-    this._root.style('padding-top', value === true ? '3em' : '0px');
-
-    return this;
-  }
-
-  _insertComment(comment) {
-    this._comment = this._root
-      .append('div')
-      .classed('scola comment', true)
-      .styles({
-        'color': '#AAA',
-        'font-size': '0.9em',
-        'line-height': '1.5em',
-        'order': 3,
-        'padding': '0.75em 1.1em 0'
-      })
-      .text(comment);
-
-    return this;
-  }
-
-  _updateComment(comment) {
-    this._comment.text(comment);
-    return this;
-  }
-
-  _deleteComment() {
-    if (this._comment) {
-      this._comment.remove();
-      this._comment = null;
+    if (this._bodyMedia) {
+      this._bodyMedia.destroy();
+      this._bodyMedia = null;
     }
 
     return this;
@@ -201,6 +180,36 @@ export default class List {
     if (this._title) {
       this._title.remove();
       this._title = null;
+    }
+
+    return this;
+  }
+
+  _insertComment(comment) {
+    this._comment = this._root
+      .append('div')
+      .classed('scola comment', true)
+      .styles({
+        'color': '#AAA',
+        'font-size': '0.9em',
+        'line-height': '1.5em',
+        'order': 3,
+        'padding': '0.75em 1.1em 0'
+      })
+      .text(comment);
+
+    return this;
+  }
+
+  _updateComment(comment) {
+    this._comment.text(comment);
+    return this;
+  }
+
+  _deleteComment() {
+    if (this._comment) {
+      this._comment.remove();
+      this._comment = null;
     }
 
     return this;

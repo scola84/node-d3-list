@@ -27,19 +27,19 @@ export default class Button {
     return this._root;
   }
 
-  text(value) {
-    this._root.text(value);
-    return this;
-  }
-
-  disabled(value) {
-    if (typeof value === 'undefined') {
+  disabled(value = null) {
+    if (value === null) {
       return this._disabled;
     }
 
     this._root.classed('disabled', value);
     this._disabled = value;
 
+    return this;
+  }
+
+  text(value) {
+    this._root.text(value);
     return this;
   }
 
