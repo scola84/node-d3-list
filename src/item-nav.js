@@ -8,17 +8,23 @@ export default class NavItem extends MenuItem {
       .classed('menu', false)
       .classed('nav', true);
 
-    this.secondary()
-      .button('ion-ios-arrow-forward');
+    this._forward = this
+      .icon()
+      .class('ion-ios-arrow-forward')
+      .secondary();
   }
 
-  _handleUser() {
+  _add(element) {
+    this._elements.splice(-1, 0, element);
+  }
+
+  _authorize() {
     if (!this._user.may('GET', this._path())) {
-      this.secondary().button(false);
+      this._forward.show(false);
     }
 
-    return super._handleUser();
+    super._authorize();
   }
 
-  _modelSet() {}
+  _set() {}
 }

@@ -31,6 +31,8 @@ export default class DateItem extends Item {
         'overflow': 'hidden'
       });
 
+    this._text = this.text().secondary();
+
     this._bind();
   }
 
@@ -218,9 +220,9 @@ export default class DateItem extends Item {
     this._setScroll();
     this._bindSelect();
 
-    this._modelSet({
-      action: 'model',
+    this._set({
       name: this._name,
+      scope: 'model',
       value: this._model.get(this._name)
     });
   }
@@ -375,12 +377,16 @@ export default class DateItem extends Item {
     return null;
   }
 
-  _modelSet(setEvent) {
+  _add(element) {
+    this._elements.splice(-1, 0, element);
+  }
+
+  _set(setEvent) {
     if (setEvent.name !== this._name) {
       return;
     }
 
-    this.secondary().text(this._format(setEvent.value));
+    this._text.text(this._format(setEvent.value));
 
     if (!this._select) {
       return;

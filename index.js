@@ -1,6 +1,5 @@
 import CheckItem from './src/item-check';
 import DateItem from './src/item-date';
-import FilterItem from './src/item-filter';
 import Item from './src/item';
 import InputItem from './src/item-input';
 import MenuItem from './src/item-menu';
@@ -17,10 +16,6 @@ export function checkItem() {
 
 export function dateItem() {
   return new DateItem();
-}
-
-export function filterItem() {
-  return new FilterItem();
 }
 
 export function inputItem() {

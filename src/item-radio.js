@@ -9,47 +9,30 @@ export default class RadioItem extends Item {
       .classed('radio', true)
       .style('cursor', 'pointer');
 
-    this._bind();
+    this._check = this
+      .icon()
+      .class('ion-ios-checkmark-empty')
+      .secondary();
+
+    this._check
+      .root()
+      .style('color', '#000');
   }
 
-  destroy() {
-    this._unbind();
-    super.destroy();
+  _add(element) {
+    this._elements.splice(-1, 0, element);
   }
 
-  value(itemValue = null) {
-    if (itemValue === null) {
-      return this._value;
-    }
-
-    this._value = itemValue;
-    return this;
-  }
-
-  _bind() {
-    this._root.on('click.scola-select-item', () => this._handleClick());
-  }
-
-  _unbind() {
-    this._root.on('click.scola-select-item', null);
-  }
-
-  _handleClick() {
+  _click() {
     this._model.set(this._name, this._value);
   }
 
-  _modelSet(setEvent) {
+  _set(setEvent) {
     if (setEvent.name !== this._name) {
       return;
     }
 
     const value = this._format(setEvent.value);
-
-    if (isEqual(value, this._value)) {
-      this.secondary().button('ion-ios-checkmark-empty');
-      this.secondary().button().style('color', '#000');
-    } else {
-      this.secondary().button(false);
-    }
+    this._check.show(isEqual(value, this._value));
   }
 }

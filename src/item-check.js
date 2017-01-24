@@ -5,45 +5,23 @@ export default class CheckItem extends Item {
     super();
 
     this._root
-      .classed('plain', false)
-      .classed('radio', true)
+      .classed('check', true)
       .style('cursor', 'pointer');
 
-    this.primary().icon('ion-ios-circle-outline', '1.5em');
-
-    this._bind();
+    this._check = this
+      .icon()
+      .class('ion-ios-circle-outline')
+      .size('1.5em');
   }
 
-  destroy() {
-    this._unbind();
-    super.destroy();
-  }
-
-  value(itemValue = null) {
-    if (itemValue === null) {
-      return this._value;
-    }
-
-    this._value = itemValue;
-    return this;
-  }
-
-  _bind() {
-    this._root.on('click.scola-check-item', () => this._handleClick());
-  }
-
-  _unbind() {
-    this._root.on('click.scola-check-item', null);
-  }
-
-  _handleClick() {
+  _click() {
     const value = this._model.get(this._name);
     const action = !value || value.indexOf(this._value) === -1;
 
     this._model.add(this._name, this._value, action);
   }
 
-  _modelSet(setEvent) {
+  _set(setEvent) {
     if (setEvent.name !== this._name) {
       return;
     }
@@ -51,9 +29,9 @@ export default class CheckItem extends Item {
     const value = this._format(setEvent.value);
 
     if (!value || value.indexOf(this._value) === -1) {
-      this.primary().icon('ion-ios-circle-outline');
+      this._check.class('ion-ios-circle-outline');
     } else {
-      this.primary().icon('ion-ios-checkmark');
+      this._check.class('ion-ios-checkmark');
     }
   }
 }
