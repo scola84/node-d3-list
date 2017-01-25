@@ -9,24 +9,23 @@ export default class Button extends Part {
     this._class = null;
 
     this._root = select('body')
-      .append('button')
+      .append('div')
       .remove()
       .classed('scola button', true)
       .styles({
         'align-items': 'center',
-        'background': 'none',
-        'border': 0,
-        'border-top': '1px solid',
-        'display': 'flex',
-        'margin': 0,
-        'padding': 0
+        'border-top': '1px solid'
       });
 
     this._icon = this._root
-      .append('div')
+      .append('button')
       .styles({
+        'background': 'none',
+        'border': 0,
         'cursor': 'pointer',
-        'font-size': '2em'
+        'font-size': '2em',
+        'margin': 0,
+        'padding': 0
       });
 
     this._padding = this._root

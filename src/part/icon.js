@@ -31,6 +31,10 @@ export default class Icon extends Part {
     this.show();
   }
 
+  icon() {
+    return this._icon;
+  }
+
   class(value = null) {
     if (value === null) {
       return this._icon.classed();
