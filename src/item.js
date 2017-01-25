@@ -1,4 +1,5 @@
 import { select } from 'd3-selection';
+import Button from './part/button';
 import Icon from './part/icon';
 import Text from './part/text';
 import 'd3-selection-multi';
@@ -114,6 +115,17 @@ export default class Item {
     }
 
     this._order();
+  }
+
+  button(value = null) {
+    const button = new Button()
+      .item(this);
+
+    button.class(value);
+    this._add(button);
+    this._order();
+
+    return button;
   }
 
   icon(value = null) {
