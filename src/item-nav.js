@@ -16,6 +16,7 @@ export default class NavItem extends MenuItem {
 
   _add(element) {
     this._elements.splice(-1, 0, element);
+    this._order();
   }
 
   _authorize() {

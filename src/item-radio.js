@@ -7,7 +7,9 @@ export default class RadioItem extends Item {
 
     this._root
       .classed('radio', true)
-      .style('cursor', 'pointer');
+      .styles({
+        'cursor': 'pointer'
+      });
 
     this._check = this
       .icon()
@@ -16,14 +18,17 @@ export default class RadioItem extends Item {
 
     this._check
       .root()
-      .style('color', '#000');
+      .styles({
+        'color': '#000'
+      });
   }
 
   _add(element) {
     this._elements.splice(-1, 0, element);
+    this._order();
   }
 
-  _click() {
+  _handleClick() {
     this._model.set(this._name, this._value);
   }
 

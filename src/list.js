@@ -50,14 +50,19 @@ export default class List {
     return this._root;
   }
 
+  body() {
+    return this._body;
+  }
+
   first(value = null) {
     if (value === null) {
       return this._first;
     }
 
     this._first = value;
-    this._root.style('padding-top',
-      value === true ? '3em' : '0px');
+    this._root.style('padding-top', () => {
+      return value === true ? '3em' : '0px';
+    });
 
     return this;
   }

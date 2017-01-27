@@ -6,15 +6,23 @@ export default class CheckItem extends Item {
 
     this._root
       .classed('check', true)
-      .style('cursor', 'pointer');
+      .styles({
+        'cursor': 'pointer'
+      });
 
     this._check = this
       .icon()
       .class('ion-ios-circle-outline')
       .size('1.5em');
+
+    this._check
+      .root()
+      .styles({
+        'width': '1.75em'
+      });
   }
 
-  _click() {
+  _handleClick() {
     const value = this._model.get(this._name);
     const action = !value || value.indexOf(this._value) === -1;
 

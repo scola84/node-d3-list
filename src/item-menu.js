@@ -6,7 +6,9 @@ export default class MenuItem extends Item {
 
     this._root
       .classed('menu', true)
-      .style('cursor', 'pointer');
+      .styles({
+        'cursor': 'pointer'
+      });
   }
 
   _authorize() {
@@ -19,7 +21,7 @@ export default class MenuItem extends Item {
       .style('cursor', 'default');
   }
 
-  _click() {
+  _handleClick() {
     if (!this._user || this._user.may('GET', this._path())) {
       this._model.set(this._name, this._value);
     }

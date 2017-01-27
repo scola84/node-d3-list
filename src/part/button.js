@@ -14,7 +14,9 @@ export default class Button extends Part {
       .classed('scola button', true)
       .styles({
         'align-items': 'center',
-        'border-top': '1px solid'
+        'border-top': '1px solid',
+        'display': 'flex',
+        'padding': '0.5em 0'
       });
 
     this._icon = this._root
@@ -23,6 +25,7 @@ export default class Button extends Part {
         'background': 'none',
         'border': 0,
         'cursor': 'pointer',
+        'display': 'flex',
         'font-size': '2em',
         'margin': 0,
         'padding': 0
@@ -63,6 +66,15 @@ export default class Button extends Part {
     }
 
     this._icon.style('font-size', value);
+    return this;
+  }
+
+  tabindex(value = null) {
+    if (value === null) {
+      return this._icon.attr('tabindex');
+    }
+
+    this._icon.attr('tabindex', value);
     return this;
   }
 

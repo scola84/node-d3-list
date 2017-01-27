@@ -32,11 +32,11 @@ export default class InputItem extends Item {
   }
 
   _bindInput() {
-    this._input.root().on('input', () => this._handleChange());
+    this._input.root().on('input.scola-item-input', () => this._handleChange());
   }
 
   _unbindInput() {
-    this._input.root().on('input', null);
+    this._input.root().on('input.scola-item-input', null);
   }
 
   _change() {

@@ -14,12 +14,17 @@ export default class Icon extends Part {
       .classed('scola icon', true)
       .styles({
         'align-items': 'center',
-        'border-top': '1px solid'
+        'border-top': '1px solid',
+        'display': 'flex',
+        'padding': '0.5em 0'
       });
 
     this._icon = this._root
       .append('div')
-      .style('font-size', '2em');
+      .styles({
+        'display': 'flex',
+        'font-size': '2em'
+      });
 
     this._padding = this._root
       .append('div')

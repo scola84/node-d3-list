@@ -19,8 +19,7 @@ export default class Item {
       .styles({
         'background': '#FFF',
         'display': 'flex',
-        'flex-direction': 'row',
-        'line-height': '3em'
+        'flex-direction': 'row'
       });
 
     this._padding = this._root
@@ -32,7 +31,6 @@ export default class Item {
         'width': '1em'
       });
 
-    this._handleClick = () => this._click();
     this._handleSet = (e) => this._set(e);
 
     this._bindRoot();
@@ -56,8 +54,9 @@ export default class Item {
     }
 
     this._first = value;
-    this._root.style('border-color',
-      value === true ? 'transparent' : '#CCC');
+    this._root.style('border-color', () => {
+      return value === true ? 'transparent' : '#CCC';
+    });
 
     return this;
   }
@@ -123,7 +122,6 @@ export default class Item {
 
     button.class(value);
     this._add(button);
-    this._order();
 
     return button;
   }
@@ -134,7 +132,6 @@ export default class Item {
 
     icon.class(value);
     this._add(icon);
-    this._order();
 
     return icon;
   }
@@ -145,17 +142,16 @@ export default class Item {
 
     text.text(value);
     this._add(text);
-    this._order();
 
     return text;
   }
 
   _bindRoot() {
-    this._root.on('click', this._handleClick);
+    this._root.on('click.scola-item', () => this._handleClick());
   }
 
   _unbindRoot() {
-    this._root.on('click', null);
+    this._root.on('click.scola-item', null);
   }
 
   _bindModel() {
@@ -174,6 +170,7 @@ export default class Item {
 
   _add(element) {
     this._elements.push(element);
+    this._order();
   }
 
   _move(element, value) {
@@ -189,9 +186,9 @@ export default class Item {
     });
   }
 
-  _authorize() {}
+  _handleClick() {}
 
-  _click() {}
+  _authorize() {}
 
   _set() {}
 }

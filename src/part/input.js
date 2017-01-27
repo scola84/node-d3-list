@@ -14,7 +14,8 @@ export default class Input extends Part {
         'border-top': '1px solid',
         'border-top-color': 'inherit',
         'display': 'flex',
-        'flex': 1
+        'flex': 1,
+        'padding': '0.5em 0'
       });
 
     this._input = this._root
@@ -24,8 +25,8 @@ export default class Input extends Part {
         'background': 'none',
         'border': 0,
         'color': 'inherit',
-        'height': '3em',
-        'padding': 0,
+        'height': '2em',
+        'padding': '0.125em',
         'width': '100%'
       });
 
@@ -55,6 +56,15 @@ export default class Input extends Part {
     }
 
     this._input.attr('placeholder', value);
+    return this;
+  }
+
+  tabindex(value = null) {
+    if (value === null) {
+      return this._input.attr('tabindex');
+    }
+
+    this._input.attr('tabindex', value);
     return this;
   }
 

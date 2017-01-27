@@ -31,14 +31,18 @@ export default class SwitchItem extends Item {
   }
 
   _bindKnob() {
-    this._knob.root().on('click', () => this._handleClick());
+    this._knob
+      .knob()
+      .on('click.scola-item-switch', () => this._handleClick());
   }
 
   _unbindKnob() {
-    this._knob.root().on('click', null);
+    this._knob
+      .knob()
+      .on('click.scola-item-switch', null);
   }
 
-  _click() {
+  _handleClick() {
     this._model.set(this._name, !this._model.get(this._name));
   }
 
