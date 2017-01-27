@@ -15,6 +15,7 @@ export default class Input extends Part {
         'border-top-color': 'inherit',
         'display': 'flex',
         'flex': 1,
+        'height': '3em',
         'padding': '0.5em 0'
       });
 
@@ -25,7 +26,6 @@ export default class Input extends Part {
         'background': 'none',
         'border': 0,
         'color': 'inherit',
-        'height': '2em',
         'padding': '0.125em',
         'width': '100%'
       });

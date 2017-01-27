@@ -16,6 +16,7 @@ export default class Icon extends Part {
         'align-items': 'center',
         'border-top': '1px solid',
         'display': 'flex',
+        'height': '3em',
         'padding': '0.5em 0'
       });
 

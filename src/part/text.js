@@ -11,24 +11,25 @@ export default class Text extends Part {
       .remove()
       .classed('scola text', true)
       .styles({
-        'align-items': 'center',
         'border-top': '1px solid',
         'border-top-color': 'inherit',
         'display': 'flex',
+        'height': '3em',
         'overflow': 'hidden',
         'padding': '0.5em 0'
       });
 
     this._text = this._root
       .append('button')
-      .attr('type', 'button')
-      .attr('tabindex', -1)
+      .attrs({
+        'tabindex': -1,
+        'type': 'button'
+      })
       .styles({
         'background': 'none',
         'border': 0,
         'color': 'inherit',
         'cursor': 'pointer',
-        'height': '2em',
         'max-width': '100%',
         'overflow': 'hidden',
         'padding': '0 0.125em',

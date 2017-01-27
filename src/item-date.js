@@ -122,7 +122,6 @@ export default class DateItem extends Item {
         'border-top': '1px solid #CCC',
         'color': '#000',
         'left': '1em',
-        'margin-top': '1px',
         'padding': '0 1em 0 0',
         'position': 'absolute',
         'right': 0,
