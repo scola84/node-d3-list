@@ -38,7 +38,10 @@ export default class List {
   destroy() {
     this._deleteInset();
 
-    this._items.forEach((item) => item.destroy());
+    this._items.forEach((item) => {
+      item.destroy();
+    });
+
     this._items.clear();
 
     this._root.dispatch('destroy');
