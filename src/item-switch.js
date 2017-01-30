@@ -32,13 +32,13 @@ export default class SwitchItem extends Item {
 
   _bindKnob() {
     this._knob
-      .knob()
+      .area()
       .on('click.scola-item-switch', () => this._handleClick());
   }
 
   _unbindKnob() {
     this._knob
-      .knob()
+      .area()
       .on('click.scola-item-switch', null);
   }
 

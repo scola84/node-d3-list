@@ -134,12 +134,9 @@ export default class DateItem extends Item {
       .append('div')
       .classed('scola year', true)
       .styles({
-        'display': 'flex',
-        'height': '2em',
-        'line-height': '2em',
         'margin-top': '0.5em',
         'overflow': 'hidden',
-        'padding': '1px 0'
+        'white-space': 'nowrap'
       });
 
     let i = this._begin.year();
@@ -152,9 +149,12 @@ export default class DateItem extends Item {
         .styles({
           'background': 'none',
           'border': 0,
-          'padding': 0,
+          'cursor': 'pointer',
+          'display': 'inline-block',
+          'height': '2em',
+          'line-height': '2em',
           'margin': 0,
-          'display': 'flex',
+          'padding': 0,
           'padding-left': '0.5em',
           'padding-right': '0.5em',
           'border-radius': '0.25em'
@@ -166,12 +166,9 @@ export default class DateItem extends Item {
       .append('div')
       .classed('scola month', true)
       .styles({
-        'display': 'flex',
-        'height': '2em',
-        'line-height': '2em',
         'margin-top': '0.5em',
         'overflow': 'hidden',
-        'padding': '1px 0'
+        'white-space': 'nowrap'
       });
 
     i = 0;
@@ -184,9 +181,12 @@ export default class DateItem extends Item {
         .styles({
           'background': 'none',
           'border': 0,
-          'padding': 0,
+          'cursor': 'pointer',
+          'display': 'inline-block',
+          'height': '2em',
+          'line-height': '2em',
           'margin': 0,
-          'display': 'flex',
+          'padding': 0,
           'padding-left': '0.5em',
           'padding-right': '0.5em',
           'border-radius': '0.25em'
@@ -200,12 +200,9 @@ export default class DateItem extends Item {
       .append('div')
       .classed('scola day', true)
       .styles({
-        'display': 'flex',
-        'height': '2em',
-        'line-height': '2em',
         'margin-top': '0.5em',
         'overflow': 'hidden',
-        'padding': '1px 0'
+        'white-space': 'nowrap'
       });
 
     i = 1;
@@ -218,9 +215,12 @@ export default class DateItem extends Item {
         .styles({
           'background': 'none',
           'border': 0,
-          'padding': 0,
+          'cursor': 'pointer',
+          'display': 'inline-block',
+          'height': '2em',
+          'line-height': '2em',
           'margin': 0,
-          'display': 'flex',
+          'padding': 0,
           'padding-left': '0.5em',
           'padding-right': '0.5em',
           'border-radius': '0.25em'
@@ -449,7 +449,7 @@ export default class DateItem extends Item {
       .styles({
         'background': 'none',
         'color': null,
-        'cursor': null
+        'cursor': 'pointer'
       });
 
     this._day.select(`button:nth-child(${dayIndex})`)

@@ -27,6 +27,7 @@ export default class Knob extends Part {
         'background': '#CCC',
         'border': '1px solid #CCC',
         'border-radius': '1em',
+        'cursor': 'pointer',
         'height': '2em',
         'position': 'relative',
         'width': '3.25em'
@@ -67,6 +68,10 @@ export default class Knob extends Part {
         'transition-property': 'left',
         'width': '1.85em'
       });
+  }
+
+  area() {
+    return this._area;
   }
 
   knob() {
