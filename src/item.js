@@ -1,6 +1,7 @@
 import { select } from 'd3-selection';
 import Button from './part/button';
 import Icon from './part/icon';
+import Input from './part/input';
 import Text from './part/text';
 import 'd3-selection-multi';
 
@@ -41,24 +42,15 @@ export default class Item {
     this._unbindRoot();
     this._unbindModel();
 
+    this._elements.forEach((element) => {
+      element.destroy();
+    });
+
     this._model = null;
 
     this._root.dispatch('destroy');
     this._root.remove();
     this._root = null;
-  }
-
-  first(value = null) {
-    if (value === null) {
-      return this._first;
-    }
-
-    this._first = value;
-    this._root.style('border-color', () => {
-      return value === true ? 'transparent' : '#CCC';
-    });
-
-    return this;
   }
 
   root() {
@@ -136,6 +128,16 @@ export default class Item {
     return icon;
   }
 
+  input(value = null) {
+    const input = new Input()
+      .item(this);
+
+    input.type(value);
+    this._add(input);
+
+    return input;
+  }
+
   text(value = null) {
     const text = new Text()
       .item(this);
@@ -144,6 +146,19 @@ export default class Item {
     this._add(text);
 
     return text;
+  }
+
+  first(value = null) {
+    if (value === null) {
+      return this._first;
+    }
+
+    this._first = value;
+    this._root.style('border-color', () => {
+      return value === true ? 'transparent' : '#CCC';
+    });
+
+    return this;
   }
 
   _bindRoot() {

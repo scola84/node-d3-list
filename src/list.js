@@ -4,7 +4,6 @@ import '@scola/d3-media';
 
 export default class List {
   constructor() {
-    this._first = null;
     this._items = new Set();
 
     this._rootMedia = null;
@@ -31,8 +30,6 @@ export default class List {
         'border-width': '1px 0',
         'order': 2
       });
-
-    this.first(false);
   }
 
   destroy() {
@@ -55,19 +52,6 @@ export default class List {
 
   body() {
     return this._body;
-  }
-
-  first(value = null) {
-    if (value === null) {
-      return this._first;
-    }
-
-    this._first = value;
-    this._root.style('padding-top', () => {
-      return value === true ? '3em' : '0px';
-    });
-
-    return this;
   }
 
   inset(width = '48em') {
@@ -115,17 +99,11 @@ export default class List {
   }
 
   append(item, action = true) {
-    item.first(this._items.size === 0);
-
-    if (action === true) {
-      this._items.add(item);
-      this._body.node().appendChild(item.root().node());
-    } else if (action === false) {
-      this._items.delete(item);
-      item.root().remove();
+    if (action === false) {
+      return this._deleteItem(item);
     }
 
-    return this;
+    return this._insertItem(item);
   }
 
   _insertInset(width) {
@@ -221,5 +199,22 @@ export default class List {
     }
 
     return this;
+  }
+
+  _insertItem(item) {
+    item.first(this._items.size === 0);
+    this._items.add(item);
+
+    this._body.node()
+      .appendChild(item.root().node());
+
+    return item;
+  }
+
+  _deleteItem(item) {
+    this._items.delete(item);
+    item.root().remove();
+
+    return item;
   }
 }

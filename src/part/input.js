@@ -9,7 +9,7 @@ export default class Input extends Part {
     this._root = select('body')
       .append('div')
       .remove()
-      .classed('scola input-root', true)
+      .classed('scola input', true)
       .styles({
         'border-top': '1px solid',
         'border-top-color': 'inherit',
@@ -35,6 +35,9 @@ export default class Input extends Part {
       .styles({
         'width': '1em'
       });
+
+    this._handleChange = () => this._change();
+    this._bindInput();
   }
 
   input() {
@@ -42,12 +45,11 @@ export default class Input extends Part {
   }
 
   name(value = null) {
-    if (value === null) {
-      return this._input.attr('name');
+    if (value !== null) {
+      this._input.attr('name', value);
     }
 
-    this._input.attr('name', value);
-    return this;
+    return super.name(value);
   }
 
   placeholder(value = null) {
@@ -84,5 +86,25 @@ export default class Input extends Part {
 
     this._input.property('value', inputValue);
     return this;
+  }
+
+  _bindInput() {
+    this._input.on('input.scola-item-input', this._handleChange);
+  }
+
+  _unbindInput() {
+    this._input.on('input.scola-item-input', null);
+  }
+
+  _change() {
+    this._model.set(this._name, this.value());
+  }
+
+  _set(setEvent) {
+    if (!this._input || setEvent.name !== this._name) {
+      return;
+    }
+
+    this.value(this._format(setEvent.value));
   }
 }

@@ -29,7 +29,7 @@ export default class Text extends Part {
         'background': 'none',
         'border': 0,
         'color': 'inherit',
-        'cursor': 'pointer',
+        'cursor': 'inherit',
         'max-width': '100%',
         'overflow': 'hidden',
         'padding': '0 0.125em',
@@ -96,5 +96,14 @@ export default class Text extends Part {
 
     this._text.style('padding', 0);
     return this;
+  }
+
+  _set(setEvent) {
+    if (setEvent.name !== this._name) {
+      return;
+    }
+
+    const value = this._format(setEvent.value);
+    this._text.text(value);
   }
 }
