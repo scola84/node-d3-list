@@ -4,7 +4,6 @@ import Item from './src/item';
 import MenuItem from './src/item-menu';
 import NavItem from './src/item-nav';
 import RadioItem from './src/item-radio';
-import SwitchItem from './src/item-switch';
 
 import Button from './src/button';
 import List from './src/list';
@@ -31,10 +30,6 @@ export function navItem() {
 
 export function radioItem() {
   return new RadioItem();
-}
-
-export function switchItem() {
-  return new SwitchItem();
 }
 
 export function itemList() {

@@ -40,6 +40,11 @@ export default class Input extends Part {
     this._bindInput();
   }
 
+  destroy() {
+    this._unbindInput();
+    super.destroy();
+  }
+
   input() {
     return this._input;
   }

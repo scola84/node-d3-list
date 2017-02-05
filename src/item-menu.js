@@ -21,7 +21,7 @@ export default class MenuItem extends Item {
       .style('cursor', 'default');
   }
 
-  _handleClick() {
+  _click() {
     if (!this._user || this._user.may('GET', this._path())) {
       this._model.set(this._name, this._value);
     }

@@ -2,14 +2,14 @@ import { select } from 'd3-selection';
 import Part from '../part';
 import 'd3-selection-multi';
 
-export default class Knob extends Part {
+export default class Switch extends Part {
   constructor() {
     super();
 
     this._root = select('body')
       .append('div')
       .remove()
-      .classed('scola knob-root', true)
+      .classed('scola switch', true)
       .styles({
         'align-items': 'center',
         'border-top': '1px solid',
@@ -68,14 +68,14 @@ export default class Knob extends Part {
         'transition-property': 'left',
         'width': '1.85em'
       });
+
+      this._handleClick = () => this._click();
+      this._bindArea();
   }
 
-  area() {
-    return this._area;
-  }
-
-  knob() {
-    return this._knob;
+  destroy() {
+    this._unbindArea();
+    super.destroy();
   }
 
   tabindex(value = null) {
@@ -115,5 +115,26 @@ export default class Knob extends Part {
     this._area.styles(areaStyle);
     this._mask.styles(maskStyle);
     this._knob.styles(knobStyle);
+  }
+
+  _bindArea() {
+    this._area.on('click.scola-item-knob', this._handleClick);
+  }
+
+  _unbindArea() {
+    this._area.on('click.scola-item-knob', null);
+  }
+
+  _click() {
+    this._model.set(this._name, !this._model.get(this._name));
+  }
+
+  _set(setEvent) {
+    if (!this._knob || setEvent.name !== this._name) {
+      return;
+    }
+
+    const value = this._format(setEvent.value);
+    this.value(value);
   }
 }

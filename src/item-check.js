@@ -22,7 +22,7 @@ export default class CheckItem extends Item {
       });
   }
 
-  _handleClick() {
+  _click() {
     const value = this._model.get(this._name);
     const action = !value || value.indexOf(this._value) === -1;
 

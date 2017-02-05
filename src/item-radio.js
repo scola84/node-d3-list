@@ -28,7 +28,7 @@ export default class RadioItem extends Item {
     this._order();
   }
 
-  _handleClick() {
+  _click() {
     this._model.set(this._name, this._value);
   }
 
