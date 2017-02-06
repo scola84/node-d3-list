@@ -1,6 +1,7 @@
 /* eslint prefer-reflect: "off" */
 
 import { event, select } from 'd3';
+import debounce from 'lodash-es/debounce';
 import { scroller } from '@scola/d3-scroller';
 import Part from '../part';
 import 'd3-selection-multi';
@@ -36,13 +37,19 @@ export default class Scroller extends Part {
         'width': '1em'
       });
 
-    this._handleScroll = () => this._scroll(event);
+    this._handleScroll = () => this._executeScroll(event);
+    this._executeScroll = debounce((e) => this._scroll(e), 100);
+
     this._bindScroller();
   }
 
   destroy() {
     this._unbindScroller();
     this._scroller.destroy();
+
+    this._executeScroll.cancel();
+    this._executeScroll = null;
+
     super.destroy();
   }
 
@@ -64,8 +71,8 @@ export default class Scroller extends Part {
     this._scroller.root().on('scroll.scola-list', null);
   }
 
-  _scroll() {
-    this._model.set(this._name, event.detail.value);
+  _scroll(scrollEvent) {
+    this._model.set(this._name, scrollEvent.detail.value);
   }
 
   _set(setEvent) {
