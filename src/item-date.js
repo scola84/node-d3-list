@@ -401,7 +401,8 @@ export default class DateItem extends Item {
       return;
     }
 
-    this._text.text(this._format(setEvent.value));
+    const value = this._format(setEvent.value);
+    this._text.text(value);
 
     if (!this._select) {
       return;

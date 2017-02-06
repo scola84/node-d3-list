@@ -10,6 +10,7 @@ export default class Part {
 
   destroy() {
     this._unbindModel();
+
     this._model = null;
     this._format = null;
 

@@ -69,8 +69,8 @@ export default class Switch extends Part {
         'width': '1.85em'
       });
 
-      this._handleClick = () => this._click();
-      this._bindArea();
+    this._handleClick = () => this._click();
+    this._bindArea();
   }
 
   destroy() {
@@ -85,36 +85,6 @@ export default class Switch extends Part {
 
     this._knob.attr('tabindex', value);
     return this;
-  }
-
-  value(itemValue) {
-    const areaStyle = {
-      'background': '#CCC',
-      'border-color': '#CCC'
-    };
-
-    const maskStyle = {
-      'transform': 'scale(1)',
-      'opacity': '1'
-    };
-
-    const knobStyle = {
-      'left': '0'
-    };
-
-    if (Boolean(itemValue) === true) {
-      areaStyle.background = 'green';
-      areaStyle['border-color'] = 'green';
-
-      maskStyle.transform = 'scale(0)';
-      maskStyle.opacity = '0';
-
-      knobStyle.left = '1.27em';
-    }
-
-    this._area.styles(areaStyle);
-    this._mask.styles(maskStyle);
-    this._knob.styles(knobStyle);
   }
 
   _bindArea() {
@@ -135,6 +105,33 @@ export default class Switch extends Part {
     }
 
     const value = this._format(setEvent.value);
-    this.value(value);
+
+    const areaStyle = {
+      'background': '#CCC',
+      'border-color': '#CCC'
+    };
+
+    const maskStyle = {
+      'transform': 'scale(1)',
+      'opacity': '1'
+    };
+
+    const knobStyle = {
+      'left': '0'
+    };
+
+    if (Boolean(value) === true) {
+      areaStyle.background = 'green';
+      areaStyle['border-color'] = 'green';
+
+      maskStyle.transform = 'scale(0)';
+      maskStyle.opacity = '0';
+
+      knobStyle.left = '1.27em';
+    }
+
+    this._area.styles(areaStyle);
+    this._mask.styles(maskStyle);
+    this._knob.styles(knobStyle);
   }
 }

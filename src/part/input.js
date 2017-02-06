@@ -84,15 +84,6 @@ export default class Input extends Part {
     return this;
   }
 
-  value(inputValue = null) {
-    if (inputValue === null) {
-      return this._input.property('value');
-    }
-
-    this._input.property('value', inputValue);
-    return this;
-  }
-
   _bindInput() {
     this._input.on('input.scola-list', this._handleChange);
   }
@@ -102,7 +93,8 @@ export default class Input extends Part {
   }
 
   _change() {
-    this._model.set(this._name, this.value());
+    const value = this._input.property('value');
+    this._model.set(this._name, value);
   }
 
   _set(setEvent) {
@@ -110,6 +102,7 @@ export default class Input extends Part {
       return;
     }
 
-    this.value(this._format(setEvent.value));
+    const value = this._format(setEvent.value);
+    this._input.property('value', value);
   }
 }

@@ -1,6 +1,7 @@
 import { select } from 'd3-selection';
 import Button from './part/button';
 import Icon from './part/icon';
+import Scroller from './part/scroller';
 import Switch from './part/switch';
 import Input from './part/input';
 import Text from './part/text';
@@ -49,6 +50,7 @@ export default class Item {
     });
 
     this._model = null;
+    this._format = null;
 
     this._root.dispatch('destroy');
     this._root.remove();
@@ -140,7 +142,15 @@ export default class Item {
     return input;
   }
 
-  switch() {
+  scroller() {
+    const scroller = new Scroller()
+      .item(this);
+
+    this._add(scroller);
+    return scroller;
+  }
+
+  switch () {
     const part = new Switch()
       .item(this);
 
