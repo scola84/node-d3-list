@@ -30,9 +30,12 @@ export default class List {
         'border-width': '1px 0',
         'order': 2
       });
+
+    this._bindBody();
   }
 
   destroy() {
+    this._unbindBody();
     this._deleteInset();
 
     this._items.forEach((item) => {
@@ -104,6 +107,25 @@ export default class List {
     }
 
     return this._insertItem(item);
+  }
+
+  _bindBody() {
+    this._gesture = this._body
+      .gesture()
+      .on('panstart', (e) => e.stopPropagation())
+      .on('panright', (e) => e.stopPropagation())
+      .on('panleft', (e) => e.stopPropagation())
+      .on('panend', (e) => e.stopPropagation())
+      .on('swiperight', (e) => e.stopPropagation())
+      .on('swipeleft', (e) => e.stopPropagation())
+      .on('tap', (e) => e.stopPropagation());
+  }
+
+  _unbindBody() {
+    if (this._gesture) {
+      this._gesture.destroy();
+      this._gesture = null;
+    }
   }
 
   _insertInset(width) {
