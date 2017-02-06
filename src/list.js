@@ -1,5 +1,6 @@
 import { select } from 'd3-selection';
 import 'd3-selection-multi';
+import '@scola/d3-gesture';
 import '@scola/d3-media';
 
 export default class List {
