@@ -118,11 +118,11 @@ export default class Switch extends Part {
   }
 
   _bindArea() {
-    this._area.on('click.scola-item-knob', this._handleClick);
+    this._area.on('click.scola-list', this._handleClick);
   }
 
   _unbindArea() {
-    this._area.on('click.scola-item-knob', null);
+    this._area.on('click.scola-list', null);
   }
 
   _click() {

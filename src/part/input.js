@@ -94,11 +94,11 @@ export default class Input extends Part {
   }
 
   _bindInput() {
-    this._input.on('input.scola-item-input', this._handleChange);
+    this._input.on('input.scola-list', this._handleChange);
   }
 
   _unbindInput() {
-    this._input.on('input.scola-item-input', null);
+    this._input.on('input.scola-list', null);
   }
 
   _change() {

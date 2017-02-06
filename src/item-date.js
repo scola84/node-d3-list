@@ -105,11 +105,11 @@ export default class DateItem extends Item {
   }
 
   _bind() {
-    this._root.on('click.scola-item-date', () => this.toggle());
+    this._root.on('click.scola-list', () => this.toggle());
   }
 
   _unbind() {
-    this._root.on('click.scola-item-date', null);
+    this._root.on('click.scola-list', null);
   }
 
   _createSelect() {
@@ -265,32 +265,32 @@ export default class DateItem extends Item {
 
   _bindSelect() {
     this._select
-      .on('mousedown.scola-item-date', () => { this._pan = false; })
-      .on('click.scola-item-date', () => event.stopPropagation())
-      .on('wheel.scola-item-date', () => event.preventDefault())
+      .on('mousedown.scola-list', () => { this._pan = false; })
+      .on('click.scola-list', () => event.stopPropagation())
+      .on('wheel.scola-list', () => event.preventDefault())
       .gesture()
       .on('swiperight', (e) => e.stopPropagation())
       .on('swipeleft', (e) => e.stopPropagation());
 
     this._year
-      .on('click.scola-item-date', () => this._handleYearClick())
-      .on('wheel.scola-item-date', () => this._handleWheel(this._year, event))
+      .on('click.scola-list', () => this._handleYearClick())
+      .on('wheel.scola-list', () => this._handleWheel(this._year, event))
       .gesture()
       .on('panstart', () => this._handlePanStart(this._year))
       .on('pan', (e) => this._handlePan(this._year, e))
       .on('panend', () => this._handlePanEnd(this._year));
 
     this._month
-      .on('click.scola-item-date', () => this._handleMonthClick())
-      .on('wheel.scola-item-date', () => this._handleWheel(this._month, event))
+      .on('click.scola-list', () => this._handleMonthClick())
+      .on('wheel.scola-list', () => this._handleWheel(this._month, event))
       .gesture()
       .on('panstart', () => this._handlePanStart(this._month))
       .on('pan', (e) => this._handlePan(this._month, e))
       .on('panend', () => this._handlePanEnd(this._month));
 
     this._day
-      .on('click.scola-item-date', () => this._handleDayClick())
-      .on('wheel.scola-item-date', () => this._handleWheel(this._day, event))
+      .on('click.scola-list', () => this._handleDayClick())
+      .on('wheel.scola-list', () => this._handleWheel(this._day, event))
       .gesture()
       .on('panstart', () => this._handlePanStart(this._day))
       .on('pan', (e) => this._handlePan(this._day, e))
@@ -299,22 +299,22 @@ export default class DateItem extends Item {
 
   _unbindSelect() {
     this._select
-      .on('.scola-item-date', null)
+      .on('.scola-list', null)
       .gesture()
       .destroy();
 
     this._year
-      .on('.scola-item-date', null)
+      .on('.scola-list', null)
       .gesture()
       .destroy();
 
     this._month
-      .on('.scola-item-date', null)
+      .on('.scola-list', null)
       .gesture()
       .destroy();
 
     this._day
-      .on('.scola-item-date', null)
+      .on('.scola-list', null)
       .gesture()
       .destroy();
   }
