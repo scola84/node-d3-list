@@ -354,7 +354,7 @@ export default class DateItem extends Item {
       date.date(copy.daysInMonth());
     }
 
-    this._model.set(this._name, date.year(firstYear + index));
+    this._model.set(this._name, date.clone().year(firstYear + index));
   }
 
   _handleMonthClick() {
@@ -364,7 +364,8 @@ export default class DateItem extends Item {
 
     const index = this._indexOf(event.target);
     const date = this._model.get(this._name);
-    this._model.set(this._name, date.month(index));
+
+    this._model.set(this._name, date.clone().month(index));
   }
 
   _handleDayClick() {
@@ -378,7 +379,8 @@ export default class DateItem extends Item {
 
     const index = this._indexOf(event.target);
     const date = this._model.get(this._name);
-    this._model.set(this._name, date.date(index + 1));
+
+    this._model.set(this._name, date.clone().date(index + 1));
   }
 
   _indexOf(node) {
