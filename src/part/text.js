@@ -1,6 +1,5 @@
-import { select } from 'd3-selection';
+import { select } from 'd3';
 import Part from '../part';
-import 'd3-selection-multi';
 
 export default class Text extends Part {
   constructor() {

@@ -1,14 +1,13 @@
-import { select } from 'd3-selection';
-import 'd3-selection-multi';
-import '@scola/d3-gesture';
-import '@scola/d3-media';
+import { select } from 'd3';
 
 export default class List {
   constructor() {
     this._items = new Set();
 
+    this._gesture = null;
     this._rootMedia = null;
     this._bodyMedia = null;
+    
     this._title = null;
     this._comment = null;
 

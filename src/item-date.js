@@ -1,8 +1,5 @@
-import { event, select } from 'd3-selection';
+import { event, select } from 'd3';
 import Item from './item';
-import 'd3-selection-multi';
-import 'd3-transition';
-import '@scola/d3-gesture';
 
 export default class DateItem extends Item {
   constructor() {
@@ -18,7 +15,7 @@ export default class DateItem extends Item {
     };
 
     this._open = false;
-    this._pan = false;
+    this._panning = false;
 
     this._height = null;
     this._scrollLeft = 0;
@@ -32,7 +29,6 @@ export default class DateItem extends Item {
       });
 
     this._text = this.text().secondary();
-
     this._bind();
   }
 
@@ -265,7 +261,7 @@ export default class DateItem extends Item {
 
   _bindSelect() {
     this._select
-      .on('mousedown.scola-list', () => { this._pan = false; })
+      .on('mousedown.scola-list', () => { this._panning = false; })
       .on('click.scola-list', () => event.stopPropagation())
       .on('wheel.scola-list', () => event.preventDefault())
       .gesture()
@@ -273,28 +269,28 @@ export default class DateItem extends Item {
       .on('swipeleft', (e) => e.stopPropagation());
 
     this._year
-      .on('click.scola-list', () => this._handleYearClick())
-      .on('wheel.scola-list', () => this._handleWheel(this._year, event))
+      .on('click.scola-list', () => this._yearClick())
+      .on('wheel.scola-list', () => this._wheel(this._year, event))
       .gesture()
-      .on('panstart', () => this._handlePanStart(this._year))
-      .on('pan', (e) => this._handlePan(this._year, e))
-      .on('panend', () => this._handlePanEnd(this._year));
+      .on('panstart', () => this._panStart(this._year))
+      .on('pan', (e) => this._pan(this._year, e))
+      .on('panend', () => this.panEnd(this._year));
 
     this._month
-      .on('click.scola-list', () => this._handleMonthClick())
-      .on('wheel.scola-list', () => this._handleWheel(this._month, event))
+      .on('click.scola-list', () => this._monthClick())
+      .on('wheel.scola-list', () => this._wheel(this._month, event))
       .gesture()
-      .on('panstart', () => this._handlePanStart(this._month))
-      .on('pan', (e) => this._handlePan(this._month, e))
-      .on('panend', () => this._handlePanEnd(this._month));
+      .on('panstart', () => this._panStart(this._month))
+      .on('pan', (e) => this._pan(this._month, e))
+      .on('panend', () => this._panEnd(this._month));
 
     this._day
-      .on('click.scola-list', () => this._handleDayClick())
-      .on('wheel.scola-list', () => this._handleWheel(this._day, event))
+      .on('click.scola-list', () => this._dayClick())
+      .on('wheel.scola-list', () => this._wheel(this._day, event))
       .gesture()
-      .on('panstart', () => this._handlePanStart(this._day))
-      .on('pan', (e) => this._handlePan(this._day, e))
-      .on('panend', () => this._handlePanEnd(this._day));
+      .on('panstart', () => this._panStart(this._day))
+      .on('pan', (e) => this._pan(this._day, e))
+      .on('panend', () => this._panEnd(this._day));
   }
 
   _unbindSelect() {
@@ -319,27 +315,27 @@ export default class DateItem extends Item {
       .destroy();
   }
 
-  _handlePanStart(target) {
+  _panStart(target) {
     this._scrollLeft = parseInt(target.node().scrollLeft, 10);
   }
 
-  _handlePan(target, panEvent) {
-    this._pan = true;
+  _pan(target, panEvent) {
+    this._panning = true;
     target.style('cursor', 'move');
     target.node().scrollLeft = this._scrollLeft - panEvent.deltaX;
   }
 
-  _handlePanEnd(target) {
+  _panEnd(target) {
     target.style('cursor', 'pointer');
   }
 
-  _handleWheel(target, wheelEvent) {
+  _wheel(target, wheelEvent) {
     this._scrollLeft = parseInt(target.node().scrollLeft, 10);
     target.node().scrollLeft = this._scrollLeft + wheelEvent.deltaY;
   }
 
-  _handleYearClick() {
-    if (this._pan) {
+  _yearClick() {
+    if (this._panning) {
       return;
     }
 
@@ -357,8 +353,8 @@ export default class DateItem extends Item {
     this._model.set(this._name, date.clone().year(firstYear + index));
   }
 
-  _handleMonthClick() {
-    if (this._pan) {
+  _monthClick() {
+    if (this._panning) {
       return;
     }
 
@@ -368,8 +364,8 @@ export default class DateItem extends Item {
     this._model.set(this._name, date.clone().month(index));
   }
 
-  _handleDayClick() {
-    if (this._pan) {
+  _dayClick() {
+    if (this._panning) {
       return;
     }
 

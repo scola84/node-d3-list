@@ -1,11 +1,10 @@
-import { select } from 'd3-selection';
+import { select } from 'd3';
 import Button from './part/button';
 import Icon from './part/icon';
 import Scroller from './part/scroller';
 import Switch from './part/switch';
 import Input from './part/input';
 import Text from './part/text';
-import 'd3-selection-multi';
 
 export default class Item {
   constructor() {
@@ -34,10 +33,9 @@ export default class Item {
         'width': '1em'
       });
 
-    this._handleClick = () => this._click();
     this._handleSet = (e) => this._set(e);
-
     this._bindRoot();
+
     this.first(false);
   }
 
@@ -182,7 +180,7 @@ export default class Item {
   }
 
   _bindRoot() {
-    this._root.on('click.scola-item', this._handleClick);
+    this._root.on('click.scola-item', () => this._click());
   }
 
   _unbindRoot() {

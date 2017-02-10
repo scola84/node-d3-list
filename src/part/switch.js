@@ -1,6 +1,5 @@
-import { select } from 'd3-selection';
+import { select } from 'd3';
 import Part from '../part';
-import 'd3-selection-multi';
 
 export default class Switch extends Part {
   constructor() {
@@ -69,7 +68,6 @@ export default class Switch extends Part {
         'width': '1.85em'
       });
 
-    this._handleClick = () => this._click();
     this._bindArea();
   }
 
@@ -88,7 +86,7 @@ export default class Switch extends Part {
   }
 
   _bindArea() {
-    this._area.on('click.scola-list', this._handleClick);
+    this._area.on('click.scola-list', () => this._click());
   }
 
   _unbindArea() {

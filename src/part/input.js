@@ -1,6 +1,5 @@
-import { select } from 'd3-selection';
+import { select } from 'd3';
 import Part from '../part';
-import 'd3-selection-multi';
 
 export default class Input extends Part {
   constructor() {
@@ -36,7 +35,6 @@ export default class Input extends Part {
         'width': '1em'
       });
 
-    this._handleChange = () => this._change();
     this._bindInput();
   }
 
@@ -85,7 +83,7 @@ export default class Input extends Part {
   }
 
   _bindInput() {
-    this._input.on('input.scola-list', this._handleChange);
+    this._input.on('input.scola-list', () => this._change());
   }
 
   _unbindInput() {
