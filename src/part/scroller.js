@@ -1,7 +1,6 @@
 /* eslint prefer-reflect: "off" */
 
-import { event, select } from 'd3';
-import debounce from 'lodash-es/debounce';
+import { select } from 'd3';
 import { scroller } from '@scola/d3-scroller';
 import Part from '../part';
 
@@ -14,6 +13,7 @@ export default class Scroller extends Part {
       .remove()
       .classed('scola scroller', true)
       .styles({
+        'align-items': 'center',
         'border-top': '1px solid',
         'border-top-color': 'inherit',
         'display': 'flex',
@@ -21,10 +21,12 @@ export default class Scroller extends Part {
         'height': '3em'
       });
 
-    this._scroller = scroller();
+    this._scroller = scroller()
+      .horizontal();
 
     this._scroller.root().styles({
-      'flex': 1
+      'flex': 1,
+      'height': '2em'
     });
 
     this._root.node()
@@ -35,50 +37,57 @@ export default class Scroller extends Part {
       .styles({
         'width': '1em'
       });
-
-    this._handleScroll = debounce((e) => this._scroll(e), 100);
-    this._bindScroller();
-  }
-
-  destroy() {
-    this._unbindScroller();
-    this._scroller.destroy();
-
-    this._executeScroll.cancel();
-    this._executeScroll = null;
-
-    super.destroy();
   }
 
   scroller() {
     return this._scroller;
   }
 
+  name(value = null) {
+    value = this._scroller.name(value);
+    return value === this._scroller ? this : value;
+  }
+
+  model(value, format = (v) => v) {
+    this._scroller.model(value, format);
+    return this;
+  }
+
+  domain(value = null) {
+    value = this._scroller.domain(value);
+    return value === this._scroller ? this : value;
+  }
+
+  step(value = null) {
+    value = this._scroller.step(value);
+    return value === this._scroller ? this : value;
+  }
+
+  ticks(value = null) {
+    value = this._scroller.ticks(value);
+    return value === this._scroller ? this : value;
+  }
+
+  tabindex(value = null) {
+    value = this._scroller.tabindex(value);
+    return value === this._scroller ? this : value;
+  }
+
   resize() {
-    this._scroller
-      .resize()
-      .value(this._model.get(this._name));
+    this._scroller.resize();
+    return this;
   }
 
-  _bindScroller() {
-    this._scroller.root()
-      .on('scroll.scola-list', () => this._handleScroll(event));
-  }
-
-  _unbindScroller() {
-    this._scroller.root()
-      .on('scroll.scola-list', null);
-  }
-
-  _scroll(scrollEvent) {
-    this._model.set(this._name, scrollEvent.detail.value);
-  }
-
-  _set(setEvent) {
-    if (setEvent.name !== this._name) {
-      return;
+  size(value = null) {
+    if (value === null) {
+      return this._root.style('width');
     }
 
-    this._scroller.value(setEvent.value, false);
+    this._root.styles({
+      'flex': 'none',
+      'width': value
+    });
+
+    return this;
   }
 }
