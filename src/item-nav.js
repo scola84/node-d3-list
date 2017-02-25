@@ -15,16 +15,8 @@ export default class NavItem extends MenuItem {
   }
 
   _add(element) {
-    this._elements.splice(-1, 0, element);
+    this._parts.splice(-1, 0, element);
     this._order();
-  }
-
-  _authorize() {
-    if (!this._user.may('GET', this._path())) {
-      this._forward.show(false);
-    }
-
-    super._authorize();
   }
 
   _set() {}

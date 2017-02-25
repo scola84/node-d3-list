@@ -1,3 +1,4 @@
+import isEqual from 'lodash-es/isEqual';
 import Item from './item';
 
 export default class MenuItem extends Item {
@@ -11,18 +12,8 @@ export default class MenuItem extends Item {
       });
   }
 
-  _authorize() {
-    if (this._user.may('GET', this._path())) {
-      return;
-    }
-
-    this._root
-      .classed('disabled', true)
-      .style('cursor', 'default');
-  }
-
   _click() {
-    if (!this._user || this._user.may('GET', this._path())) {
+    if (this._model) {
       this._model.set(this._name, this._value);
     }
   }
@@ -33,8 +24,14 @@ export default class MenuItem extends Item {
     }
 
     const value = this._format(setEvent.value);
+    let selected = typeof value !== 'undefined' &&
+      isEqual(value, this._value);
 
-    if (value && value.indexOf(this._value) !== -1) {
+    if (typeof value === 'string') {
+      selected = value.indexOf(this._value) !== -1;
+    }
+
+    if (selected) {
       this._root
         .classed('selected', true)
         .style('background', '#007AFF');
@@ -43,9 +40,9 @@ export default class MenuItem extends Item {
         .classed('selected', false)
         .style('background', '#FFF');
     }
-  }
 
-  _path() {
-    return [this._value, this._name].join('@');
+    this._root.dispatch('select', {
+      detail: { selected }
+    });
   }
 }

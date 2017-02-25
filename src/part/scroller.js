@@ -29,8 +29,8 @@ export default class Scroller extends Part {
       'height': '2em'
     });
 
-    this._root.node()
-      .appendChild(this._scroller.root().node());
+    this._root
+      .append(() => this._scroller.root().node());
 
     this._padding = this._root
       .append('div')

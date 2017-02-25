@@ -2,8 +2,6 @@ import { select } from 'd3';
 
 export default class Button {
   constructor() {
-    this._disabled = false;
-
     this._root = select('body')
       .append('div')
       .remove()
@@ -13,6 +11,21 @@ export default class Button {
         'cursor': 'pointer',
         'line-height': '3em',
         'text-align': 'center'
+      });
+
+    this._text = this._root
+      .append('button')
+      .attrs({
+        'tabindex': -1,
+        'type': 'button'
+      })
+      .styles({
+        'background': 'none',
+        'border': 0,
+        'color': 'inherit',
+        'cursor': 'pointer',
+        'margin': 0,
+        'padding': 0
       });
   }
 
@@ -26,19 +39,21 @@ export default class Button {
     return this._root;
   }
 
-  disabled(value = null) {
+  tabindex(value = null) {
     if (value === null) {
-      return this._disabled;
+      return this._text.attr('tabindex');
     }
 
-    this._root.classed('disabled', value);
-    this._disabled = value;
-
+    this._text.attr('tabindex', value);
     return this;
   }
 
-  text(value) {
-    this._root.text(value);
+  text(value = null) {
+    if (value === null) {
+      return this._text;
+    }
+
+    this._text.text(value);
     return this;
   }
 

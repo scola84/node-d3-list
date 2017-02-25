@@ -69,7 +69,7 @@ export default class Text extends Part {
 
   text(value) {
     if (value === null) {
-      return this._text.text();
+      return this._text;
     }
 
     this._text.text(value);

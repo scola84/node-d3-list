@@ -24,12 +24,14 @@ export default class RadioItem extends Item {
   }
 
   _add(element) {
-    this._elements.splice(-1, 0, element);
+    this._parts.splice(-1, 0, element);
     this._order();
   }
 
   _click() {
-    this._model.set(this._name, this._value);
+    if (this._model) {
+      this._model.set(this._name, this._value);
+    }
   }
 
   _set(setEvent) {

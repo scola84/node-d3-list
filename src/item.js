@@ -12,7 +12,7 @@ export default class Item {
     this._name = null;
     this._model = null;
     this._format = null;
-    this._elements = [];
+    this._parts = [];
 
     this._root = select('body')
       .append('div')
@@ -43,8 +43,8 @@ export default class Item {
     this._unbindRoot();
     this._unbindModel();
 
-    this._elements.forEach((element) => {
-      element.destroy();
+    this._parts.forEach((part) => {
+      part.destroy();
     });
 
     this._model = null;
@@ -91,23 +91,16 @@ export default class Item {
     return this;
   }
 
-  user(value = null) {
-    if (value === null) {
-      return this._user;
-    }
-
-    this._user = value;
-    this._authorize();
-
-    return this;
-  }
-
-  order(element = null, value = -1) {
-    if (element !== null) {
-      this._move(element, value);
+  order(part = null, value = -1) {
+    if (part !== null) {
+      this._move(part, value);
     }
 
     this._order();
+  }
+
+  part(index) {
+    return this._parts[index];
   }
 
   button(value = null) {
@@ -201,27 +194,25 @@ export default class Item {
     }
   }
 
-  _add(element) {
-    this._elements.push(element);
+  _add(part) {
+    this._parts.push(part);
     this._order();
   }
 
-  _move(element, value) {
-    this._elements.splice(value, 0,
-      this._elements.splice(
-        this._elements.indexOf(element), 1).pop());
+  _move(part, value) {
+    this._parts.splice(value, 0,
+      this._parts.splice(
+        this._parts.indexOf(part), 1).pop());
   }
 
   _order() {
-    this._elements.forEach((element, index) => {
-      element.order(index + 2, false);
-      this._root.node().appendChild(element.root().node());
+    this._parts.forEach((part, index) => {
+      part.order(index + 2, false);
+      this._root.append(() => part.root().node());
     });
   }
 
   _click() {}
-
-  _authorize() {}
 
   _set() {}
 }

@@ -29,12 +29,6 @@ export default class DateItem extends Item {
       });
 
     this._text = this.text().secondary();
-    this._bind();
-  }
-
-  destroy() {
-    this._unbind();
-    super.destroy();
   }
 
   begin(value = null) {
@@ -100,12 +94,8 @@ export default class DateItem extends Item {
     return this.open(!this._open);
   }
 
-  _bind() {
-    this._root.on('click.scola-list', () => this.toggle());
-  }
-
-  _unbind() {
-    this._root.on('click.scola-list', null);
+  _click() {
+    this.toggle();
   }
 
   _createSelect() {
@@ -124,7 +114,8 @@ export default class DateItem extends Item {
         'top': '3em'
       });
 
-    this._root.node().appendChild(this._select.node());
+    this._root
+      .append(() => this._select.node());
 
     this._year = this._select
       .append('div')
@@ -390,7 +381,7 @@ export default class DateItem extends Item {
   }
 
   _add(element) {
-    this._elements.splice(-1, 0, element);
+    this._parts.splice(-1, 0, element);
     this._order();
   }
 

@@ -7,7 +7,8 @@ export default class List {
     this._gesture = null;
     this._rootMedia = null;
     this._bodyMedia = null;
-    
+    this._inset = false;
+
     this._title = null;
     this._comment = null;
 
@@ -58,6 +59,10 @@ export default class List {
   }
 
   inset(width = '48em') {
+    if (width === null) {
+      return this._inset;
+    }
+
     if (width === false) {
       this._deleteInset();
     }
@@ -130,7 +135,10 @@ export default class List {
 
   _insertInset(width) {
     this._rootMedia = this._root
+      .media(`not all and (min-width: ${width})`)
+      .call(() => { this._inset = false; })
       .media(`(min-width: ${width})`)
+      .call(() => { this._inset = true; })
       .styles({
         'padding-left': '1em',
         'padding-right': '1em'
@@ -225,10 +233,9 @@ export default class List {
 
   _insertItem(item) {
     item.first(this._items.size === 0);
-    this._items.add(item);
 
-    this._body.node()
-      .appendChild(item.root().node());
+    this._items.add(item);
+    this._body.append(() => item.root().node());
 
     return item;
   }
