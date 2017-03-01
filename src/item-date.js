@@ -16,9 +16,11 @@ export default class DateItem extends Item {
 
     this._open = false;
     this._panning = false;
+    this._jump = false;
 
     this._height = null;
     this._scrollLeft = 0;
+    this._clear = null;
 
     this._root
       .classed('date', true)
@@ -28,7 +30,18 @@ export default class DateItem extends Item {
         'overflow': 'hidden'
       });
 
-    this._text = this.text().secondary();
+    this._date = this
+      .text()
+      .secondary();
+  }
+
+  destroy() {
+    this._unbindClear();
+    super.destroy();
+  }
+
+  date() {
+    return this._date;
   }
 
   begin(value = null) {
@@ -58,6 +71,27 @@ export default class DateItem extends Item {
     return this;
   }
 
+  jump(value = null) {
+    if (value === null) {
+      return this._jump;
+    }
+
+    this._jump = value;
+    return this;
+  }
+
+  clear(action = null) {
+    if (action === null) {
+      return this._clear;
+    }
+
+    if (action === false) {
+      return this._deleteClear();
+    }
+
+    return this._insertClear();
+  }
+
   open(value = null) {
     if (value === null) {
       return this._open;
@@ -75,7 +109,7 @@ export default class DateItem extends Item {
     const height = this._open ? (11 * 16) + 'px' : this._height;
 
     if (this._open) {
-      this._createSelect();
+      this._insertSelect();
     }
 
     this._root
@@ -83,7 +117,7 @@ export default class DateItem extends Item {
       .style('height', height)
       .on('end', () => {
         if (!this._open) {
-          this._destroySelect();
+          this._deleteSelect();
         }
       });
 
@@ -92,162 +126,6 @@ export default class DateItem extends Item {
 
   toggle() {
     return this.open(!this._open);
-  }
-
-  _click() {
-    this.toggle();
-  }
-
-  _createSelect() {
-    const formatter = this._begin.clone();
-
-    this._select = this._root
-      .append('div')
-      .classed('scola select', true)
-      .styles({
-        'border-top': '1px solid #CCC',
-        'color': '#000',
-        'left': '1em',
-        'padding': '0 1em 0 0',
-        'position': 'absolute',
-        'right': 0,
-        'top': '3em'
-      });
-
-    this._root
-      .append(() => this._select.node());
-
-    this._year = this._select
-      .append('div')
-      .classed('scola year', true)
-      .styles({
-        'margin-top': '0.5em',
-        'overflow': 'hidden',
-        'white-space': 'nowrap'
-      });
-
-    let i = this._begin.year();
-    let max = this._end.year();
-
-    for (; i <= max; i += 1) {
-      this._year
-        .append('button')
-        .attr('tabindex', 0)
-        .styles({
-          'background': 'none',
-          'border': 0,
-          'cursor': 'pointer',
-          'display': 'inline-block',
-          'height': '2em',
-          'line-height': '2em',
-          'margin': 0,
-          'padding': 0,
-          'padding-left': '0.5em',
-          'padding-right': '0.5em',
-          'border-radius': '0.25em'
-        })
-        .text(formatter.year(i).format(this._formats.year));
-    }
-
-    this._month = this._select
-      .append('div')
-      .classed('scola month', true)
-      .styles({
-        'margin-top': '0.5em',
-        'overflow': 'hidden',
-        'white-space': 'nowrap'
-      });
-
-    i = 0;
-    max = 12;
-
-    for (; i < max; i += 1) {
-      this._month
-        .append('button')
-        .attr('tabindex', 0)
-        .styles({
-          'background': 'none',
-          'border': 0,
-          'cursor': 'pointer',
-          'display': 'inline-block',
-          'height': '2em',
-          'line-height': '2em',
-          'margin': 0,
-          'padding': 0,
-          'padding-left': '0.5em',
-          'padding-right': '0.5em',
-          'border-radius': '0.25em'
-        })
-        .text(formatter
-          .month(i)
-          .format(this._formats.month));
-    }
-
-    this._day = this._select
-      .append('div')
-      .classed('scola day', true)
-      .styles({
-        'margin-top': '0.5em',
-        'overflow': 'hidden',
-        'white-space': 'nowrap'
-      });
-
-    i = 1;
-    max = 31;
-
-    for (; i <= max; i += 1) {
-      this._day
-        .append('button')
-        .attr('tabindex', 0)
-        .styles({
-          'background': 'none',
-          'border': 0,
-          'cursor': 'pointer',
-          'display': 'inline-block',
-          'height': '2em',
-          'line-height': '2em',
-          'margin': 0,
-          'padding': 0,
-          'padding-left': '0.5em',
-          'padding-right': '0.5em',
-          'border-radius': '0.25em'
-        })
-        .text(formatter
-          .startOf('year')
-          .date(i)
-          .format(this._formats.day));
-    }
-
-    this._setScroll();
-    this._bindSelect();
-
-    this._set({
-      name: this._name,
-      scope: 'model',
-      value: this._model.get(this._name)
-    });
-  }
-
-  _destroySelect() {
-    this._unbindSelect();
-    this._select.remove();
-  }
-
-  _setScroll() {
-    const now = this._model.get(this._name);
-    const firstYear = this._begin.year();
-
-    const yearIndex = now.year() - firstYear + 1;
-    this._year.node().scrollLeft = this._year
-      .select(`button:nth-child(${yearIndex})`).node().offsetLeft;
-
-    const monthIndex = now.month() + 1;
-    this._month.node().scrollLeft = this._month
-      .select(`button:nth-child(${monthIndex})`).node().offsetLeft;
-
-    const dayIndex = now.date();
-    this._day.node().scrollLeft = this._day
-      .select(`button:nth-child(${dayIndex})`).node().offsetLeft;
   }
 
   _bindSelect() {
@@ -260,7 +138,7 @@ export default class DateItem extends Item {
       .on('swipeleft', (e) => e.stopPropagation());
 
     this._year
-      .on('click.scola-list', () => this._yearClick())
+      .on('click.scola-list', () => this._clickYear())
       .on('wheel.scola-list', () => this._wheel(this._year, event))
       .gesture()
       .on('panstart', () => this._panStart(this._year))
@@ -268,7 +146,7 @@ export default class DateItem extends Item {
       .on('panend', () => this.panEnd(this._year));
 
     this._month
-      .on('click.scola-list', () => this._monthClick())
+      .on('click.scola-list', () => this._clickMonth())
       .on('wheel.scola-list', () => this._wheel(this._month, event))
       .gesture()
       .on('panstart', () => this._panStart(this._month))
@@ -276,7 +154,7 @@ export default class DateItem extends Item {
       .on('panend', () => this._panEnd(this._month));
 
     this._day
-      .on('click.scola-list', () => this._dayClick())
+      .on('click.scola-list', () => this._clickDay())
       .on('wheel.scola-list', () => this._wheel(this._day, event))
       .gesture()
       .on('panstart', () => this._panStart(this._day))
@@ -306,82 +184,22 @@ export default class DateItem extends Item {
       .destroy();
   }
 
-  _panStart(target) {
-    this._scrollLeft = parseInt(target.node().scrollLeft, 10);
-  }
-
-  _pan(target, panEvent) {
-    this._panning = true;
-    target.style('cursor', 'move');
-    target.node().scrollLeft = this._scrollLeft - panEvent.deltaX;
-  }
-
-  _panEnd(target) {
-    target.style('cursor', 'pointer');
-  }
-
-  _wheel(target, wheelEvent) {
-    this._scrollLeft = parseInt(target.node().scrollLeft, 10);
-    target.node().scrollLeft = this._scrollLeft + wheelEvent.deltaY;
-  }
-
-  _yearClick() {
-    if (this._panning) {
-      return;
+  _bindClear() {
+    if (this._clear) {
+      this._clear.root().on('click.scola-list', () => {
+        this._clickClear(event);
+      });
     }
-
-    const index = this._indexOf(event.target);
-    const date = this._model.get(this._name);
-    const copy = date.clone();
-    const firstYear = this._begin.year();
-
-    copy.date(1).year(firstYear + index);
-
-    if (date.date() > copy.daysInMonth()) {
-      date.date(copy.daysInMonth());
-    }
-
-    this._model.set(this._name, date.clone().year(firstYear + index));
   }
 
-  _monthClick() {
-    if (this._panning) {
-      return;
+  _unbindClear() {
+    if (this._clear) {
+      this._clear.root().on('click.scola-list', null);
     }
-
-    const index = this._indexOf(event.target);
-    const date = this._model.get(this._name);
-
-    this._model.set(this._name, date.clone().month(index));
-  }
-
-  _dayClick() {
-    if (this._panning) {
-      return;
-    }
-
-    if (select(event.target).classed('disabled')) {
-      return;
-    }
-
-    const index = this._indexOf(event.target);
-    const date = this._model.get(this._name);
-
-    this._model.set(this._name, date.clone().date(index + 1));
-  }
-
-  _indexOf(node) {
-    for (let i = 0; i < node.parentNode.children.length; i += 1) {
-      if (node.parentNode.children[i] === node) {
-        return i;
-      }
-    }
-
-    return null;
   }
 
   _add(element) {
-    this._parts.splice(-1, 0, element);
+    this._parts.splice(-2, 0, element);
     this._order();
   }
 
@@ -390,26 +208,39 @@ export default class DateItem extends Item {
       return;
     }
 
-    const value = this._format(setEvent.value);
-    this._text.text(value);
+    const date = setEvent.value;
+    const unix = date && date.unix() || -1;
+
+    this._date.text(unix > -1 ? this._format(date) : '');
+
+    if (this._clear) {
+      if (unix > -1) {
+        this._clear.show();
+      } else {
+        this._clear.hide();
+      }
+    }
 
     if (!this._select) {
       return;
     }
 
-    const date = this._model.get(this._name);
-    const firstYear = this._begin.year();
-
-    const yearIndex = date.year() - firstYear + 1;
-    const monthIndex = date.month() + 1;
-    const dayIndex = date.date();
-
-    this._year.selectAll('button')
+    this._select.selectAll('button')
       .classed('selected', false)
+      .classed('disabled', false)
       .styles({
         'background': 'none',
-        'color': null
+        'color': null,
+        'cursor': 'pointer'
       });
+
+    if (date.unix() === -1) {
+      return;
+    }
+
+    const yearIndex = date.year() - this._begin.year() + 1;
+    const monthIndex = date.month() + 1;
+    const dayIndex = date.date();
 
     this._year.select(`button:nth-child(${yearIndex})`)
       .classed('selected', true)
@@ -418,28 +249,11 @@ export default class DateItem extends Item {
         'color': '#FFF'
       });
 
-    this._month.selectAll('button')
-      .classed('selected', false)
-      .styles({
-        'background': 'none',
-        'color': null
-      });
-
     this._month.select(`button:nth-child(${monthIndex})`)
       .classed('selected', true)
       .styles({
         'background': '#007AFF',
         'color': '#FFF'
-      });
-
-    this._day.selectAll('button')
-      .classed('selected', false)
-      .classed('disabled', false)
-      .attr('tabindex', 0)
-      .styles({
-        'background': 'none',
-        'color': null,
-        'cursor': 'pointer'
       });
 
     this._day.select(`button:nth-child(${dayIndex})`)
@@ -461,4 +275,325 @@ export default class DateItem extends Item {
         });
     }
   }
+
+  _click() {
+    this.toggle();
+  }
+
+  _clickYear() {
+    if (this._panning) {
+      return;
+    }
+
+    const index = this._indexOf(event.target);
+    let date = this._model.get(this._name);
+    date = date.clone();
+
+    if (this._jump === 'begin') {
+      date = this._beginYear(date, index);
+    } else if (this._jump === 'end') {
+      date = this._endYear(date, index);
+    } else {
+      date = this._exactYear(date, index);
+    }
+
+    this._model.set(this._name, date);
+  }
+
+  _clickMonth() {
+    if (this._panning) {
+      return;
+    }
+
+    let date = this._model.get(this._name);
+    date = date.clone();
+
+    date.month(this._indexOf(event.target));
+
+    if (this._jump === 'begin') {
+      date = this._beginMonth(date);
+    } else if (this._jump === 'end') {
+      date = this._endMonth(date);
+    }
+
+    this._model.set(this._name, date);
+  }
+
+  _clickDay() {
+    if (this._panning) {
+      return;
+    }
+
+    if (select(event.target).classed('disabled')) {
+      return;
+    }
+
+    let date = this._model.get(this._name);
+    date = date.clone();
+
+    date.date(this._indexOf(event.target) + 1);
+
+    this._model.set(this._name, date);
+  }
+
+  _clickClear() {
+    event.stopPropagation();
+
+    const date = this._model
+      .get(this._name)
+      .clone()
+      .utc()
+      .year(1970)
+      .startOf('year')
+      .milliseconds(-1);
+
+    this._model.set(this._name, date);
+  }
+
+  _panStart(target) {
+    this._scrollLeft = parseInt(target.node().scrollLeft, 10);
+  }
+
+  _pan(target, panEvent) {
+    this._panning = true;
+    target.style('cursor', 'move');
+    target.node().scrollLeft = this._scrollLeft - panEvent.deltaX;
+  }
+
+  _panEnd(target) {
+    target.style('cursor', 'pointer');
+  }
+
+  _wheel(target, wheelEvent) {
+    this._scrollLeft = parseInt(target.node().scrollLeft, 10);
+    target.node().scrollLeft = this._scrollLeft + wheelEvent.deltaY;
+  }
+
+  _insertClear() {
+    this._clear = this
+      .button('ion-ios-close-empty')
+      .hide()
+      .padding(false)
+      .secondary();
+
+    this._bindClear();
+    return this;
+  }
+
+  _deleteClear() {
+    this._clear.remove();
+    return this;
+  }
+
+  _insertSelect() {
+    const formatter = this._begin.clone();
+
+    this._select = this._root
+      .append('div')
+      .classed('scola select', true)
+      .styles({
+        'border-top': '1px solid #CCC',
+        'color': '#000',
+        'left': '1em',
+        'padding': '0 1em 0 0',
+        'position': 'absolute',
+        'right': 0,
+        'top': '3em'
+      });
+
+    this._insertYear(formatter);
+    this._insertMonth(formatter);
+    this._insertDay(formatter);
+
+    this._setScroll();
+    this._bindSelect();
+
+    this._set({
+      name: this._name,
+      scope: 'model',
+      value: this._model.get(this._name)
+    });
+  }
+
+  _insertYear(formatter) {
+    this._year = this._select
+      .append('div')
+      .classed('scola year', true)
+      .styles({
+        'margin-top': '0.5em',
+        'overflow': 'hidden',
+        'white-space': 'nowrap'
+      });
+
+    let i = this._begin.year();
+    const max = this._end.year();
+
+    for (; i <= max; i += 1) {
+      this._year
+        .append('button')
+        .attr('tabindex', 0)
+        .styles({
+          'background': 'none',
+          'border': 0,
+          'cursor': 'pointer',
+          'display': 'inline-block',
+          'height': '2em',
+          'line-height': '2em',
+          'margin': 0,
+          'padding': 0,
+          'padding-left': '0.5em',
+          'padding-right': '0.5em',
+          'border-radius': '0.25em'
+        })
+        .text(formatter.year(i).format(this._formats.year));
+    }
+  }
+
+  _insertMonth(formatter) {
+    this._month = this._select
+      .append('div')
+      .classed('scola month', true)
+      .styles({
+        'margin-top': '0.5em',
+        'overflow': 'hidden',
+        'white-space': 'nowrap'
+      });
+
+    for (let i = 0; i < 12; i += 1) {
+      this._month
+        .append('button')
+        .attr('tabindex', 0)
+        .styles({
+          'background': 'none',
+          'border': 0,
+          'cursor': 'pointer',
+          'display': 'inline-block',
+          'height': '2em',
+          'line-height': '2em',
+          'margin': 0,
+          'padding': 0,
+          'padding-left': '0.5em',
+          'padding-right': '0.5em',
+          'border-radius': '0.25em'
+        })
+        .text(formatter
+          .month(i)
+          .format(this._formats.month));
+    }
+  }
+
+  _insertDay(formatter) {
+    this._day = this._select
+      .append('div')
+      .classed('scola day', true)
+      .styles({
+        'margin-top': '0.5em',
+        'overflow': 'hidden',
+        'white-space': 'nowrap'
+      });
+
+    for (let i = 1; i <= 31; i += 1) {
+      this._day
+        .append('button')
+        .attr('tabindex', 0)
+        .styles({
+          'background': 'none',
+          'border': 0,
+          'cursor': 'pointer',
+          'display': 'inline-block',
+          'height': '2em',
+          'line-height': '2em',
+          'margin': 0,
+          'padding': 0,
+          'padding-left': '0.5em',
+          'padding-right': '0.5em',
+          'border-radius': '0.25em'
+        })
+        .text(formatter
+          .startOf('year')
+          .date(i)
+          .format(this._formats.day));
+    }
+  }
+
+  _deleteSelect() {
+    this._unbindSelect();
+    this._select.remove();
+  }
+
+  _setScroll() {
+    const now = this._model.get(this._name);
+    const firstYear = this._begin.year();
+
+    const yearIndex = now.year() - firstYear + 1;
+    const yearNode = this._year
+      .select(`button:nth-child(${yearIndex})`);
+
+    this._year.node().scrollLeft = yearNode.size() === 1 ?
+      yearNode.node().offsetLeft : 0;
+
+    const monthIndex = now.month() + 1;
+    const monthNode = this._month
+      .select(`button:nth-child(${monthIndex})`);
+
+    this._month.node().scrollLeft = monthNode.size() === 1 ?
+      monthNode.node().offsetLeft : 0;
+
+    const dayIndex = now.date();
+    const dayNode = this._day
+      .select(`button:nth-child(${dayIndex})`);
+
+    this._day.node().scrollLeft = dayNode.size() === 1 ?
+      dayNode.node().offsetLeft : 0;
+  }
+
+  _beginYear(date, index) {
+    this._month.node().scrollLeft = 0;
+    this._day.node().scrollLeft = 0;
+
+    return date
+      .year(this._begin.year() + index)
+      .startOf('year');
+  }
+
+  _endYear(date, index) {
+    this._month.node().scrollLeft = this._month.node().scrollWidth;
+    this._day.node().scrollLeft = this._day.node().scrollWidth;
+
+    return date
+      .year(this._begin.year() + index)
+      .endOf('year');
+  }
+
+  _exactYear(date, index) {
+    const day = date.date();
+
+    date
+      .date(1)
+      .year(this._begin.year() + index);
+
+    return date
+      .date(Math.min(date.daysInMonth(), day));
+  }
+
+  _beginMonth(date) {
+    this._day.node().scrollLeft = 0;
+    return date.startOf('month');
+  }
+
+  _endMonth(date) {
+    this._day.node().scrollLeft = this._day.node().scrollWidth;
+    return date.endOf('month');
+  }
+
+  _indexOf(node) {
+    for (let i = 0; i < node.parentNode.children.length; i += 1) {
+      if (node.parentNode.children[i] === node) {
+        return i;
+      }
+    }
+
+    return null;
+  }
+
 }

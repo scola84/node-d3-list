@@ -36,12 +36,7 @@ export default class Text extends Part {
         'white-space': 'nowrap'
       });
 
-    this._padding = this._root
-      .append('div')
-      .styles({
-        'width': '1em'
-      });
-
+    this.padding(true);
     this.primary();
   }
 

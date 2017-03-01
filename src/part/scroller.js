@@ -32,11 +32,7 @@ export default class Scroller extends Part {
     this._root
       .append(() => this._scroller.root().node());
 
-    this._padding = this._root
-      .append('div')
-      .styles({
-        'width': '1em'
-      });
+    this.padding(true);
   }
 
   scroller() {

@@ -26,12 +26,7 @@ export default class Icon extends Part {
         'font-size': '2em'
       });
 
-    this._padding = this._root
-      .append('div')
-      .styles({
-        'width': '1em'
-      });
-
+    this.padding(true);
     this.primary();
     this.show();
   }
@@ -55,6 +50,15 @@ export default class Icon extends Part {
     return this;
   }
 
+  color(value = null) {
+    if (value === null) {
+      return this._icon.style('color');
+    }
+
+    this._icon.style('color', value);
+    return this;
+  }
+
   size(value = null) {
     if (value === null) {
       return this._icon.style('font-size');
@@ -62,12 +66,6 @@ export default class Icon extends Part {
 
     this._icon.style('font-size', value);
     return this;
-  }
-
-  show(action = true) {
-    this._root.style('display', () => {
-      return action ? 'flex' : 'none';
-    });
   }
 
   primary() {

@@ -24,6 +24,7 @@ export default class Button extends Part {
       .styles({
         'background': 'none',
         'border': 0,
+        'color': 'inherit',
         'cursor': 'pointer',
         'display': 'flex',
         'font-size': '2em',
@@ -31,12 +32,7 @@ export default class Button extends Part {
         'padding': 0
       });
 
-    this._padding = this._root
-      .append('div')
-      .styles({
-        'width': '1em'
-      });
-
+    this.padding(true);
     this.primary();
     this.show();
   }
@@ -76,12 +72,6 @@ export default class Button extends Part {
 
     this._icon.attr('tabindex', value);
     return this;
-  }
-
-  show(action = true) {
-    this._root.style('display', () => {
-      return action ? 'flex' : 'none';
-    });
   }
 
   primary() {

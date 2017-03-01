@@ -19,12 +19,18 @@ export default class Item {
       .remove()
       .classed('scola item', true)
       .styles({
-        'background': '#FFF',
+        'background': '#FFF'
+      });
+
+    this._over = this._root
+      .append('div')
+      .classed('scola over', true)
+      .styles({
         'display': 'flex',
         'flex-direction': 'row'
       });
 
-    this._padding = this._root
+    this._padding = this._over
       .append('div')
       .classed('scola padding', true)
       .styles({
@@ -165,7 +171,7 @@ export default class Item {
     }
 
     this._first = value;
-    this._root.style('border-color', () => {
+    this._over.style('border-color', () => {
       return value === true ? 'transparent' : '#CCC';
     });
 
@@ -173,11 +179,11 @@ export default class Item {
   }
 
   _bindRoot() {
-    this._root.on('click.scola-item', () => this._click());
+    this._over.on('click.scola-item', () => this._click());
   }
 
   _unbindRoot() {
-    this._root.on('click.scola-item', null);
+    this._over.on('click.scola-item', null);
   }
 
   _bindModel() {
@@ -208,7 +214,7 @@ export default class Item {
   _order() {
     this._parts.forEach((part, index) => {
       part.order(index + 2, false);
-      this._root.append(() => part.root().node());
+      this._over.append(() => part.root().node());
     });
   }
 

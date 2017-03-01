@@ -40,6 +40,11 @@ export default class RadioItem extends Item {
     }
 
     const value = this._format(setEvent.value);
-    this._check.show(isEqual(value, this._value));
+
+    if (isEqual(value, this._value)) {
+      this._check.show();
+    } else {
+      this._check.hide();
+    }
   }
 }

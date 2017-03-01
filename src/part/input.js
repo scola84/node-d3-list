@@ -29,12 +29,7 @@ export default class Input extends Part {
         'width': '100%'
       });
 
-    this._padding = this._root
-      .append('div')
-      .styles({
-        'width': '1em'
-      });
-
+    this.padding(true);
     this._bindInput();
   }
 

@@ -4,6 +4,7 @@ export default class Part {
     this._root = null;
     this._model = null;
     this._format = null;
+    this._padding = null;
 
     this._handleSet = (e) => this._set(e);
   }
@@ -69,6 +70,28 @@ export default class Part {
     return this;
   }
 
+  padding(action = null) {
+    if (action === null) {
+      return this._padding;
+    }
+
+    if (action === false) {
+      return this._deletePadding();
+    }
+
+    return this._insertPadding();
+  }
+
+  show() {
+    this._root.style('display', 'flex');
+    return this;
+  }
+
+  hide() {
+    this._root.style('display', 'none');
+    return this;
+  }
+
   _bindModel() {
     if (this._model) {
       this._model.setMaxListeners(this._model.getMaxListeners() + 1);
@@ -81,6 +104,21 @@ export default class Part {
       this._model.setMaxListeners(this._model.getMaxListeners() - 1);
       this._model.removeListener('set', this._handleSet);
     }
+  }
+
+  _insertPadding() {
+    this._padding = this._root
+      .append('div')
+      .styles({
+        'width': '1em'
+      });
+
+    return this;
+  }
+
+  _deletePadding() {
+    this._padding.remove();
+    return this;
   }
 
   _set() {}
