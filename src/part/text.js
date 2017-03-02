@@ -26,7 +26,7 @@ export default class Text extends Part {
       })
       .styles({
         'background': 'none',
-        'border': 0,
+        'border': '1px solid transparent',
         'color': 'inherit',
         'cursor': 'inherit',
         'max-width': '100%',

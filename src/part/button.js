@@ -23,7 +23,7 @@ export default class Button extends Part {
       .append('button')
       .styles({
         'background': 'none',
-        'border': 0,
+        'border': '1px solid transparent',
         'color': 'inherit',
         'cursor': 'pointer',
         'display': 'flex',

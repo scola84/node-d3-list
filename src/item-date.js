@@ -434,7 +434,7 @@ export default class DateItem extends Item {
         .attr('tabindex', 0)
         .styles({
           'background': 'none',
-          'border': 0,
+          'border': '1px solid transparent',
           'cursor': 'pointer',
           'display': 'inline-block',
           'height': '2em',
@@ -465,7 +465,7 @@ export default class DateItem extends Item {
         .attr('tabindex', 0)
         .styles({
           'background': 'none',
-          'border': 0,
+          'border': '1px solid transparent',
           'cursor': 'pointer',
           'display': 'inline-block',
           'height': '2em',
@@ -498,7 +498,7 @@ export default class DateItem extends Item {
         .attr('tabindex', 0)
         .styles({
           'background': 'none',
-          'border': 0,
+          'border': '1px solid transparent',
           'cursor': 'pointer',
           'display': 'inline-block',
           'height': '2em',

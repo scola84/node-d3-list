@@ -54,7 +54,7 @@ export default class Switch extends Part {
       })
       .styles({
         'background': '#FFF',
-        'border': 0,
+        'border': '1px solid transparent',
         'border-radius': '1em',
         'box-shadow': '0 1px 5px #AAA',
         'cursor': 'pointer',
