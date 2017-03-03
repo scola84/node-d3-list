@@ -4,38 +4,48 @@ import Item from './src/item';
 import MenuItem from './src/item-menu';
 import NavItem from './src/item-nav';
 import RadioItem from './src/item-radio';
-
 import Button from './src/button';
 import List from './src/list';
 
-export function checkItem() {
+function checkItem() {
   return new CheckItem();
 }
 
-export function dateItem() {
+function dateItem() {
   return new DateItem();
 }
 
-export function listItem() {
+function listItem() {
   return new Item();
 }
 
-export function menuItem() {
+function menuItem() {
   return new MenuItem();
 }
 
-export function navItem() {
+function navItem() {
   return new NavItem();
 }
 
-export function radioItem() {
+function radioItem() {
   return new RadioItem();
 }
 
-export function itemList() {
+function itemList() {
   return new List();
 }
 
-export function listButton() {
+function listButton() {
   return new Button();
 }
+
+export {
+  checkItem,
+  dateItem,
+  listItem,
+  menuItem,
+  navItem,
+  radioItem,
+  itemList,
+  listButton
+};
