@@ -24,7 +24,8 @@ export default class CheckItem extends Item {
 
   _click() {
     const value = this._model.get(this._name);
-    const action = !value || value.indexOf(this._value) === -1;
+    const action = typeof value === 'undefined' ||
+      value.indexOf(this._value) === -1;
 
     this._model.add(this._name, this._value, action);
   }
@@ -34,9 +35,11 @@ export default class CheckItem extends Item {
       return;
     }
 
-    const value = this._format(setEvent.value);
+    const value = setEvent.value;
+    const checked = typeof value !== 'undefined' &&
+      value.indexOf(this._value) > -1;
 
-    if (!value || value.indexOf(this._value) === -1) {
+    if (checked === true) {
       this._check.class('ion-ios-circle-outline');
     } else {
       this._check.class('ion-ios-checkmark');

@@ -1,4 +1,5 @@
 import { select } from 'd3';
+import { Observer } from '@scola/d3-model';
 import Button from './part/button';
 import Icon from './part/icon';
 import Scroller from './part/scroller';
@@ -6,12 +7,11 @@ import Switch from './part/switch';
 import Input from './part/input';
 import Text from './part/text';
 
-export default class Item {
+export default class Item extends Observer {
   constructor() {
+    super();
+
     this._first = null;
-    this._name = null;
-    this._model = null;
-    this._format = null;
     this._parts = [];
 
     this._root = select('body')
@@ -39,22 +39,18 @@ export default class Item {
         'width': '1em'
       });
 
-    this._handleSet = (e) => this._set(e);
     this._bindRoot();
-
     this.first(false);
   }
 
   destroy() {
+    super.destroy();
+
     this._unbindRoot();
-    this._unbindModel();
 
     this._parts.forEach((part) => {
       part.destroy();
     });
-
-    this._model = null;
-    this._format = null;
 
     this._root.dispatch('destroy');
     this._root.remove();
@@ -65,35 +61,12 @@ export default class Item {
     return this._root;
   }
 
-  name(value) {
-    if (value === null) {
-      return this._name;
-    }
-
-    this._name = value;
-    return this;
-  }
-
   value(itemValue = null) {
     if (itemValue === null) {
       return this._value;
     }
 
     this._value = itemValue;
-    return this;
-  }
-
-  model(value, format = (v) => v) {
-    this._model = value;
-    this._format = format;
-
-    this._bindModel();
-    this._set({
-      name: this._name,
-      scope: 'model',
-      value: value.get(this._name)
-    });
-
     return this;
   }
 
@@ -186,20 +159,6 @@ export default class Item {
     this._over.on('click.scola-item', null);
   }
 
-  _bindModel() {
-    if (this._model) {
-      this._model.setMaxListeners(this._model.getMaxListeners() + 1);
-      this._model.addListener('set', this._handleSet);
-    }
-  }
-
-  _unbindModel() {
-    if (this._model) {
-      this._model.setMaxListeners(this._model.getMaxListeners() - 1);
-      this._model.removeListener('set', this._handleSet);
-    }
-  }
-
   _add(part) {
     this._parts.push(part);
     this._order();
@@ -219,6 +178,4 @@ export default class Item {
   }
 
   _click() {}
-
-  _set() {}
 }

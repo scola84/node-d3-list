@@ -91,7 +91,7 @@ export default class Input extends Part {
   }
 
   _set(setEvent) {
-    if (!this._input || setEvent.name !== this._name) {
+    if (setEvent.name !== this._name) {
       return;
     }
 

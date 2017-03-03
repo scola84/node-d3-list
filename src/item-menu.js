@@ -23,7 +23,7 @@ export default class MenuItem extends Item {
       return;
     }
 
-    const value = this._format(setEvent.value);
+    const value = setEvent.value;
     let selected = typeof value !== 'undefined' &&
       isEqual(value, this._value);
 
@@ -31,7 +31,7 @@ export default class MenuItem extends Item {
       selected = value.indexOf(this._value) !== -1;
     }
 
-    if (selected) {
+    if (selected === true) {
       this._root
         .classed('selected', true)
         .style('background', '#007AFF');

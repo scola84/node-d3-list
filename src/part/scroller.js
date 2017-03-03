@@ -44,13 +44,13 @@ export default class Scroller extends Part {
     return value === this._scroller ? this : value;
   }
 
-  model(value, format = (v) => v) {
-    this._scroller.model(value, format);
-    return this;
+  model(value) {
+    value = this._scroller.model(value);
+    return value === this._scroller ? this : value;
   }
 
-  domain(value = null) {
-    value = this._scroller.domain(value);
+  scale(value = null) {
+    value = this._scroller.scale(value);
     return value === this._scroller ? this : value;
   }
 

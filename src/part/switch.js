@@ -102,8 +102,6 @@ export default class Switch extends Part {
       return;
     }
 
-    const value = this._format(setEvent.value);
-
     const areaStyle = {
       'background': '#CCC',
       'border-color': '#CCC'
@@ -118,7 +116,7 @@ export default class Switch extends Part {
       'left': '0'
     };
 
-    if (Boolean(value) === true) {
+    if (Boolean(setEvent.value) === true) {
       areaStyle.background = 'green';
       areaStyle['border-color'] = 'green';
 

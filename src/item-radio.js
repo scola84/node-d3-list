@@ -39,9 +39,11 @@ export default class RadioItem extends Item {
       return;
     }
 
-    const value = this._format(setEvent.value);
+    const value = setEvent.value;
+    const checked = typeof value !== 'undefined' &&
+      isEqual(value, this._value);
 
-    if (isEqual(value, this._value)) {
+    if (checked === true) {
       this._check.show();
     } else {
       this._check.hide();

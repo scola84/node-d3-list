@@ -74,6 +74,18 @@ export default class Button extends Part {
     return this;
   }
 
+  circle(background = '#007AFF') {
+    this._icon.styles({
+      background,
+      'border-radius': '1em',
+      'color': '#FFF',
+      'height': '1em',
+      'width': '1em'
+    });
+
+    return this;
+  }
+
   primary() {
     this._root.styles({
       'border-top-color': 'transparent',
