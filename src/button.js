@@ -24,8 +24,9 @@ export default class Button {
         'border': '1px solid transparent',
         'color': 'inherit',
         'cursor': 'pointer',
+        'line-height': '2em',
         'margin': 0,
-        'padding': 0
+        'padding': '0 0.25em'
       });
   }
 
