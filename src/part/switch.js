@@ -94,7 +94,9 @@ export default class Switch extends Part {
   }
 
   _click() {
-    this._model.set(this._name, !this._model.get(this._name));
+    if (this._model) {
+      this._model.set(this._name, !this._model.get(this._name));
+    }
   }
 
   _set(setEvent) {

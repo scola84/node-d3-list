@@ -23,6 +23,10 @@ export default class CheckItem extends Item {
   }
 
   _click() {
+    if (!this._model) {
+      return;
+    }
+
     const value = this._model.get(this._name);
     const action = typeof value === 'undefined' ||
       value.indexOf(this._value) === -1;

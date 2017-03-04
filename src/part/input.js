@@ -86,8 +86,10 @@ export default class Input extends Part {
   }
 
   _change() {
-    const value = this._input.property('value');
-    this._model.set(this._name, value);
+    if (this._model) {
+      const value = this._input.property('value');
+      this._model.set(this._name, value);
+    }
   }
 
   _set(setEvent) {

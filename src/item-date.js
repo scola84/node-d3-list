@@ -281,7 +281,7 @@ export default class DateItem extends Item {
   }
 
   _clickYear() {
-    if (this._panning) {
+    if (!this._model || this._panning) {
       return;
     }
 
@@ -301,7 +301,7 @@ export default class DateItem extends Item {
   }
 
   _clickMonth() {
-    if (this._panning) {
+    if (!this._model || this._panning) {
       return;
     }
 
@@ -320,7 +320,7 @@ export default class DateItem extends Item {
   }
 
   _clickDay() {
-    if (this._panning) {
+    if (!this._model || this._panning) {
       return;
     }
 
@@ -338,6 +338,10 @@ export default class DateItem extends Item {
 
   _clickClear() {
     event.stopPropagation();
+
+    if (!this._model) {
+      return;
+    }
 
     const date = this._model
       .get(this._name)
@@ -404,10 +408,13 @@ export default class DateItem extends Item {
     this._insertYear(formatter);
     this._insertMonth(formatter);
     this._insertDay(formatter);
-
-    this._setScroll();
     this._bindSelect();
 
+    if (!this._model) {
+      return;
+    }
+
+    this._setScroll();
     this._set({
       name: this._name,
       scope: 'model',
@@ -595,5 +602,4 @@ export default class DateItem extends Item {
 
     return null;
   }
-
 }
