@@ -19,18 +19,12 @@ export default class Item extends Observer {
       .remove()
       .classed('scola item', true)
       .styles({
-        'background': '#FFF'
-      });
-
-    this._over = this._root
-      .append('div')
-      .classed('scola over', true)
-      .styles({
+        'background': '#FFF',
         'display': 'flex',
         'flex-direction': 'row'
       });
 
-    this._padding = this._over
+    this._padding = this._root
       .append('div')
       .classed('scola padding', true)
       .styles({
@@ -144,7 +138,7 @@ export default class Item extends Observer {
     }
 
     this._first = value;
-    this._over.style('border-color', () => {
+    this._root.style('border-color', () => {
       return value === true ? 'transparent' : '#CCC';
     });
 
@@ -152,11 +146,11 @@ export default class Item extends Observer {
   }
 
   _bindRoot() {
-    this._over.on('click.scola-item', () => this._click());
+    this._root.on('click.scola-item', () => this._click());
   }
 
   _unbindRoot() {
-    this._over.on('click.scola-item', null);
+    this._root.on('click.scola-item', null);
   }
 
   _add(part) {
@@ -173,7 +167,7 @@ export default class Item extends Observer {
   _order() {
     this._parts.forEach((part, index) => {
       part.order(index + 2, false);
-      this._over.append(() => part.root().node());
+      this._root.append(() => part.root().node());
     });
   }
 
