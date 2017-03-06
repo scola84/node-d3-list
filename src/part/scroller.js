@@ -39,41 +39,6 @@ export default class Scroller extends Part {
     return this._scroller;
   }
 
-  name(value = null) {
-    value = this._scroller.name(value);
-    return value === this._scroller ? this : value;
-  }
-
-  model(value) {
-    value = this._scroller.model(value);
-    return value === this._scroller ? this : value;
-  }
-
-  scale(value = null) {
-    value = this._scroller.scale(value);
-    return value === this._scroller ? this : value;
-  }
-
-  step(value = null) {
-    value = this._scroller.step(value);
-    return value === this._scroller ? this : value;
-  }
-
-  ticks(value = null) {
-    value = this._scroller.ticks(value);
-    return value === this._scroller ? this : value;
-  }
-
-  tabindex(value = null) {
-    value = this._scroller.tabindex(value);
-    return value === this._scroller ? this : value;
-  }
-
-  resize() {
-    this._scroller.resize();
-    return this;
-  }
-
   size(value = null) {
     if (value === null) {
       return this._root.style('width');
