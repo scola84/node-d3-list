@@ -5,8 +5,8 @@
   "repository": "github:scola84/node-d3-list",
   "author": "M.C. van den Boogaart <scola@kvdb.name>",
   "license": "MIT",
-  "main": "./dist/d3-list.js",
-  "jsnext:main": "index.js",
+  "main": "./index.js",
+  "jsnext:main": "./index.js",
   "dependencies": {
     "d3-selection": "^1.0.3",
     "d3-selection-multi": "^1.0.0",
