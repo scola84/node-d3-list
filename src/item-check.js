@@ -23,7 +23,7 @@ export default class CheckItem extends Item {
   }
 
   _click() {
-    if (!this._model) {
+    if (this._disabled === true || !this._model) {
       return;
     }
 

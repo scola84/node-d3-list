@@ -11,8 +11,10 @@ export default class Item extends Observer {
   constructor() {
     super();
 
-    this._first = null;
     this._parts = [];
+
+    this._disabled = false;
+    this._first = null;
 
     this._root = select('body')
       .append('div')
@@ -55,12 +57,31 @@ export default class Item extends Observer {
     return this._root;
   }
 
-  value(itemValue = null) {
-    if (itemValue === null) {
-      return this._value;
+  disabled(value = null) {
+    if (value === null) {
+      return this._disabled;
     }
 
-    this._value = itemValue;
+    this._disabled = value;
+    this._root.classed('disabled', value);
+
+    this._parts.forEach((part) => {
+      part.disabled(value);
+    });
+
+    return this;
+  }
+
+  first(value = null) {
+    if (value === null) {
+      return this._first;
+    }
+
+    this._first = value;
+    this._root.style('border-color', () => {
+      return value === true ? 'transparent' : '#CCC';
+    });
+
     return this;
   }
 
@@ -130,19 +151,6 @@ export default class Item extends Observer {
     this._add(text);
 
     return text;
-  }
-
-  first(value = null) {
-    if (value === null) {
-      return this._first;
-    }
-
-    this._first = value;
-    this._root.style('border-color', () => {
-      return value === true ? 'transparent' : '#CCC';
-    });
-
-    return this;
   }
 
   _bindRoot() {

@@ -7,6 +7,8 @@ export default class Part extends Observer {
     this._item = null;
     this._root = null;
     this._padding = null;
+    
+    this._disabled = false;
   }
 
   destroy() {
@@ -27,6 +29,17 @@ export default class Part extends Observer {
     }
 
     this._item = value;
+    return this;
+  }
+
+  disabled(value = null) {
+    if (value === null) {
+      return this._disabled;
+    }
+
+    this._disabled = value;
+    this._root.classed('disabled', value);
+
     return this;
   }
 

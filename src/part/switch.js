@@ -57,7 +57,7 @@ export default class Switch extends Part {
         'border': '1px solid transparent',
         'border-radius': '1em',
         'box-shadow': '0 1px 5px #AAA',
-        'cursor': 'pointer',
+        'cursor': 'inherit',
         'height': '1.85em',
         'left': 0,
         'margin': 0,
@@ -94,7 +94,7 @@ export default class Switch extends Part {
   }
 
   _click() {
-    if (this._model) {
+    if (this._disabled === false && this._model) {
       this._model.set(this._name, !this._model.get(this._name));
     }
   }

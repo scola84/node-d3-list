@@ -13,7 +13,7 @@ export default class MenuItem extends Item {
   }
 
   _click() {
-    if (this._model) {
+    if (this._disabled === false && this._model) {
       this._model.set(this._name, this._value);
     }
   }

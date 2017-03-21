@@ -1,16 +1,17 @@
 import { select } from 'd3';
+import Item from './item';
 
-export default class Button {
+export default class ButtonItem extends Item {
   constructor() {
-    this._root = select('body')
-      .append('div')
-      .remove()
-      .classed('scola button', true)
+    super();
+
+    this._root
+      .classed('button', true)
       .styles({
         'background': '#FFF',
         'cursor': 'pointer',
-        'line-height': '3em',
-        'text-align': 'center'
+        'height': '3em',
+        'justify-content': 'center'
       });
 
     this._text = this._root
@@ -23,21 +24,15 @@ export default class Button {
         'background': 'none',
         'border': '1px solid transparent',
         'color': 'inherit',
-        'cursor': 'pointer',
+        'cursor': 'inherit',
         'line-height': '2em',
         'margin': 0,
         'padding': '0 0.25em'
       });
-  }
 
-  destroy() {
-    this._root.dispatch('destroy');
-    this._root.remove();
-    this._root = null;
-  }
-
-  root() {
-    return this._root;
+    this._padding.styles({
+      'display': 'none'
+    });
   }
 
   tabindex(value = null) {
@@ -58,5 +53,9 @@ export default class Button {
     return this;
   }
 
-  first() {}
+  _click() {
+    if (this._disabled === false && this._model) {
+      this._model.set(this._name, this._value);
+    }
+  }
 }

@@ -42,6 +42,14 @@ export default class Input extends Part {
     return this._input;
   }
 
+  disabled(value = null) {
+    if (value !== null) {
+      this._input.property('disabled', value);
+    }
+
+    return super.disabled(value);
+  }
+
   name(value = null) {
     if (value !== null) {
       this._input.attr('name', value);

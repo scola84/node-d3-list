@@ -114,6 +114,11 @@ export default class List {
     return this._insertItem(item);
   }
 
+  disabled(value) {
+    this._items.forEach((item) => item.disabled(value));
+    return this;
+  }
+
   _bindBody() {
     this._gesture = this._body
       .gesture()

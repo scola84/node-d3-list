@@ -231,7 +231,7 @@ export default class DateItem extends Item {
       .styles({
         'background': 'none',
         'color': null,
-        'cursor': 'pointer'
+        'cursor': 'inherit'
       });
 
     if (date.unix() === -1) {
@@ -277,11 +277,17 @@ export default class DateItem extends Item {
   }
 
   _click() {
-    this.toggle();
+    if (this._disabled === false) {
+      this.toggle();
+    }
   }
 
   _clickYear() {
-    if (!this._model || this._panning) {
+    const cancel = !this._model ||
+      this._disabled === true ||
+      this._panning === true;
+
+    if (cancel) {
       return;
     }
 
@@ -301,7 +307,11 @@ export default class DateItem extends Item {
   }
 
   _clickMonth() {
-    if (!this._model || this._panning) {
+    const cancel = !this._model ||
+      this._disabled === true ||
+      this._panning === true;
+
+    if (cancel) {
       return;
     }
 
@@ -320,7 +330,11 @@ export default class DateItem extends Item {
   }
 
   _clickDay() {
-    if (!this._model || this._panning) {
+    const cancel = !this._model ||
+      this._disabled === true ||
+      this._panning === true;
+
+    if (cancel) {
       return;
     }
 
@@ -339,7 +353,10 @@ export default class DateItem extends Item {
   _clickClear() {
     event.stopPropagation();
 
-    if (!this._model) {
+    const cancel = !this._model ||
+      this._disabled === true;
+
+    if (cancel) {
       return;
     }
 
@@ -365,7 +382,7 @@ export default class DateItem extends Item {
   }
 
   _panEnd(target) {
-    target.style('cursor', 'pointer');
+    target.style('cursor', 'inherit');
   }
 
   _wheel(target, wheelEvent) {
@@ -442,7 +459,7 @@ export default class DateItem extends Item {
         .styles({
           'background': 'none',
           'border': '1px solid transparent',
-          'cursor': 'pointer',
+          'cursor': 'inherit',
           'display': 'inline-block',
           'height': '2em',
           'line-height': '2em',
@@ -473,7 +490,7 @@ export default class DateItem extends Item {
         .styles({
           'background': 'none',
           'border': '1px solid transparent',
-          'cursor': 'pointer',
+          'cursor': 'inherit',
           'display': 'inline-block',
           'height': '2em',
           'line-height': '2em',
@@ -506,7 +523,7 @@ export default class DateItem extends Item {
         .styles({
           'background': 'none',
           'border': '1px solid transparent',
-          'cursor': 'pointer',
+          'cursor': 'inherit',
           'display': 'inline-block',
           'height': '2em',
           'line-height': '2em',
