@@ -40,9 +40,5 @@ export default class MenuItem extends Item {
         .classed('selected', false)
         .style('background', '#FFF');
     }
-
-    this._root.dispatch('select', {
-      detail: { selected }
-    });
   }
 }
