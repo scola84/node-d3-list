@@ -121,6 +121,7 @@ export default class DateItem extends Item {
         }
       });
 
+    this.emit('open', value);
     return this;
   }
 
