@@ -296,6 +296,10 @@ export default class DateItem extends Item {
     let date = this._model.get(this._name);
     date = date.clone();
 
+    if (date.unix() === -1) {
+      date = this._beginYear(date, index);
+    }
+
     if (this._jump === 'begin') {
       date = this._beginYear(date, index);
     } else if (this._jump === 'end') {
@@ -317,9 +321,14 @@ export default class DateItem extends Item {
     }
 
     let date = this._model.get(this._name);
-    date = date.clone();
 
-    date.month(this._indexOf(event.target));
+    if (date.unix() === -1) {
+      return;
+    }
+
+    date = date
+      .clone()
+      .month(this._indexOf(event.target));
 
     if (this._jump === 'begin') {
       date = this._beginMonth(date);
@@ -333,20 +342,22 @@ export default class DateItem extends Item {
   _clickDay() {
     const cancel = !this._model ||
       this._disabled === true ||
-      this._panning === true;
+      this._panning === true ||
+      select(event.target).classed('disabled') === true;
 
     if (cancel) {
       return;
     }
 
-    if (select(event.target).classed('disabled')) {
+    let date = this._model.get(this._name);
+
+    if (date.unix() === -1) {
       return;
     }
 
-    let date = this._model.get(this._name);
-    date = date.clone();
-
-    date.date(this._indexOf(event.target) + 1);
+    date = date
+      .clone()
+      .date(this._indexOf(event.target) + 1);
 
     this._model.set(this._name, date);
   }
