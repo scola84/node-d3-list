@@ -1,4 +1,3 @@
-import { select } from 'd3';
 import Item from './item';
 
 export default class ButtonItem extends Item {
@@ -11,7 +10,8 @@ export default class ButtonItem extends Item {
         'background': '#FFF',
         'cursor': 'pointer',
         'height': '3em',
-        'justify-content': 'center'
+        'justify-content': 'center',
+        'padding': '0.5em 0'
       });
 
     this._text = this._root
