@@ -1,7 +1,12 @@
-import { select } from 'd3';
+/* eslint prefer-reflect: "off" */
 
-export default class List {
+import { select, transition } from 'd3';
+import { Observer } from '@scola/d3-model';
+
+export default class List extends Observer {
   constructor() {
+    super();
+
     this._items = new Set();
 
     this._gesture = null;
@@ -17,9 +22,39 @@ export default class List {
       .remove()
       .classed('scola list static', true)
       .styles({
-        'display': 'flex',
-        'flex-direction': 'column',
-        'padding-bottom': '3em'
+        'margin-bottom': '3em',
+        'overflow': 'hidden'
+      });
+
+    this._title = this._root
+      .append('div')
+      .classed('scola title', true)
+      .styles({
+        'color': '#AAA',
+        'display': 'none',
+        'font-size': '0.9em',
+        'justify-content': 'space-between',
+        'order': 1,
+        'padding': '0 1.1em 0.75em',
+        'text-transform': 'uppercase'
+      });
+
+    this._titleText = this._title
+      .append('span')
+      .classed('scola text', true)
+      .styles({
+        'font-size': 'inherit'
+      });
+
+    this._titleIcon = this._title
+      .append('span')
+      .classed('scola icon ion-ios-arrow-down', true)
+      .styles({
+        'display': 'none',
+        'font-size': 'inherit',
+        'height': '1em',
+        'text-align': 'center',
+        'width': '1em'
       });
 
     this._body = this._root
@@ -29,7 +64,18 @@ export default class List {
         'border-color': '#CCC',
         'border-style': 'solid',
         'border-width': '1px 0',
-        'order': 2
+        'overflow': 'hidden'
+      });
+
+    this._comment = this._root
+      .append('div')
+      .classed('scola comment', true)
+      .styles({
+        'color': '#AAA',
+        'display': 'none',
+        'font-size': '0.9em',
+        'line-height': '1.5em',
+        'padding': '0.75em 1.1em 0'
       });
 
     this._bindBody();
@@ -37,6 +83,7 @@ export default class List {
 
   destroy() {
     this._unbindBody();
+    this._unbindTitle();
     this._deleteInset();
 
     this._items.forEach((item) => {
@@ -83,11 +130,7 @@ export default class List {
       return this._deleteTitle();
     }
 
-    if (this._title) {
-      return this._updateTitle(value);
-    }
-
-    return this._insertTitle(value);
+    return this._updateTitle(value);
   }
 
   comment(value = null) {
@@ -99,11 +142,7 @@ export default class List {
       return this._deleteComment();
     }
 
-    if (this._comment) {
-      return this._updateComment(value);
-    }
-
-    return this._insertComment(value);
+    return this._updateComment(value);
   }
 
   append(item, action = true) {
@@ -145,8 +184,8 @@ export default class List {
       .media(`(min-width: ${width})`)
       .call(() => { this._inset = true; })
       .styles({
-        'padding-left': '1em',
-        'padding-right': '1em'
+        'margin-left': '1em',
+        'margin-right': '1em'
       })
       .start();
 
@@ -154,8 +193,7 @@ export default class List {
       .media(`(min-width: ${width})`)
       .styles({
         'border-radius': '0.5em',
-        'border-style': 'none',
-        'overflow': 'hidden'
+        'border-style': 'none'
       })
       .start();
 
@@ -176,24 +214,13 @@ export default class List {
     return this;
   }
 
-  _insertTitle(title) {
-    this._title = this._root
-      .append('div')
-      .classed('scola title', true)
-      .styles({
-        'color': '#AAA',
-        'font-size': '0.9em',
-        'order': 1,
-        'padding': '0 1.1em 0.75em',
-        'text-transform': 'uppercase'
-      })
+  _updateTitle(title) {
+    this._title
+      .style('display', 'flex');
+
+    this._titleText
       .text(title);
 
-    return this;
-  }
-
-  _updateTitle(title) {
-    this._title.text(title);
     return this;
   }
 
@@ -201,29 +228,18 @@ export default class List {
     if (this._title) {
       this._title.remove();
       this._title = null;
+      this._titleIcon = null;
+      this._titleText = null;
     }
 
     return this;
   }
 
-  _insertComment(comment) {
-    this._comment = this._root
-      .append('div')
-      .classed('scola comment', true)
-      .styles({
-        'color': '#AAA',
-        'font-size': '0.9em',
-        'line-height': '1.5em',
-        'order': 3,
-        'padding': '0.75em 1.1em 0'
-      })
+  _updateComment(comment) {
+    this._comment
+      .style('display', 'block')
       .text(comment);
 
-    return this;
-  }
-
-  _updateComment(comment) {
-    this._comment.text(comment);
     return this;
   }
 
@@ -250,5 +266,74 @@ export default class List {
     item.root().remove();
 
     return item;
+  }
+
+  model(value) {
+    value = super.model(value);
+    this._root.style('height', 0);
+    this._titleIcon.style('display', 'initial');
+    this._bindTitle();
+    return value;
+  }
+
+  _bindTitle() {
+    if (this._title) {
+      this._title.style('cursor', 'pointer');
+      this._title.on('click.scola-list', () => this._click());
+    }
+  }
+
+  _unbindTitle() {
+    if (this._title) {
+      this._title.style('cursor', 'initial');
+      this._title.on('click.scola-list', null);
+    }
+  }
+
+  _click() {
+    if (this._model) {
+      const value = this._model.get(this._name);
+      this._model.set(this._name, value === false ? true : false);
+    }
+  }
+
+  _set(setEvent) {
+    const bodyHeight = parseFloat(this._body.style('height') || 0);
+    const commentHeight = parseFloat(this._comment.style('height') || 0);
+    const titleHeight = parseFloat(this._title.style('height') || 0);
+    const borderWidth = parseFloat(this._body.style('border-width') || 0);
+
+    const duration = setEvent.changed === false ? 0 : 250;
+
+    const timeline = transition()
+      .duration(duration)
+      .on('end', () => {
+        setTimeout(() => {
+          if (setEvent.value === true) {
+            this._root.style('height', null);
+          }
+        });
+      });
+
+    this._root
+      .style('border-bottom', () => {
+        return setEvent.value === true ? 0 : '1px solid #CCC';
+      })
+      .transition(timeline)
+      .style('height', () => {
+        return setEvent.value !== false ? (
+          titleHeight +
+          bodyHeight +
+          commentHeight
+        ) + 'px' : (titleHeight + borderWidth) + 'px';
+      });
+
+    this._titleIcon
+      .transition(timeline)
+      .style('transform', () => {
+        return setEvent.value !== false ?
+          'rotate(0deg)' :
+          'rotate(-90deg)';
+      });
   }
 }
