@@ -127,10 +127,10 @@ export default class List extends Observer {
     }
 
     if (value === false) {
-      return this._deleteTitle();
+      return this._hideTitle();
     }
 
-    return this._updateTitle(value);
+    return this._showTitle(value);
   }
 
   comment(value = null) {
@@ -139,10 +139,10 @@ export default class List extends Observer {
     }
 
     if (value === false) {
-      return this._deleteComment();
+      return this._hideComment();
     }
 
-    return this._updateComment(value);
+    return this._showComment(value);
   }
 
   append(item, action = true) {
@@ -214,7 +214,7 @@ export default class List extends Observer {
     return this;
   }
 
-  _updateTitle(title) {
+  _showTitle(title) {
     this._title
       .style('display', 'flex');
 
@@ -224,18 +224,12 @@ export default class List extends Observer {
     return this;
   }
 
-  _deleteTitle() {
-    if (this._title) {
-      this._title.remove();
-      this._title = null;
-      this._titleIcon = null;
-      this._titleText = null;
-    }
-
+  _hideTitle() {
+    this._title.style('display', 'none');
     return this;
   }
 
-  _updateComment(comment) {
+  _showComment(comment) {
     this._comment
       .style('display', 'block')
       .text(comment);
@@ -243,12 +237,8 @@ export default class List extends Observer {
     return this;
   }
 
-  _deleteComment() {
-    if (this._comment) {
-      this._comment.remove();
-      this._comment = null;
-    }
-
+  _hideComment() {
+    this._comment.style('display', 'none');
     return this;
   }
 
