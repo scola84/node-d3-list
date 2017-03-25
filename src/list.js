@@ -292,6 +292,10 @@ export default class List extends Observer {
   }
 
   _set(setEvent) {
+    if (setEvent.name !== this._name) {
+      return;
+    }
+
     const bodyHeight = parseFloat(this._body.style('height') || 0);
     const commentHeight = parseFloat(this._comment.style('height') || 0);
     const titleHeight = parseFloat(this._title.style('height') || 0);
