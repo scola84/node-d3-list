@@ -263,11 +263,11 @@ export default class List extends Observer {
   }
 
   model(value) {
-    value = super.model(value);
     this._root.style('height', 0);
     this._titleIcon.style('display', 'initial');
     this._bindTitle();
-    return value;
+
+    return super.model(value);
   }
 
   _bindTitle() {
@@ -303,7 +303,7 @@ export default class List extends Observer {
       .duration(duration)
       .on('end', () => {
         setTimeout(() => {
-          if (setEvent.value === true) {
+          if (setEvent.value !== false) {
             this._root.style('height', null);
           }
         });
@@ -311,7 +311,7 @@ export default class List extends Observer {
 
     this._root
       .style('border-bottom', () => {
-        return setEvent.value === true ? 0 : '1px solid #CCC';
+        return setEvent.value !== false ? 0 : '1px solid #CCC';
       })
       .transition(timeline)
       .style('height', () => {
