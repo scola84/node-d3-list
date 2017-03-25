@@ -85,6 +85,16 @@ export default class Item extends Observer {
     return this;
   }
 
+  hide() {
+    this._root.style('display', 'none');
+    return this;
+  }
+
+  show() {
+    this._root.style('display', 'flex');
+    return this;
+  }
+
   order(part = null, value = -1) {
     if (part !== null) {
       this._move(part, value);

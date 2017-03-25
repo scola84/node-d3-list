@@ -105,6 +105,10 @@ export default class List extends Observer {
     return this._body;
   }
 
+  items() {
+    return this._items;
+  }
+
   inset(width = '48em') {
     if (width === null) {
       return this._inset;
