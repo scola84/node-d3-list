@@ -20,8 +20,9 @@ export default class List extends Observer {
     this._root = select('body')
       .append('div')
       .remove()
-      .classed('scola list static', true)
+      .classed('scola list', true)
       .styles({
+        'box-sizing': 'content-box',
         'margin-bottom': '3em',
         'overflow': 'hidden'
       });
@@ -35,7 +36,7 @@ export default class List extends Observer {
         'font-size': '0.9em',
         'justify-content': 'space-between',
         'order': 1,
-        'padding': '0 1.1em 0.75em',
+        'padding': '1.11em',
         'text-transform': 'uppercase'
       });
 
@@ -107,6 +108,20 @@ export default class List extends Observer {
 
   items() {
     return this._items;
+  }
+
+  model(value) {
+    this._root
+      .style('height', 0);
+
+    this._title
+      .classed('open', true);
+
+    this._titleIcon
+      .style('display', 'initial');
+
+    this._bindTitle();
+    return super.model(value);
   }
 
   inset(width = '48em') {
@@ -229,7 +244,9 @@ export default class List extends Observer {
   }
 
   _hideTitle() {
-    this._title.style('display', 'none');
+    this._title
+      .style('display', 'none');
+
     return this;
   }
 
@@ -242,7 +259,9 @@ export default class List extends Observer {
   }
 
   _hideComment() {
-    this._comment.style('display', 'none');
+    this._comment
+      .style('display', 'none');
+
     return this;
   }
 
@@ -260,14 +279,6 @@ export default class List extends Observer {
     item.root().remove();
 
     return item;
-  }
-
-  model(value) {
-    this._root.style('height', 0);
-    this._titleIcon.style('display', 'initial');
-    this._bindTitle();
-
-    return super.model(value);
   }
 
   _bindTitle() {
@@ -309,14 +320,17 @@ export default class List extends Observer {
         setTimeout(() => {
           if (setEvent.value !== false) {
             this._root.style('height', null);
+          } else {
+            this._root.style('border-bottom', '1px solid #CCC');
           }
         });
       });
 
+    if (setEvent.value === true) {
+      this._root.style('border', 0);
+    }
+
     this._root
-      .style('border-bottom', () => {
-        return setEvent.value !== false ? 0 : '1px solid #CCC';
-      })
       .transition(timeline)
       .style('height', () => {
         return setEvent.value !== false ? (
