@@ -114,9 +114,6 @@ export default class List extends Observer {
     this._root
       .style('height', 0);
 
-    this._title
-      .classed('open', true);
-
     this._titleIcon
       .style('display', 'initial');
 
@@ -310,7 +307,6 @@ export default class List extends Observer {
     const bodyHeight = parseFloat(this._body.style('height') || 0);
     const commentHeight = parseFloat(this._comment.style('height') || 0);
     const titleHeight = parseFloat(this._title.style('height') || 0);
-    const borderWidth = parseFloat(this._body.style('border-width') || 0);
 
     const duration = setEvent.changed === false ? 0 : 250;
 
@@ -337,7 +333,7 @@ export default class List extends Observer {
           titleHeight +
           bodyHeight +
           commentHeight
-        ) + 'px' : (titleHeight + borderWidth) + 'px';
+        ) + 'px' : titleHeight + 'px';
       });
 
     this._titleIcon
