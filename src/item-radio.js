@@ -43,10 +43,6 @@ export default class RadioItem extends Item {
     const checked = typeof value !== 'undefined' &&
       isEqual(value, this._value);
 
-    if (checked === true) {
-      this._check.show();
-    } else {
-      this._check.hide();
-    }
+    this._check.show(checked);
   }
 }

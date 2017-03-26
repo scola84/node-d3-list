@@ -215,11 +215,7 @@ export default class DateItem extends Item {
     this._date.text(unix > -1 ? this._format(date) : '');
 
     if (this._clear) {
-      if (unix > -1) {
-        this._clear.show();
-      } else {
-        this._clear.hide();
-      }
+      this._clear.show(unix > -1);
     }
 
     if (!this._select) {
@@ -405,7 +401,7 @@ export default class DateItem extends Item {
   _insertClear() {
     this._clear = this
       .button('ion-ios-close-empty')
-      .hide()
+      .show(false)
       .padding(false)
       .secondary();
 

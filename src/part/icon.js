@@ -28,7 +28,7 @@ export default class Icon extends Part {
 
     this.padding(true);
     this.primary();
-    this.show();
+    this.show(true);
   }
 
   icon() {

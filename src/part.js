@@ -7,8 +7,9 @@ export default class Part extends Observer {
     this._item = null;
     this._root = null;
     this._padding = null;
-    
+
     this._disabled = false;
+    this._visible = true;
   }
 
   destroy() {
@@ -69,13 +70,18 @@ export default class Part extends Observer {
     return this._insertPadding();
   }
 
-  show() {
-    this._root.style('display', 'flex');
-    return this;
-  }
+  show(value = null) {
+    if (value === null) {
+      return this._visible;
+    }
 
-  hide() {
-    this._root.style('display', 'none');
+    this._visible = value;
+
+    const display = value === true ?
+      'flex' : 'none';
+
+    this._root.style('display', display);
+
     return this;
   }
 

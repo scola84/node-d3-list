@@ -14,7 +14,8 @@ export default class Item extends Observer {
     this._parts = [];
 
     this._disabled = false;
-    this._first = null;
+    this._first = false;
+    this._visible = true;
 
     this._root = select('body')
       .append('div')
@@ -41,7 +42,6 @@ export default class Item extends Observer {
 
   destroy() {
     super.destroy();
-
     this._unbindRoot();
 
     this._parts.forEach((part) => {
@@ -78,20 +78,27 @@ export default class Item extends Observer {
     }
 
     this._first = value;
-    this._root.style('border-color', () => {
-      return value === true ? 'transparent' : '#CCC';
-    });
+
+    const color = value === true ?
+      'transparent' : '#CCC';
+
+    this._root.style('border-color', color);
 
     return this;
   }
 
-  hide() {
-    this._root.style('display', 'none');
-    return this;
-  }
+  show(value = null) {
+    if (value === null) {
+      return this._visible;
+    }
 
-  show() {
-    this._root.style('display', 'flex');
+    this._visible = value;
+
+    const display = value === true ?
+      'flex' : 'none';
+
+    this._root.style('display', display);
+
     return this;
   }
 
