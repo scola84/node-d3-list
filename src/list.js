@@ -130,7 +130,7 @@ export default class List extends Observer {
       this._deleteInset();
     }
 
-    if (!this._rootMedia) {
+    if (this._rootMedia === null) {
       this._insertInset(width);
     }
 

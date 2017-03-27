@@ -23,7 +23,11 @@ export default class CheckItem extends Item {
   }
 
   _click() {
-    if (this._disabled === true || !this._model) {
+    const cancel =
+      this._model === null ||
+      this._disabled === true;
+
+    if (cancel === true) {
       return;
     }
 

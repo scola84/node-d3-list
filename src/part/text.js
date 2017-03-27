@@ -74,7 +74,7 @@ export default class Text extends Part {
   primary(flex = true) {
     this._root.styles({
       'color': '#000',
-      'flex': flex ? 1 : 'none',
+      'flex': flex === true ? 1 : 'none',
       'justify-content': 'flex-start'
     });
 
@@ -84,7 +84,7 @@ export default class Text extends Part {
   secondary(flex = true) {
     this._root.styles({
       'color': '#AAA',
-      'flex': flex ? 1 : 'none',
+      'flex': flex === true ? 1 : 'none',
       'justify-content': 'flex-end'
     });
 

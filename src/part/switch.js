@@ -94,13 +94,23 @@ export default class Switch extends Part {
   }
 
   _click() {
-    if (this._disabled === false && this._model) {
-      this._model.set(this._name, !this._model.get(this._name));
+    const cancel =
+      this._model === null ||
+      this._disabled === true;
+
+    if (cancel === true) {
+      return;
     }
+
+    this._model.set(this._name, !this._model.get(this._name));
   }
 
   _set(setEvent) {
-    if (!this._knob || setEvent.name !== this._name) {
+    const cancel =
+      this._knob === null ||
+      setEvent.name !== this._name;
+
+    if (cancel === true) {
       return;
     }
 

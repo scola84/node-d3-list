@@ -14,13 +14,15 @@ export default class DateItem extends Item {
       year: 'YYYY'
     };
 
+    this._jump = false;
     this._open = false;
     this._panning = false;
-    this._jump = false;
 
     this._height = null;
     this._scrollLeft = 0;
+
     this._clear = null;
+    this._select = null;
 
     this._root
       .classed('date', true)
@@ -97,8 +99,8 @@ export default class DateItem extends Item {
       return this._open;
     }
 
-    if (!this._height) {
-      this._height = this._root.style('height');
+    if (this._height === null) {
+      this._height = parseFloat(this._root.style('height'));
     }
 
     if (this._open === value) {
@@ -106,17 +108,18 @@ export default class DateItem extends Item {
     }
 
     this._open = value;
-    const height = this._open ? (11 * 16) + 'px' : this._height;
+    let height = this._height;
 
-    if (this._open) {
+    if (this._open === true) {
       this._insertSelect();
+      height += parseFloat(this._select.style('height'));
     }
 
     this._root
       .transition()
-      .style('height', height)
+      .style('height', height + 'px')
       .on('end', () => {
-        if (!this._open) {
+        if (this._open === false) {
           this._deleteSelect();
         }
       });
@@ -218,7 +221,7 @@ export default class DateItem extends Item {
       this._clear.show(unix > -1);
     }
 
-    if (!this._select) {
+    if (this._select === null) {
       return;
     }
 
@@ -231,7 +234,7 @@ export default class DateItem extends Item {
         'cursor': 'inherit'
       });
 
-    if (date.unix() === -1) {
+    if (unix === -1) {
       return;
     }
 
@@ -280,11 +283,12 @@ export default class DateItem extends Item {
   }
 
   _clickYear() {
-    const cancel = !this._model ||
+    const cancel =
+      this._model === null ||
       this._disabled === true ||
       this._panning === true;
 
-    if (cancel) {
+    if (cancel === true) {
       return;
     }
 
@@ -308,11 +312,12 @@ export default class DateItem extends Item {
   }
 
   _clickMonth() {
-    const cancel = !this._model ||
+    const cancel =
+      this._model === null ||
       this._disabled === true ||
       this._panning === true;
 
-    if (cancel) {
+    if (cancel === true) {
       return;
     }
 
@@ -336,12 +341,13 @@ export default class DateItem extends Item {
   }
 
   _clickDay() {
-    const cancel = !this._model ||
+    const cancel =
+      this._model === null ||
       this._disabled === true ||
       this._panning === true ||
       select(event.target).classed('disabled') === true;
 
-    if (cancel) {
+    if (cancel === true) {
       return;
     }
 
@@ -361,10 +367,11 @@ export default class DateItem extends Item {
   _clickClear() {
     event.stopPropagation();
 
-    const cancel = !this._model ||
+    const cancel =
+      this._model === null ||
       this._disabled === true;
 
-    if (cancel) {
+    if (cancel === true) {
       return;
     }
 
@@ -424,7 +431,7 @@ export default class DateItem extends Item {
         'border-top': '1px solid #CCC',
         'color': '#000',
         'left': '1em',
-        'padding': '0 1em 0 0',
+        'padding': '0 1em 0.5em 0',
         'position': 'absolute',
         'right': 0,
         'top': '3em'
@@ -435,11 +442,12 @@ export default class DateItem extends Item {
     this._insertDay(formatter);
     this._bindSelect();
 
-    if (!this._model) {
+    if (this._model === null) {
       return;
     }
 
     this._setScroll();
+
     this._set({
       name: this._name,
       scope: 'model',
@@ -555,6 +563,11 @@ export default class DateItem extends Item {
 
   _setScroll() {
     const now = this._model.get(this._name);
+
+    if (now.unix() === -1) {
+      return;
+    }
+
     const firstYear = this._begin.year();
 
     const yearIndex = now.year() - firstYear + 1;
