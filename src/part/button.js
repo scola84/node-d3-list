@@ -56,6 +56,14 @@ export default class Button extends Part {
     return this;
   }
 
+  disabled(value = null) {
+    if (value !== null) {
+      this._icon.property('disabled', value);
+    }
+
+    return super.disabled(value);
+  }
+
   size(value = null) {
     if (value === null) {
       return this._icon.style('font-size');
