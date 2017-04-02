@@ -23,7 +23,7 @@ export default class List extends Observer {
       .classed('scola list', true)
       .styles({
         'box-sizing': 'content-box',
-        'margin-bottom': '3em',
+        'margin-bottom': '2em',
         'overflow': 'hidden'
       });
 
@@ -36,7 +36,7 @@ export default class List extends Observer {
         'font-size': '0.9em',
         'justify-content': 'space-between',
         'order': 1,
-        'padding': '1.11em',
+        'padding': '0 1.111em 0.555em',
         'text-transform': 'uppercase'
       });
 
