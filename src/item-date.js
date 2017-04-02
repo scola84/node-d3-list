@@ -147,7 +147,7 @@ export default class DateItem extends Item {
       .gesture()
       .on('panstart', () => this._panStart(this._year))
       .on('pan', (e) => this._pan(this._year, e))
-      .on('panend', () => this.panEnd(this._year));
+      .on('panend', () => this._panEnd(this._year));
 
     this._month
       .on('click.scola-list', () => this._clickMonth())
@@ -203,7 +203,8 @@ export default class DateItem extends Item {
   }
 
   _add(element) {
-    this._parts.splice(-2, 0, element);
+    const index = this._clear === null ? -1 : -2;
+    this._parts.splice(index, 0, element);
     this._order();
   }
 
@@ -387,16 +388,19 @@ export default class DateItem extends Item {
   }
 
   _panStart(target) {
+    this._panning = true;
     this._scrollLeft = parseInt(target.node().scrollLeft, 10);
   }
 
   _pan(target, panEvent) {
-    this._panning = true;
-    target.style('cursor', 'move');
-    target.node().scrollLeft = this._scrollLeft - panEvent.deltaX;
+    if (this._panning === true) {
+      target.style('cursor', 'move');
+      target.node().scrollLeft = this._scrollLeft - panEvent.deltaX;
+    }
   }
 
   _panEnd(target) {
+    this._panning = false;
     target.style('cursor', 'inherit');
   }
 
