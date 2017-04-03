@@ -200,8 +200,8 @@ export default class List extends Observer {
       .media(`(min-width: ${width})`)
       .call(() => { this._inset = true; })
       .styles({
-        'margin-left': '1em',
-        'margin-right': '1em'
+        'padding-left': '1em',
+        'padding-right': '1em'
       })
       .start();
 
