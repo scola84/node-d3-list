@@ -280,15 +280,19 @@ export default class List extends Observer {
 
   _bindTitle() {
     if (this._title) {
-      this._title.style('cursor', 'pointer');
-      this._title.on('click.scola-list', () => this._click());
+      this._title
+        .classed('click', true)
+        .style('cursor', 'pointer')
+        .on('click.scola-list', () => this._click());
     }
   }
 
   _unbindTitle() {
     if (this._title) {
-      this._title.style('cursor', 'initial');
-      this._title.on('click.scola-list', null);
+      this._title
+        .classed('click', false)
+        .style('cursor', 'initial')
+        .on('click.scola-list', null);
     }
   }
 
@@ -304,9 +308,9 @@ export default class List extends Observer {
       return;
     }
 
-    const bodyHeight = parseFloat(this._body.style('height') || 0);
-    const commentHeight = parseFloat(this._comment.style('height') || 0);
-    const titleHeight = parseFloat(this._title.style('height') || 0);
+    const bodyHeight = parseFloat(this._body.style('height')) || 0;
+    const commentHeight = parseFloat(this._comment.style('height')) || 0;
+    const titleHeight = parseFloat(this._title.style('height')) || 0;
 
     const duration = setEvent.changed === false ? 0 : 250;
 
