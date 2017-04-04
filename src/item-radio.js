@@ -14,7 +14,8 @@ export default class RadioItem extends Item {
     this._check = this
       .icon()
       .class('ion-ios-checkmark-empty')
-      .secondary();
+      .secondary()
+      .show(false);
 
     this._check
       .root()
