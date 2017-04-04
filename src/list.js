@@ -110,15 +110,25 @@ export default class List extends Observer {
     return this._items;
   }
 
-  model(value) {
-    this._root
-      .style('height', 0);
+  model(value = null) {
+    value = super.model(value);
+
+    if (value === null) {
+      return value;
+    }
+
+    if (this._model.get(this._name) === false) {
+      this._root.styles({
+        'height': '1.5em',
+        'border-bottom': '1px solid #CCC'
+      });
+    }
 
     this._titleIcon
       .style('display', 'initial');
 
     this._bindTitle();
-    return super.model(value);
+    return this;
   }
 
   inset(width = '48em') {
@@ -169,8 +179,20 @@ export default class List extends Observer {
     return this._insertItem(item);
   }
 
+  clear() {
+    this._items.forEach((item) => {
+      item.destroy();
+    });
+
+    this._items.clear();
+    return this;
+  }
+
   disabled(value) {
-    this._items.forEach((item) => item.disabled(value));
+    this._items.forEach((item) => {
+      item.disabled(value);
+    });
+
     return this;
   }
 
