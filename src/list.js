@@ -326,7 +326,11 @@ export default class List extends Observer {
   }
 
   _set(setEvent) {
-    if (setEvent.name !== this._name) {
+    const cancel =
+      setEvent.name !== this._name ||
+      setEvent.changed === false;
+
+    if (cancel) {
       return;
     }
 
@@ -334,10 +338,7 @@ export default class List extends Observer {
     const commentHeight = parseFloat(this._comment.style('height')) || 0;
     const titleHeight = parseFloat(this._title.style('height')) || 0;
 
-    const duration = setEvent.changed === false ? 0 : 250;
-
     const timeline = transition()
-      .duration(duration)
       .on('end', () => {
         setTimeout(() => {
           if (setEvent.value !== false) {
