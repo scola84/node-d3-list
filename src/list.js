@@ -326,11 +326,7 @@ export default class List extends Observer {
   }
 
   _set(setEvent) {
-    const cancel =
-      setEvent.name !== this._name ||
-      setEvent.changed === false;
-
-    if (cancel) {
+    if (setEvent.name !== this._name) {
       return;
     }
 
