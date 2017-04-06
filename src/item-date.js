@@ -226,7 +226,8 @@ export default class DateItem extends Item {
       return;
     }
 
-    this._select.selectAll('button')
+    this._select
+      .selectAll('button')
       .classed('selected', false)
       .classed('disabled', false)
       .styles({
@@ -243,21 +244,24 @@ export default class DateItem extends Item {
     const monthIndex = date.month() + 1;
     const dayIndex = date.date();
 
-    this._year.select(`button:nth-child(${yearIndex})`)
+    this._year
+      .select(`button:nth-child(${yearIndex})`)
       .classed('selected', true)
       .styles({
         'background': '#007AFF',
         'color': '#FFF'
       });
 
-    this._month.select(`button:nth-child(${monthIndex})`)
+    this._month
+      .select(`button:nth-child(${monthIndex})`)
       .classed('selected', true)
       .styles({
         'background': '#007AFF',
         'color': '#FFF'
       });
 
-    this._day.select(`button:nth-child(${dayIndex})`)
+    this._day
+      .select(`button:nth-child(${dayIndex})`)
       .classed('selected', true)
       .styles({
         'background': '#007AFF',
@@ -267,7 +271,8 @@ export default class DateItem extends Item {
     const daysInMonth = date.daysInMonth();
 
     for (let i = 31; i > daysInMonth; i -= 1) {
-      this._day.select(`button:nth-child(${i})`)
+      this._day
+        .select(`button:nth-child(${i})`)
         .classed('disabled', true)
         .attr('tabindex', -1)
         .styles({

@@ -334,33 +334,29 @@ export default class List extends Observer {
     const commentHeight = parseFloat(this._comment.style('height')) || 0;
     const titleHeight = parseFloat(this._title.style('height')) || 0;
 
-    const timeline = transition()
-      .on('end', () => {
-        setTimeout(() => {
-          if (setEvent.value !== false) {
-            this._root.style('height', null);
-          } else {
-            this._root.style('border-bottom', '1px solid #CCC');
-          }
-        });
-      });
-
     if (setEvent.value === true) {
       this._root.style('border', 0);
     }
 
     this._root
-      .transition(timeline)
+      .transition()
       .style('height', () => {
         return setEvent.value !== false ? (
           titleHeight +
           bodyHeight +
           commentHeight
         ) + 'px' : titleHeight + 'px';
+      })
+      .on('end', () => {
+        if (setEvent.value !== false) {
+          this._root.style('height', null);
+        } else {
+          this._root.style('border-bottom', '1px solid #CCC');
+        }
       });
 
     this._titleIcon
-      .transition(timeline)
+      .transition()
       .style('transform', () => {
         return setEvent.value !== false ?
           'rotate(0deg)' :
