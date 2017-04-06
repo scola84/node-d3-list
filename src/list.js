@@ -1,6 +1,6 @@
 /* eslint prefer-reflect: "off" */
 
-import { select, transition } from 'd3';
+import { select } from 'd3';
 import { Observer } from '@scola/d3-model';
 
 export default class List extends Observer {
@@ -83,6 +83,8 @@ export default class List extends Observer {
   }
 
   destroy() {
+    super.destroy();
+
     this._unbindBody();
     this._unbindTitle();
     this._deleteInset();
