@@ -62,9 +62,8 @@ export default class List extends Observer {
       .append('div')
       .classed('scola body', true)
       .styles({
-        'border-color': '#CCC',
-        'border-style': 'solid',
-        'border-width': '1px 0',
+        'border-bottom': '1px solid #CCC',
+        'border-top': '1px solid #CCC',
         'overflow': 'hidden'
       });
 
@@ -232,8 +231,9 @@ export default class List extends Observer {
     this._bodyMedia = this._body
       .media(`(min-width: ${width})`)
       .styles({
+        'border-bottom': 'none',
         'border-radius': '0.5em',
-        'border-style': 'none'
+        'border-top': 'none'
       })
       .start();
 
