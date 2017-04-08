@@ -350,6 +350,10 @@ export default class List extends Observer {
         ) + 'px' : titleHeight + 'px';
       })
       .on('end', () => {
+        if (this._root === null) {
+          return;
+        }
+
         if (setEvent.value !== false) {
           this._root.style('height', null);
         } else {
