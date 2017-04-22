@@ -1,9 +1,11 @@
-import { select } from 'd3';
+import { event, select } from 'd3';
 import Part from '../part';
 
 export default class Input extends Part {
   constructor() {
     super();
+
+    this._capsKey = null;
 
     this._root = select('body')
       .append('div')
@@ -87,10 +89,49 @@ export default class Input extends Part {
 
   _bindInput() {
     this._input.on('input.scola-list', () => this._change());
+    this._input.on('keydown.scola-list', () => this._keydown(event));
+    this._input.on('keypress.scola-list', () => this._keypress(event));
   }
 
   _unbindInput() {
     this._input.on('input.scola-list', null);
+    this._input.on('keydown.scola-list', null);
+    this._input.on('keypress.scola-list', null);
+  }
+
+  _keydown(keyEvent) {
+    const keyCode = keyEvent.which || keyEvent.keyCode || 0;
+
+    if (keyCode === 20) {
+      if (this._capsKey === null) {
+        return;
+      }
+
+      this._capsKey = !this._capsKey;
+
+      this._input.dispatch('caps', {
+        detail: this._capsKey
+      });
+    }
+  }
+
+  _keypress(keyEvent) {
+    const keyCode = keyEvent.which || keyEvent.keyCode || 0;
+    const string = String.fromCharCode(keyCode);
+
+    if (keyEvent.shiftKey === false) {
+      this._capsKey =
+        string.toUpperCase() === string &&
+        string.toLowerCase() !== string;
+    } else {
+      this._capsKey =
+        string.toLowerCase() === string &&
+        string.toUpperCase() !== string;
+    }
+
+    this._input.dispatch('caps', {
+      detail: this._capsKey
+    });
   }
 
   _change() {
