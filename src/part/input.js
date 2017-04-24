@@ -142,7 +142,11 @@ export default class Input extends Part {
   }
 
   _set(setEvent) {
-    if (setEvent.name !== this._name) {
+    const cancel =
+      setEvent.name !== this._name ||
+      setEvent.value === this._input.property('value');
+
+    if (cancel === true) {
       return;
     }
 
