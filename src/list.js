@@ -35,7 +35,6 @@ export default class List extends Observer {
         'display': 'none',
         'font-size': '0.9em',
         'justify-content': 'space-between',
-        'order': 1,
         'padding': '0 1.111em 0.555em',
         'text-transform': 'uppercase'
       });

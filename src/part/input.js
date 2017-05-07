@@ -15,7 +15,7 @@ export default class Input extends Part {
         'border-top': '1px solid',
         'border-top-color': 'inherit',
         'display': 'flex',
-        'flex': 1,
+        'flex': 'auto',
         'height': '3em',
         'padding': '0.5em 0'
       });

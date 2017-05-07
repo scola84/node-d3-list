@@ -32,7 +32,6 @@ export default class Item extends Observer {
       .classed('scola padding', true)
       .styles({
         'border-top': '1px solid transparent',
-        'order': 1,
         'width': '1em'
       });
 
