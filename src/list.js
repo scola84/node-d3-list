@@ -331,9 +331,9 @@ export default class List extends Observer {
       return;
     }
 
-    const bodyHeight = parseFloat(this._body.style('height')) || 0;
-    const commentHeight = parseFloat(this._comment.style('height')) || 0;
-    const titleHeight = parseFloat(this._title.style('height')) || 0;
+    const bodyHeight = this._body.height();
+    const commentHeight = this._comment.height();
+    const titleHeight = this._title.height();
 
     if (setEvent.value === true) {
       this._root.style('border', 0);

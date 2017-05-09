@@ -100,7 +100,7 @@ export default class DateItem extends Item {
     }
 
     if (this._height === null) {
-      this._height = parseFloat(this._root.style('height'));
+      this._height = this._root.height();
     }
 
     if (this._open === value) {
@@ -112,7 +112,7 @@ export default class DateItem extends Item {
 
     if (this._open === true) {
       this._insertSelect();
-      height += parseFloat(this._select.style('height'));
+      height += this._select.height();
     }
 
     this._root
