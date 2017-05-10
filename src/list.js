@@ -125,7 +125,7 @@ export default class List extends Observer {
     }
 
     this._titleIcon
-      .style('display', 'initial');
+      .style('display', null);
 
     this._bindTitle();
     return this;
@@ -314,7 +314,7 @@ export default class List extends Observer {
     if (this._title) {
       this._title
         .classed('click', false)
-        .style('cursor', 'initial')
+        .style('cursor', null)
         .on('click.scola-list', null);
     }
   }
