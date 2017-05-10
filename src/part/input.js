@@ -87,6 +87,11 @@ export default class Input extends Part {
     return this;
   }
 
+  focus() {
+    this._input.node().focus();
+    return this;
+  }
+
   _bindInput() {
     this._input.on('input.scola-list', () => this._change());
     this._input.on('keydown.scola-list', () => this._keydown(event));
