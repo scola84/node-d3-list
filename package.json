@@ -9,8 +9,8 @@
   "jsnext:main": "./index.js",
   "dependencies": {
     "@scola/d3-model": "^3.1.1",
-    "@scola/d3-scroller": "^2.0.1",
-    "d3": "^4.8.0",
+    "@scola/d3-scroller": "^2.0.4",
+    "d3": "^4.9.1",
     "lodash-es": "^4.17.4"
   }
 }
