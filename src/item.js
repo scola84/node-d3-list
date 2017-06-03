@@ -2,10 +2,12 @@ import { select } from 'd3';
 import { Observer } from '@scola/d3-model';
 import Button from './part/button';
 import Icon from './part/icon';
+import Icons from './part/icons';
 import Scroller from './part/scroller';
 import Switch from './part/switch';
 import Input from './part/input';
 import Text from './part/text';
+import Texts from './part/texts';
 
 export default class Item extends Observer {
   constructor() {
@@ -135,6 +137,14 @@ export default class Item extends Observer {
     return icon;
   }
 
+  icons() {
+    const icon = new Icons()
+      .item(this);
+
+    this._add(icon);
+    return icon;
+  }
+
   input(value = null) {
     const input = new Input()
       .item(this);
@@ -169,6 +179,14 @@ export default class Item extends Observer {
     this._add(text);
 
     return text;
+  }
+
+  texts() {
+    const texts = new Texts()
+      .item(this);
+
+    this._add(texts);
+    return texts;
   }
 
   _bindRoot() {
