@@ -1,6 +1,6 @@
 {
   "name": "@scola/d3-list",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "List",
   "repository": "github:scola84/node-d3-list",
   "author": "M.C. van den Boogaart <scola@kvdb.name>",
