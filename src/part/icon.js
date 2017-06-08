@@ -15,7 +15,7 @@ export default class Icon extends Part {
         'align-items': 'center',
         'border-top': '1px solid',
         'display': 'flex',
-        'height': '3em',
+        'min-height': '3em',
         'padding': '0.5em 0'
       });
 
@@ -65,6 +65,19 @@ export default class Icon extends Part {
     }
 
     this._icon.style('font-size', value);
+    return this;
+  }
+
+  width(value = null) {
+    if (value === null) {
+      return this._root.style('width');
+    }
+
+    this._root.styles({
+      'flex': 'none',
+      'width': value
+    });
+
     return this;
   }
 

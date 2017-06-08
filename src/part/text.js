@@ -13,12 +13,30 @@ export default class Text extends Part {
         'border-top': '1px solid',
         'border-top-color': 'inherit',
         'display': 'flex',
-        'height': '3em',
+        'min-height': '3em',
         'overflow': 'hidden',
         'padding': '0.5em 0'
       });
 
-    this._text = this._root
+    this._wrapper = this._root
+      .append('div')
+      .styles({
+        'display': 'flex',
+        'flex-direction': 'column',
+        'justify-content': 'center',
+        'min-width': 0
+      });
+
+    this._label = this._wrapper
+      .append('div')
+      .styles({
+        'color': '#AAA',
+        'display': 'none',
+        'font-size': '0.8em',
+        'padding': '0 0.25em 0.25em'
+      });
+
+    this._text = this._wrapper
       .append('button')
       .attrs({
         'tabindex': -1,
@@ -29,9 +47,11 @@ export default class Text extends Part {
         'border': '1px solid transparent',
         'color': 'inherit',
         'cursor': 'inherit',
+        'line-height': '1.5em',
         'max-width': '100%',
         'overflow': 'hidden',
         'padding': '0 0.125em',
+        'text-align': 'left',
         'text-overflow': 'ellipsis',
         'white-space': 'nowrap'
       });
@@ -40,15 +60,14 @@ export default class Text extends Part {
     this.primary();
   }
 
-  size(value = null) {
+  label(value = null) {
     if (value === null) {
-      return this._root.style('width');
+      return this._label;
     }
 
-    this._root.styles({
-      'flex': 'none',
-      'width': value
-    });
+    this._label
+      .style('display', 'initial')
+      .text(value);
 
     return this;
   }
@@ -71,24 +90,48 @@ export default class Text extends Part {
     return this;
   }
 
-  primary(flex = true) {
+  width(value = null) {
+    if (value === null) {
+      return this._root.style('width');
+    }
+
     this._root.styles({
-      'color': '#000',
-      'flex': flex === true ? 1 : 'none',
-      'justify-content': 'flex-start'
+      'flex': 'none',
+      'width': value
     });
 
     return this;
   }
 
-  secondary(flex = true) {
+  primary(flex = true) {
+    this._root.styles({
+      'color': '#000',
+      'flex': flex === true ? 'auto' : 'none',
+      'justify-content': 'flex-start'
+    });
+
+    this._wrapper.styles({
+      'flex': flex === true ? 'auto' : 'none'
+    });
+
+    return this;
+  }
+
+  secondary(flex = false) {
     this._root.styles({
       'color': '#AAA',
-      'flex': flex === true ? 1 : 'none',
+      'flex': flex === true ? 'auto' : 'none',
       'justify-content': 'flex-end'
     });
 
-    this._text.style('padding', 0);
+    this._wrapper.styles({
+      'flex': flex === true ? 'auto' : 'none'
+    });
+
+    this._text.styles({
+      'padding': 0
+    });
+
     return this;
   }
 

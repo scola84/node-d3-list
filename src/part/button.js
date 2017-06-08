@@ -15,21 +15,50 @@ export default class Button extends Part {
         'align-items': 'center',
         'border-top': '1px solid',
         'display': 'flex',
-        'height': '3em',
+        'min-height': '3em',
         'padding': '0.5em 0'
       });
 
-    this._icon = this._root
+    this._wrapper = this._root
+      .append('div')
+      .styles({
+        'align-items': 'center',
+        'display': 'flex',
+        'flex': 'auto',
+        'flex-direction': 'column',
+        'justify-content': 'center',
+        'min-width': 0
+      });
+
+    this._button = this._wrapper
       .append('button')
       .styles({
+        'align-items': 'center',
         'background': 'none',
         'border': '1px solid transparent',
         'color': 'inherit',
         'cursor': 'pointer',
         'display': 'flex',
         'font-size': '2em',
+        'justify-content': 'center',
         'margin': 0,
         'padding': 0
+      });
+
+    this._icon = this._button
+      .append('span')
+      .styles({
+        'font-size': '1em',
+        'line-height': 0
+      });
+
+    this._label = this._wrapper
+      .append('div')
+      .styles({
+        'color': '#AAA',
+        'display': 'none',
+        'font-size': '0.8em',
+        'padding': '0.25em 0.25em 0'
       });
 
     this.padding(true);
@@ -58,10 +87,22 @@ export default class Button extends Part {
 
   disabled(value = null) {
     if (value !== null) {
-      this._icon.property('disabled', value);
+      this._button.property('disabled', value);
     }
 
     return super.disabled(value);
+  }
+
+  label(value = null) {
+    if (value === null) {
+      return this._label;
+    }
+
+    this._label
+      .style('display', 'initial')
+      .text(value);
+
+    return this;
   }
 
   size(value = null) {
@@ -75,15 +116,28 @@ export default class Button extends Part {
 
   tabindex(value = null) {
     if (value === null) {
-      return this._icon.attr('tabindex');
+      return this._button.attr('tabindex');
     }
 
-    this._icon.attr('tabindex', value);
+    this._button.attr('tabindex', value);
+    return this;
+  }
+
+  width(value = null) {
+    if (value === null) {
+      return this._root.style('width');
+    }
+
+    this._root.styles({
+      'flex': 'none',
+      'width': value
+    });
+
     return this;
   }
 
   circle(background = '#007AFF') {
-    this._icon.styles({
+    this._button.styles({
       background,
       'border-radius': '1em',
       'color': '#FFF',

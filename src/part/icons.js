@@ -27,15 +27,6 @@ export default class Icon extends Part {
     this.show(true);
   }
 
-  line(index) {
-    if (typeof this._lines[index] === 'undefined') {
-      this._lines[index] = this._createIcon();
-    }
-
-    this._current = this._lines[index];
-    return this;
-  }
-
   class(value = null) {
     if (value === null) {
       return this._current.classed();
@@ -53,6 +44,15 @@ export default class Icon extends Part {
     }
 
     this._current.style('color', value);
+    return this;
+  }
+
+  line(index) {
+    if (typeof this._lines[index] === 'undefined') {
+      this._lines[index] = this._createIcon();
+    }
+
+    this._current = this._lines[index];
     return this;
   }
 

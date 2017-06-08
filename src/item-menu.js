@@ -23,12 +23,14 @@ export default class MenuItem extends Item {
       return;
     }
 
-    const value = setEvent.value;
+    const value = this._format(setEvent.value);
+    const self = this._format(this._value);
+
     let selected = typeof value !== 'undefined' &&
-      isEqual(value, this._value);
+      isEqual(value, self);
 
     if (typeof value === 'string') {
-      selected = value.indexOf(this._value) !== -1;
+      selected = value.indexOf(self) !== -1;
     }
 
     if (selected === true) {

@@ -15,7 +15,7 @@ export default class Texts extends Part {
         'border-top': '1px solid',
         'border-top-color': 'inherit',
         'display': 'flex',
-        'flex': 1,
+        'flex': 'auto',
         'overflow': 'hidden',
         'padding': '0.375em 0'
       });
@@ -24,23 +24,19 @@ export default class Texts extends Part {
       .append('div')
       .styles({
         'display': 'flex',
-        'flex': 1,
+        'flex': 'auto',
         'flex-flow': 'row wrap'
       });
 
     this.padding(true);
   }
 
-  size(value = null) {
-    if (value === null) {
-      return this._current.style('width');
+  line(index) {
+    if (typeof this._lines[index] === 'undefined') {
+      this._lines[index] = this._createText();
     }
 
-    this._current.styles({
-      'flex': 'none',
-      'width': value
-    });
-
+    this._current = this._lines[index];
     return this;
   }
 
@@ -53,15 +49,6 @@ export default class Texts extends Part {
     return this;
   }
 
-  line(index) {
-    if (typeof this._lines[index] === 'undefined') {
-      this._lines[index] = this._createText();
-    }
-
-    this._current = this._lines[index];
-    return this;
-  }
-
   text(value) {
     if (value === null) {
       return this._current;
@@ -71,9 +58,22 @@ export default class Texts extends Part {
     return this;
   }
 
+  width(value = null) {
+    if (value === null) {
+      return this._root.style('width');
+    }
+
+    this._root.styles({
+      'flex': 'none',
+      'width': value
+    });
+
+    return this;
+  }
+
   primary(sub = false) {
     this._current.styles({
-      'flex': '1 auto'
+      'flex': 'auto'
     });
 
     this._current.styles(() => {
@@ -119,7 +119,7 @@ export default class Texts extends Part {
         'border': '1px solid transparent',
         'color': 'inherit',
         'cursor': 'inherit',
-        'flex': '1 100%',
+        'flex': '1 1 100%',
         'overflow': 'hidden',
         'padding': '0.125em',
         'text-align': 'left',
