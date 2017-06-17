@@ -24,10 +24,9 @@ export default class Button extends Part {
       .styles({
         'align-items': 'center',
         'display': 'flex',
-        'flex': 'auto',
+        'flex': '1 1 auto',
         'flex-direction': 'column',
-        'justify-content': 'center',
-        'min-width': 0
+        'justify-content': 'center'
       });
 
     this._button = this._wrapper
@@ -49,10 +48,11 @@ export default class Button extends Part {
       .append('span')
       .styles({
         'font-size': '1em',
-        'line-height': 0
+        'line-height': 0,
+        'position': 'relative'
       });
 
-    this._label = this._wrapper
+    this._sub = this._wrapper
       .append('div')
       .styles({
         'color': '#AAA',
@@ -93,13 +93,13 @@ export default class Button extends Part {
     return super.disabled(value);
   }
 
-  label(value = null) {
+  sub(value = null) {
     if (value === null) {
-      return this._label;
+      return this._sub;
     }
 
-    this._label
-      .style('display', 'initial')
+    this._sub
+      .style('display', null)
       .text(value);
 
     return this;
@@ -137,6 +137,8 @@ export default class Button extends Part {
   }
 
   circle(background = '#007AFF') {
+    this._root.classed('circle', true);
+
     this._button.styles({
       background,
       'border-radius': '1em',
