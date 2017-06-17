@@ -14,7 +14,7 @@ export default class ButtonItem extends Item {
         'padding': '0.5em 0'
       });
 
-    this._text = this._root
+    this._button = this._root
       .append('button')
       .attrs({
         'tabindex': -1,
@@ -30,6 +30,12 @@ export default class ButtonItem extends Item {
         'padding': '0 0.25em'
       });
 
+    this._text = this._button
+      .append('span')
+      .styles({
+        'position': 'relative'
+      });
+
     this._padding.styles({
       'display': 'none'
     });
@@ -37,10 +43,10 @@ export default class ButtonItem extends Item {
 
   tabindex(value = null) {
     if (value === null) {
-      return this._text.attr('tabindex');
+      return this._button.attr('tabindex');
     }
 
-    this._text.attr('tabindex', value);
+    this._button.attr('tabindex', value);
     return this;
   }
 

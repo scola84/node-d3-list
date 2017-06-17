@@ -15,7 +15,7 @@ export default class Texts extends Part {
         'border-top': '1px solid',
         'border-top-color': 'inherit',
         'display': 'flex',
-        'flex': 'auto',
+        'flex': '1 1 0%',
         'overflow': 'hidden',
         'padding': '0.375em 0'
       });
@@ -24,7 +24,7 @@ export default class Texts extends Part {
       .append('div')
       .styles({
         'display': 'flex',
-        'flex': 'auto',
+        'flex': '1 1 0%',
         'flex-flow': 'row wrap'
       });
 
@@ -54,7 +54,10 @@ export default class Texts extends Part {
       return this._current;
     }
 
-    this._current.text(value);
+    this._current
+      .select('span')
+      .text(value);
+
     return this;
   }
 
@@ -73,7 +76,7 @@ export default class Texts extends Part {
 
   primary(sub = false) {
     this._current.styles({
-      'flex': 'auto'
+      'flex': '1 1 0%'
     });
 
     this._current.styles(() => {
@@ -108,7 +111,7 @@ export default class Texts extends Part {
   }
 
   _createText() {
-    return this._container
+    const text = this._container
       .append('button')
       .attrs({
         'tabindex': -1,
@@ -126,6 +129,15 @@ export default class Texts extends Part {
         'text-overflow': 'ellipsis',
         'white-space': 'nowrap'
       });
+
+    text
+      .append('span')
+      .styles({
+        'font-size': 'inherit',
+        'position': 'relative'
+      });
+
+    return text;
   }
 
   _set() {}
