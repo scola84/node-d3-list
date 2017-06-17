@@ -5,6 +5,8 @@ export default class Text extends Part {
   constructor() {
     super();
 
+    this._overflow = null;
+
     this._root = select('body')
       .append('div')
       .remove()
@@ -27,7 +29,7 @@ export default class Text extends Part {
         'min-width': 0
       });
 
-    this._label = this._wrapper
+    this._sup = this._wrapper
       .append('div')
       .styles({
         'color': '#AAA',
@@ -36,7 +38,7 @@ export default class Text extends Part {
         'padding': '0 0.25em 0.25em'
       });
 
-    this._text = this._wrapper
+    this._button = this._wrapper
       .append('button')
       .attrs({
         'tabindex': -1,
@@ -56,17 +58,53 @@ export default class Text extends Part {
         'white-space': 'nowrap'
       });
 
+    this._text = this._button
+      .append('span')
+      .styles({
+        'position': 'relative'
+      });
+
+    this._sub = this._wrapper
+      .append('div')
+      .styles({
+        'color': '#AAA',
+        'display': 'none',
+        'font-size': '0.8em',
+        'padding': '0.25em 0.25em 0'
+      });
+
     this.padding(true);
     this.primary();
   }
 
-  label(value = null) {
+  overflow(value = null) {
     if (value === null) {
-      return this._label;
+      return this._overflow;
     }
 
-    this._label
-      .style('display', 'initial')
+    this._overflow = value;
+    return this;
+  }
+
+  sub(value = null) {
+    if (value === null) {
+      return this._sub;
+    }
+
+    this._sub
+      .style('display', null)
+      .text(value);
+
+    return this;
+  }
+
+  sup(value = null) {
+    if (value === null) {
+      return this._sup;
+    }
+
+    this._sup
+      .style('display', null)
       .text(value);
 
     return this;
@@ -74,10 +112,10 @@ export default class Text extends Part {
 
   tabindex(value = null) {
     if (value === null) {
-      return this._text.attr('tabindex');
+      return this._button.attr('tabindex');
     }
 
-    this._text.attr('tabindex', value);
+    this._button.attr('tabindex', value);
     return this;
   }
 
@@ -87,6 +125,19 @@ export default class Text extends Part {
     }
 
     this._text.text(value);
+
+    if (this._overflow === 'expand') {
+      this._expand(true);
+    }
+
+    if (this._overflow === 'title') {
+      this._title(value);
+    }
+
+    if (this._overflow === 'toggle') {
+      this._toggle();
+    }
+
     return this;
   }
 
@@ -106,12 +157,13 @@ export default class Text extends Part {
   primary(flex = true) {
     this._root.styles({
       'color': '#000',
-      'flex': flex === true ? 'auto' : 'none',
+      'flex': flex === true ? '1 1 0%' : 'none',
       'justify-content': 'flex-start'
     });
 
     this._wrapper.styles({
-      'flex': flex === true ? 'auto' : 'none'
+      'flex': flex === true && this._overflow !== null ?
+        '1 1 0%' : 'none',
     });
 
     return this;
@@ -120,19 +172,59 @@ export default class Text extends Part {
   secondary(flex = false) {
     this._root.styles({
       'color': '#AAA',
-      'flex': flex === true ? 'auto' : 'none',
+      'flex': flex === true ? '1 1 0%' : 'none',
       'justify-content': 'flex-end'
     });
 
     this._wrapper.styles({
-      'flex': flex === true ? 'auto' : 'none'
+      'flex': flex === true && this._overflow !== null ?
+        '1 1 0%' : 'none',
     });
 
-    this._text.styles({
+    this._button.styles({
       'padding': 0
     });
 
     return this;
+  }
+
+  _bindToggle() {
+    this._button
+      .style('cursor', 'pointer')
+      .on('click.scola-list', () => this._expand());
+  }
+
+  _unbindToggle() {
+    this._button
+      .style('cursor', null)
+      .on('click.scola-list', null);
+  }
+
+  _expand(force = false) {
+    this._button.style('white-space', () => {
+      return force === true ||
+        this._button.style('white-space') === 'nowrap' ?
+        null : 'nowrap';
+    });
+  }
+
+  _overflows() {
+    return this._button.node().scrollWidth >
+      this._button.node().clientWidth;
+  }
+
+  _title(value) {
+    this._button.attr('title', () => {
+      return this._overflows() === true ? value : null;
+    });
+  }
+
+  _toggle() {
+    this._unbindToggle();
+
+    if (this._overflows() === true) {
+      this._bindToggle();
+    }
   }
 
   _set(setEvent) {
@@ -141,6 +233,6 @@ export default class Text extends Part {
     }
 
     const value = this._format(setEvent.value);
-    this._text.text(value);
+    this.text(value);
   }
 }
