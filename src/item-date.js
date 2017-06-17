@@ -23,6 +23,7 @@ export default class DateItem extends Item {
 
     this._clear = null;
     this._select = null;
+    this._today = null;
 
     this._root
       .classed('date', true)
@@ -92,6 +93,18 @@ export default class DateItem extends Item {
     }
 
     return this._insertClear();
+  }
+
+  today(action = null) {
+    if (action === null) {
+      return this._today;
+    }
+
+    if (action === false) {
+      return this._deleteToday();
+    }
+
+    return this._insertToday();
   }
 
   open(value = null) {
@@ -202,8 +215,29 @@ export default class DateItem extends Item {
     }
   }
 
+  _bindToday() {
+    if (this._today) {
+      this._today.root().on('click.scola-list', () => {
+        this._clickToday(event);
+      });
+    }
+  }
+
+  _unbindToday() {
+    if (this._today) {
+      this._today.root().on('click.scola-list', null);
+    }
+  }
+
   _add(element) {
-    const index = this._clear === null ? -1 : -2;
+    element
+      .root()
+      .style('height', '3em');
+
+    let index = -1;
+    index -= this._clear === null ? 0 : 1;
+    index -= this._today === null ? 0 : 1;
+
     this._parts.splice(index, 0, element);
     this._order();
   }
@@ -392,6 +426,27 @@ export default class DateItem extends Item {
     this._model.set(this._name, date);
   }
 
+  _clickToday() {
+    event.stopPropagation();
+
+    const cancel =
+      this._model === null ||
+      this._disabled === true;
+
+    if (cancel === true) {
+      return;
+    }
+
+    const date = this._model
+      .get(this._name)
+      .clone()
+      .year(new Date().getFullYear())
+      .month(new Date().getMonth())
+      .date(new Date().getDate());
+
+    this._model.set(this._name, date);
+  }
+
   _panStart(target) {
     this._panning = true;
     this._scrollLeft = parseInt(target.node().scrollLeft, 10);
@@ -417,9 +472,8 @@ export default class DateItem extends Item {
   _insertClear() {
     this._clear = this
       .button('ion-ios-close-empty')
-      .show(false)
-      .padding(false)
-      .secondary();
+      .secondary()
+      .show(false);
 
     this._bindClear();
     return this;
@@ -427,6 +481,23 @@ export default class DateItem extends Item {
 
   _deleteClear() {
     this._clear.remove();
+    return this;
+  }
+
+  _insertToday() {
+    this._today = this
+      .button('ion-ios-circle-filled')
+      .secondary()
+      .size('0.65em');
+
+    this._move(this._today, 5);
+    this._bindToday();
+
+    return this;
+  }
+
+  _todayClear() {
+    this._today.remove();
     return this;
   }
 
@@ -494,6 +565,10 @@ export default class DateItem extends Item {
           'padding-right': '0.5em',
           'border-radius': '0.25em'
         })
+        .append('span')
+        .styles({
+          'position': 'relative'
+        })
         .text(formatter.year(i).format(this._formats.year));
     }
   }
@@ -524,6 +599,10 @@ export default class DateItem extends Item {
           'padding-left': '0.5em',
           'padding-right': '0.5em',
           'border-radius': '0.25em'
+        })
+        .append('span')
+        .styles({
+          'position': 'relative'
         })
         .text(formatter
           .month(i)
@@ -557,6 +636,10 @@ export default class DateItem extends Item {
           'padding-left': '0.5em',
           'padding-right': '0.5em',
           'border-radius': '0.25em'
+        })
+        .append('span')
+        .styles({
+          'position': 'relative'
         })
         .text(formatter
           .startOf('year')
