@@ -4,9 +4,11 @@ import Button from './part/button';
 import Icon from './part/icon';
 import Icons from './part/icons';
 import Scroller from './part/scroller';
+import Space from './part/space';
 import Switch from './part/switch';
 import Input from './part/input';
 import Text from './part/text';
+import Textarea from './part/textarea';
 import Texts from './part/texts';
 
 export default class Item extends Observer {
@@ -163,6 +165,14 @@ export default class Item extends Observer {
     return scroller;
   }
 
+  space() {
+    const space = new Space()
+      .item(this);
+
+    this._add(space);
+    return space;
+  }
+
   switch () {
     const part = new Switch()
       .item(this);
@@ -179,6 +189,14 @@ export default class Item extends Observer {
     this._add(text);
 
     return text;
+  }
+
+  textarea() {
+    const textarea = new Textarea()
+      .item(this);
+
+    this._add(textarea);
+    return textarea;
   }
 
   texts() {
