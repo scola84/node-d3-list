@@ -127,6 +127,15 @@ export default class Button extends Part {
     return this;
   }
 
+  type(value = null) {
+    if (value === null) {
+      return this._button.attr('type');
+    }
+
+    this._button.attr('type', value);
+    return this;
+  }
+
   width(value = null) {
     if (value === null) {
       return this._root.style('width');
