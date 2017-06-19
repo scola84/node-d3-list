@@ -724,6 +724,9 @@ export default class DateItem extends Item {
   }
 
   _indexOf(node) {
+    node = node.nodeName.toLowerCase() === 'span' ?
+      node.parentNode : node;
+
     for (let i = 0; i < node.parentNode.children.length; i += 1) {
       if (node.parentNode.children[i] === node) {
         return i;
