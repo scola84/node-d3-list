@@ -31,6 +31,10 @@ export default class Button extends Part {
 
     this._button = this._wrapper
       .append('button')
+      .attrs({
+        'tabindex': -1,
+        'type': 'button'
+      })
       .styles({
         'align-items': 'center',
         'background': 'none',
