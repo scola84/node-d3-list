@@ -11,6 +11,7 @@ export default class NavItem extends MenuItem {
     this._forward = this
       .icon()
       .class('ion-ios-arrow-forward')
+      .size('1.9em')
       .secondary();
   }
 
