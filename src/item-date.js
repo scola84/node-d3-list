@@ -14,6 +14,8 @@ export default class DateItem extends Item {
       year: 'YYYY'
     };
 
+    this._moment = null;
+
     this._jump = false;
     this._open = false;
     this._panning = false;
@@ -80,6 +82,20 @@ export default class DateItem extends Item {
     }
 
     this._jump = value;
+    return this;
+  }
+
+  moment(value = null) {
+    if (value === null) {
+      return this._moment;
+    }
+
+    this._moment = value
+      .utc()
+      .year(1970)
+      .startOf('year')
+      .milliseconds(-1);
+
     return this;
   }
 
@@ -333,7 +349,7 @@ export default class DateItem extends Item {
     }
 
     const index = this._indexOf(event.target);
-    let date = this._model.get(this._name);
+    let date = this._model.get(this._name) || this._moment;
     date = date.clone();
 
     if (date.unix() === -1) {
@@ -361,7 +377,7 @@ export default class DateItem extends Item {
       return;
     }
 
-    let date = this._model.get(this._name);
+    let date = this._model.get(this._name) || this._moment;
 
     if (date.unix() === -1) {
       return;
@@ -391,7 +407,7 @@ export default class DateItem extends Item {
       return;
     }
 
-    let date = this._model.get(this._name);
+    let date = this._model.get(this._name) || this._moment;
 
     if (date.unix() === -1) {
       return;
@@ -415,15 +431,7 @@ export default class DateItem extends Item {
       return;
     }
 
-    const date = this._model
-      .get(this._name)
-      .clone()
-      .utc()
-      .year(1970)
-      .startOf('year')
-      .milliseconds(-1);
-
-    this._model.set(this._name, date);
+    this._model.set(this._name, this._moment.clone());
   }
 
   _clickToday() {
@@ -437,8 +445,7 @@ export default class DateItem extends Item {
       return;
     }
 
-    const date = this._model
-      .get(this._name)
+    const date = this._moment
       .clone()
       .year(new Date().getFullYear())
       .month(new Date().getMonth())
@@ -654,7 +661,7 @@ export default class DateItem extends Item {
   }
 
   _setScroll() {
-    const now = this._model.get(this._name);
+    const now = this._model.get(this._name) || this._moment;
 
     if (now.unix() === -1) {
       return;
