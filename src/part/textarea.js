@@ -35,7 +35,7 @@ export default class Textarea extends Part {
         'margin': 0,
         'overflow-x': 'hidden',
         'overflow-y': 'auto',
-        'padding': '0.25em 0.35em',
+        'padding': '0.125em',
         'resize': 'none',
         'width': '100%',
       });
