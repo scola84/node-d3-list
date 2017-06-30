@@ -65,9 +65,16 @@ export default class Button extends Part {
         'padding': '0.25em 0.25em 0'
       });
 
+    this._bindButton();
+
     this.padding(true);
     this.primary();
     this.show(true);
+  }
+
+  destroy() {
+    this._unbindButton();
+    super.destroy();
   }
 
   icon() {
@@ -86,6 +93,15 @@ export default class Button extends Part {
     this._class = value;
     this._icon.classed(value, true);
 
+    return this;
+  }
+
+  color(value = null) {
+    if (value === null) {
+      return this._root.style('color');
+    }
+
+    this._root.style('color', value);
     return this;
   }
 
@@ -182,5 +198,19 @@ export default class Button extends Part {
     });
 
     return this;
+  }
+
+  _bindButton() {
+    this._button.on('click.scola-item', () => this._click());
+  }
+
+  _unbindButton() {
+    this._button.on('click.scola-item', null);
+  }
+
+  _click() {
+    if (this._disabled === false && this._model) {
+      this._model.set(this._name, this._value);
+    }
   }
 }
