@@ -41,6 +41,15 @@ export default class ButtonItem extends Item {
     });
   }
 
+  color(value = null) {
+    if (value === null) {
+      return this._root.style('color');
+    }
+
+    this._root.style('color', value);
+    return this;
+  }
+
   tabindex(value = null) {
     if (value === null) {
       return this._button.attr('tabindex');
