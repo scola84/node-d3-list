@@ -48,9 +48,9 @@ export default class CheckItem extends Item {
       value.indexOf(this._value) > -1;
 
     if (checked === true) {
-      this._check.class('ion-ios-circle-outline');
-    } else {
       this._check.class('ion-ios-checkmark');
+    } else {
+      this._check.class('ion-ios-circle-outline');
     }
   }
 }
