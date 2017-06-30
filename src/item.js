@@ -44,7 +44,6 @@ export default class Item extends Observer {
   }
 
   destroy() {
-    super.destroy();
     this._unbindRoot();
 
     this._parts.forEach((part) => {
@@ -56,6 +55,8 @@ export default class Item extends Observer {
     this._root.dispatch('destroy');
     this._root.remove();
     this._root = null;
+
+    super.destroy();
   }
 
   root() {
