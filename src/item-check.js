@@ -22,6 +22,15 @@ export default class CheckItem extends Item {
       });
   }
 
+  selected(value = null) {
+    if (value === null) {
+      value = this._model.get(this._name);
+    }
+
+    return typeof value !== 'undefined' &&
+      value.indexOf(this._value) > -1;
+  }
+
   _click() {
     const cancel =
       this._model === null ||
@@ -43,11 +52,7 @@ export default class CheckItem extends Item {
       return;
     }
 
-    const value = setEvent.value;
-    const checked = typeof value !== 'undefined' &&
-      value.indexOf(this._value) > -1;
-
-    if (checked === true) {
+    if (this.selected(setEvent.value) === true) {
       this._check.class('ion-ios-checkmark');
     } else {
       this._check.class('ion-ios-circle-outline');

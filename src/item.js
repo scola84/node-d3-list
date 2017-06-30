@@ -234,5 +234,7 @@ export default class Item extends Observer {
     });
   }
 
+  selected() {}
+
   _click() {}
 }

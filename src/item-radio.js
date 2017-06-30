@@ -24,6 +24,15 @@ export default class RadioItem extends Item {
       });
   }
 
+  selected(value = null) {
+    if (value === null) {
+      value = this._model.get(this._name);
+    }
+
+    return typeof value !== 'undefined' &&
+      isEqual(value, this._value);
+  }
+
   _add(element) {
     this._parts.splice(-1, 0, element);
     this._order();
@@ -40,10 +49,6 @@ export default class RadioItem extends Item {
       return;
     }
 
-    const value = setEvent.value;
-    const checked = typeof value !== 'undefined' &&
-      isEqual(value, this._value);
-
-    this._check.show(checked);
+    this._check.show(this.selected(setEvent.value));
   }
 }
