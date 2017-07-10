@@ -110,6 +110,10 @@ export default class List extends Observer {
     return this._items;
   }
 
+  filled() {
+    return this._items.size > 0;
+  }
+
   model(value = null) {
     value = super.model(value);
 
