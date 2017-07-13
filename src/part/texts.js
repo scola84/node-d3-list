@@ -6,6 +6,7 @@ export default class Texts extends Part {
     super();
 
     this._lines = [];
+    this._current = null;
 
     this._root = select('body')
       .append('div')
@@ -31,21 +32,16 @@ export default class Texts extends Part {
     this.padding(true);
   }
 
+  current() {
+    return this._current;
+  }
+
   line(index) {
     if (typeof this._lines[index] === 'undefined') {
       this._lines[index] = this._createText();
     }
 
     this._current = this._lines[index];
-    return this;
-  }
-
-  tabindex(value = null) {
-    if (value === null) {
-      return this._current.attr('tabindex');
-    }
-
-    this._current.attr('tabindex', value);
     return this;
   }
 
@@ -57,19 +53,6 @@ export default class Texts extends Part {
     this._current
       .select('span')
       .text(value);
-
-    return this;
-  }
-
-  width(value = null) {
-    if (value === null) {
-      return this._root.style('width');
-    }
-
-    this._root.styles({
-      'flex': 'none',
-      'width': value
-    });
 
     return this;
   }

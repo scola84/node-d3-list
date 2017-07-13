@@ -35,52 +35,6 @@ export default class Icon extends Part {
     return this._icon;
   }
 
-  class(value = null) {
-    if (value === null) {
-      return this._icon.classed();
-    }
-
-    if (this._class) {
-      this._icon.classed(this._class, false);
-    }
-
-    this._class = value;
-    this._icon.classed(value, true);
-
-    return this;
-  }
-
-  color(value = null) {
-    if (value === null) {
-      return this._icon.style('color');
-    }
-
-    this._icon.style('color', value);
-    return this;
-  }
-
-  size(value = null) {
-    if (value === null) {
-      return this._icon.style('font-size');
-    }
-
-    this._icon.style('font-size', value);
-    return this;
-  }
-
-  width(value = null) {
-    if (value === null) {
-      return this._root.style('width');
-    }
-
-    this._root.styles({
-      'flex': 'none',
-      'width': value
-    });
-
-    return this;
-  }
-
   primary() {
     this._root.styles({
       'border-top-color': 'transparent',

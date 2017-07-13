@@ -76,13 +76,16 @@ export default class Switch extends Part {
     super.destroy();
   }
 
-  tabindex(value = null) {
-    if (value === null) {
-      return this._knob.attr('tabindex');
-    }
+  area() {
+    return this._area;
+  }
 
-    this._knob.attr('tabindex', value);
-    return this;
+  mask() {
+    return this._mask;
+  }
+
+  knob() {
+    return this._knob;
   }
 
   _bindArea() {

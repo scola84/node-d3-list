@@ -494,8 +494,13 @@ export default class DateItem extends Item {
   _insertToday() {
     this._today = this
       .button('ion-ios-circle-filled')
-      .secondary()
-      .size('0.65em');
+      .secondary();
+
+    this._today
+      .icon()
+      .styles({
+        'font-size': '0.65em'
+      });
 
     this._move(this._today, 5);
     this._bindToday();

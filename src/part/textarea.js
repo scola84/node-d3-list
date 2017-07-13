@@ -78,29 +78,6 @@ export default class Textarea extends Part {
     return super.name(value);
   }
 
-  placeholder(value = null) {
-    if (value === null) {
-      return this._textarea.attr('placeholder');
-    }
-
-    this._textarea.attr('placeholder', value);
-    return this;
-  }
-
-  tabindex(value = null) {
-    if (value === null) {
-      return this._textarea.attr('tabindex');
-    }
-
-    this._textarea.attr('tabindex', value);
-    return this;
-  }
-
-  focus() {
-    this._textarea.node().focus();
-    return this;
-  }
-
   _bindTextarea() {
     this._textarea.on('input.scola-list', () => this._change());
   }

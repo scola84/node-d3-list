@@ -11,14 +11,19 @@ export default class CheckItem extends Item {
       });
 
     this._check = this
-      .icon()
-      .class('ion-ios-circle-outline')
-      .size('1.5em');
+      .icon();
 
     this._check
       .root()
       .styles({
         'width': '1.75em'
+      });
+
+    this._check
+      .icon()
+      .classed('ion-ios-circle-outline', true)
+      .styles({
+        'font-size': '1.5em'
       });
   }
 
@@ -52,10 +57,12 @@ export default class CheckItem extends Item {
       return;
     }
 
-    if (this.selected(setEvent.value) === true) {
-      this._check.class('ion-ios-checkmark');
-    } else {
-      this._check.class('ion-ios-circle-outline');
-    }
+    this._check
+      .icon()
+      .attr('class', () => {
+        return this.selected(setEvent.value) === true ?
+          'ion-ios-checkmark' :
+          'ion-ios-circle-outline';
+      });
   }
 }

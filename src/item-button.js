@@ -41,31 +41,12 @@ export default class ButtonItem extends Item {
     });
   }
 
-  color(value = null) {
-    if (value === null) {
-      return this._root.style('color');
-    }
-
-    this._root.style('color', value);
-    return this;
+  button() {
+    return this._button;
   }
 
-  tabindex(value = null) {
-    if (value === null) {
-      return this._button.attr('tabindex');
-    }
-
-    this._button.attr('tabindex', value);
-    return this;
-  }
-
-  text(value = null) {
-    if (value === null) {
-      return this._text;
-    }
-
-    this._text.text(value);
-    return this;
+  text() {
+    return this._text;
   }
 
   _click() {

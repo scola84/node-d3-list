@@ -60,38 +60,6 @@ export default class Input extends Part {
     return super.name(value);
   }
 
-  placeholder(value = null) {
-    if (value === null) {
-      return this._input.attr('placeholder');
-    }
-
-    this._input.attr('placeholder', value);
-    return this;
-  }
-
-  tabindex(value = null) {
-    if (value === null) {
-      return this._input.attr('tabindex');
-    }
-
-    this._input.attr('tabindex', value);
-    return this;
-  }
-
-  type(value = null) {
-    if (value === null) {
-      return this._input.attr('type');
-    }
-
-    this._input.attr('type', value);
-    return this;
-  }
-
-  focus() {
-    this._input.node().focus();
-    return this;
-  }
-
   _bindInput() {
     this._input.on('input.scola-list', () => this._change());
     this._input.on('keydown.scola-list', () => this._keydown(event));

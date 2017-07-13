@@ -5,6 +5,7 @@ export default class Icon extends Part {
   constructor() {
     super();
 
+    this._current = null;
     this._lines = [];
 
     this._root = select('body')
@@ -27,24 +28,8 @@ export default class Icon extends Part {
     this.show(true);
   }
 
-  class(value = null) {
-    if (value === null) {
-      return this._current.classed();
-    }
-
-    this._current.attr('class', null);
-    this._current.classed(value, true);
-
-    return this;
-  }
-
-  color(value = null) {
-    if (value === null) {
-      return this._current.style('color');
-    }
-
-    this._current.style('color', value);
-    return this;
+  current() {
+    return this._current;
   }
 
   line(index) {
@@ -53,15 +38,6 @@ export default class Icon extends Part {
     }
 
     this._current = this._lines[index];
-    return this;
-  }
-
-  size(value = null) {
-    if (value === null) {
-      return this._current.style('font-size');
-    }
-
-    this._current.style('font-size', value);
     return this;
   }
 

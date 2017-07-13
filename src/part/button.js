@@ -5,8 +5,6 @@ export default class Button extends Part {
   constructor() {
     super();
 
-    this._class = null;
-
     this._root = select('body')
       .append('div')
       .remove()
@@ -77,32 +75,12 @@ export default class Button extends Part {
     super.destroy();
   }
 
+  button() {
+    return this._button;
+  }
+
   icon() {
     return this._icon;
-  }
-
-  class(value = null) {
-    if (value === null) {
-      return this._icon.classed();
-    }
-
-    if (this._class) {
-      this._icon.classed(this._class, false);
-    }
-
-    this._class = value;
-    this._icon.classed(value, true);
-
-    return this;
-  }
-
-  color(value = null) {
-    if (value === null) {
-      return this._root.style('color');
-    }
-
-    this._root.style('color', value);
-    return this;
   }
 
   disabled(value = null) {
@@ -121,46 +99,6 @@ export default class Button extends Part {
     this._sub
       .style('display', null)
       .text(value);
-
-    return this;
-  }
-
-  size(value = null) {
-    if (value === null) {
-      return this._icon.style('font-size');
-    }
-
-    this._icon.style('font-size', value);
-    return this;
-  }
-
-  tabindex(value = null) {
-    if (value === null) {
-      return this._button.attr('tabindex');
-    }
-
-    this._button.attr('tabindex', value);
-    return this;
-  }
-
-  type(value = null) {
-    if (value === null) {
-      return this._button.attr('type');
-    }
-
-    this._button.attr('type', value);
-    return this;
-  }
-
-  width(value = null) {
-    if (value === null) {
-      return this._root.style('width');
-    }
-
-    this._root.styles({
-      'flex': 'none',
-      'width': value
-    });
 
     return this;
   }

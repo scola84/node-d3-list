@@ -77,6 +77,10 @@ export default class Text extends Part {
     this.primary();
   }
 
+  button() {
+    return this._button;
+  }
+
   overflow(value = null) {
     if (value === null) {
       return this._overflow;
@@ -110,16 +114,7 @@ export default class Text extends Part {
     return this;
   }
 
-  tabindex(value = null) {
-    if (value === null) {
-      return this._button.attr('tabindex');
-    }
-
-    this._button.attr('tabindex', value);
-    return this;
-  }
-
-  text(value) {
+  text(value = null) {
     if (value === null) {
       return this._text;
     }
@@ -137,19 +132,6 @@ export default class Text extends Part {
     if (this._overflow === 'toggle') {
       this._toggle();
     }
-
-    return this;
-  }
-
-  width(value = null) {
-    if (value === null) {
-      return this._root.style('width');
-    }
-
-    this._root.styles({
-      'flex': 'none',
-      'width': value
-    });
 
     return this;
   }

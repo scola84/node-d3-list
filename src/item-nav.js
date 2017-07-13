@@ -10,9 +10,14 @@ export default class NavItem extends MenuItem {
 
     this._forward = this
       .icon()
-      .class('ion-ios-arrow-forward')
-      .size('1.9em')
       .secondary();
+
+    this._forward
+      .icon()
+      .classed('ion-ios-arrow-forward', true)
+      .styles({
+        'font-size': '1.9em'
+      });
   }
 
   _add(element) {

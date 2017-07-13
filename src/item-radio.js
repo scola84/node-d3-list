@@ -13,7 +13,6 @@ export default class RadioItem extends Item {
 
     this._check = this
       .icon()
-      .class('ion-ios-checkmark-empty')
       .secondary()
       .show(false);
 
@@ -22,6 +21,10 @@ export default class RadioItem extends Item {
       .styles({
         'color': '#000'
       });
+
+    this._check
+      .icon()
+      .classed('ion-ios-checkmark-empty', true);
   }
 
   selected(value = null) {

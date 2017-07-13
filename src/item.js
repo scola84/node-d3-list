@@ -124,9 +124,11 @@ export default class Item extends Observer {
     const button = new Button()
       .item(this);
 
-    button.class(value);
-    this._add(button);
+    button
+      .icon()
+      .classed(value, true);
 
+    this._add(button);
     return button;
   }
 
@@ -134,9 +136,11 @@ export default class Item extends Observer {
     const icon = new Icon()
       .item(this);
 
-    icon.class(value);
-    this._add(icon);
+    icon
+      .icon()
+      .classed(value, true);
 
+    this._add(icon);
     return icon;
   }
 
@@ -152,9 +156,13 @@ export default class Item extends Observer {
     const input = new Input()
       .item(this);
 
-    input.type(value);
-    this._add(input);
+    input
+      .input()
+      .attrs({
+        'type': value
+      });
 
+    this._add(input);
     return input;
   }
 

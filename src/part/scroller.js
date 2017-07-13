@@ -46,17 +46,4 @@ export default class Scroller extends Part {
 
     return super.disabled(value);
   }
-
-  width(value = null) {
-    if (value === null) {
-      return this._root.style('width');
-    }
-
-    this._root.styles({
-      'flex': 'none',
-      'width': value
-    });
-
-    return this;
-  }
 }
