@@ -215,6 +215,6 @@ export default class Text extends Part {
     }
 
     const value = this._format(setEvent.value);
-    this.text(value);
+    this.text(value === null ? '' : value);
   }
 }

@@ -45,7 +45,7 @@ export default class Texts extends Part {
     return this;
   }
 
-  text(value) {
+  text(value = null) {
     if (value === null) {
       return this._current;
     }

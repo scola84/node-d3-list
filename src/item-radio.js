@@ -24,7 +24,10 @@ export default class RadioItem extends Item {
 
     this._check
       .icon()
-      .classed('ion-ios-checkmark-empty', true);
+      .classed('ion-ios-checkmark-empty', true)
+      .styles({
+        'font-size': '1.9em'
+      });
   }
 
   selected(value = null) {
@@ -32,8 +35,11 @@ export default class RadioItem extends Item {
       value = this._model.get(this._name);
     }
 
+    value = this._format(value);
+    const self = this._format(this._value);
+
     return typeof value !== 'undefined' &&
-      isEqual(value, this._value);
+      isEqual(value, self);
   }
 
   _add(element) {

@@ -8,6 +8,7 @@ import Space from './part/space';
 import Switch from './part/switch';
 import Input from './part/input';
 import Text from './part/text';
+import TextLink from './part/text-link';
 import Textarea from './part/textarea';
 import Texts from './part/texts';
 
@@ -164,6 +165,16 @@ export default class Item extends Observer {
 
     this._add(input);
     return input;
+  }
+
+  link(value = null) {
+    const text = new TextLink()
+      .item(this);
+
+    text.text(value);
+    this._add(text);
+
+    return text;
   }
 
   scroller() {
