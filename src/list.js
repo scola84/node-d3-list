@@ -2,18 +2,18 @@
 
 import { select } from 'd3';
 import { Observer } from '@scola/d3-model';
+import Item from './item';
 
 export default class List extends Observer {
   constructor() {
     super();
 
-    this._items = new Set();
-
     this._gesture = null;
+    this._items = new Set();
     this._rootMedia = null;
     this._bodyMedia = null;
     this._inset = false;
-
+    this._item = null;
     this._title = null;
     this._comment = null;
 
@@ -114,6 +114,15 @@ export default class List extends Observer {
     return this._items.size > 0;
   }
 
+  item(value = null) {
+    if (value === null) {
+      return this._item;
+    }
+
+    this._item = value;
+    return this;
+  }
+
   model(value = null) {
     value = super.model(value);
 
@@ -195,6 +204,29 @@ export default class List extends Observer {
   disabled(value) {
     this._items.forEach((item) => {
       item.disabled(value);
+    });
+
+    return this;
+  }
+
+  message(text) {
+    this.clear();
+
+    const message = this
+      .append(new Item());
+
+    message
+      .text(text)
+      .primary();
+
+    return this;
+  }
+
+  render(data) {
+    this.clear();
+
+    data.forEach((datum, index) => {
+      this.append(this._item(datum, index));
     });
 
     return this;
