@@ -49,7 +49,7 @@ export default class Button extends Part {
     this._icon = this._button
       .append('span')
       .styles({
-        'font-size': '1em',
+        'font-size': 'inherit',
         'line-height': 0,
         'position': 'relative'
       });

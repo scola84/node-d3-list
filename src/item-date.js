@@ -563,7 +563,10 @@ export default class DateItem extends Item {
     for (; i <= max; i += 1) {
       this._year
         .append('button')
-        .attr('tabindex', 0)
+        .attrs({
+          'tabindex': 0,
+          'type': 'button'
+        })
         .styles({
           'background': 'none',
           'border': '1px solid transparent',
@@ -598,7 +601,10 @@ export default class DateItem extends Item {
     for (let i = 0; i < 12; i += 1) {
       this._month
         .append('button')
-        .attr('tabindex', 0)
+        .attrs({
+          'tabindex': 0,
+          'type': 'button'
+        })
         .styles({
           'background': 'none',
           'border': '1px solid transparent',
@@ -635,7 +641,10 @@ export default class DateItem extends Item {
     for (let i = 1; i <= 31; i += 1) {
       this._day
         .append('button')
-        .attr('tabindex', 0)
+        .attrs({
+          'tabindex': 0,
+          'type': 'button'
+        })
         .styles({
           'background': 'none',
           'border': '1px solid transparent',
