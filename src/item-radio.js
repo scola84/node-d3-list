@@ -12,7 +12,7 @@ export default class RadioItem extends Item {
       });
 
     this._check = this
-      .icon()
+      .icon('ion-ios-checkmark-empty')
       .secondary()
       .show(false);
 
@@ -24,9 +24,9 @@ export default class RadioItem extends Item {
 
     this._check
       .icon()
-      .classed('ion-ios-checkmark-empty', true)
       .styles({
-        'font-size': '1.9em'
+        'font-size': '1.9em',
+        'padding': '0 0.125em'
       });
   }
 

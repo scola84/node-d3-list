@@ -5,8 +5,6 @@ export default class Icon extends Part {
   constructor() {
     super();
 
-    this._class = null;
-
     this._root = select('body')
       .append('div')
       .remove()

@@ -121,7 +121,7 @@ export default class Item extends Observer {
     return this._parts[index];
   }
 
-  button(value = null) {
+  button(value) {
     const button = new Button()
       .item(this);
 
@@ -133,7 +133,7 @@ export default class Item extends Observer {
     return button;
   }
 
-  icon(value = null) {
+  icon(value) {
     const icon = new Icon()
       .item(this);
 
@@ -153,7 +153,7 @@ export default class Item extends Observer {
     return icon;
   }
 
-  input(value = null) {
+  input(value = 'text') {
     const input = new Input()
       .item(this);
 
