@@ -210,8 +210,6 @@ export default class List extends Observer {
   }
 
   message(text) {
-    this.clear();
-
     const message = this
       .append(new Item());
 
@@ -223,8 +221,6 @@ export default class List extends Observer {
   }
 
   render(data) {
-    this.clear();
-
     data.forEach((datum, index) => {
       this.append(this._item(datum, index));
     });
