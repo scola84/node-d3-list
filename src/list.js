@@ -14,6 +14,8 @@ export default class List extends Observer {
     this._bodyMedia = null;
     this._inset = false;
     this._item = null;
+    this._message = null;
+    this._prepare = null;
     this._title = null;
     this._comment = null;
 
@@ -114,6 +116,15 @@ export default class List extends Observer {
     return this._items.size > 0;
   }
 
+  prepare(value = null) {
+    if (value === null) {
+      return this._prepare;
+    }
+
+    this._prepare = value;
+    return this;
+  }
+
   item(value = null) {
     if (value === null) {
       return this._item;
@@ -209,18 +220,31 @@ export default class List extends Observer {
     return this;
   }
 
-  message(text) {
-    const message = this
-      .append(new Item());
+  message(value = null) {
+    if (value === null) {
+      return this._message;
+    }
 
-    message
-      .text(text)
-      .primary();
+    if (value === false) {
+      return this._deleteMessage();
+    }
 
-    return this;
+    if (this._message) {
+      return this._updateMessage(value);
+    }
+
+    return this._insertMessage(value);
   }
 
   render(data) {
+    if (this._prepare) {
+      this._prepare(data, this);
+    }
+
+    if (this._items.size > 0) {
+      this.clear();
+    }
+
     data.forEach((datum, index) => {
       this.append(this._item(datum, index));
     });
@@ -281,6 +305,35 @@ export default class List extends Observer {
       this._bodyMedia.destroy();
       this._bodyMedia = null;
     }
+
+    return this;
+  }
+
+  _deleteMessage() {
+    if (this._message) {
+      this.append(this._message, false);
+      this._message.destroy();
+      this._message = null;
+    }
+
+    return this;
+  }
+
+  _insertMessage(text) {
+    this._message = this
+      .append(new Item());
+
+    this._message
+      .text(text)
+      .primary();
+
+    return this;
+  }
+
+  _updateMessage(text) {
+    this._message
+      .part(0)
+      .text(text);
 
     return this;
   }
