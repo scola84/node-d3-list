@@ -27,7 +27,7 @@ export default class Textarea extends Part {
         'rows': 1
       })
       .styles({
-        'background': '#FFF',
+        'background': 'none',
         'border': '0',
         'border-radius': '0.5em',
         'color': 'inherit',
