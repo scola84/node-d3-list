@@ -209,6 +209,8 @@ export default class List extends Observer {
     });
 
     this._items.clear();
+    this._message = null;
+
     return this;
   }
 
